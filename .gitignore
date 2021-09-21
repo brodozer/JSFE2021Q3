@@ -104,10 +104,10 @@ dist
 .tern-port
 
 # EditorConfig
-.editorconfig
+museum/.editorconfig
 
 # CSScomb
-csscomb.json
+museum/csscomb.json
 
 # SASS
-sass/
+museum/sass/
