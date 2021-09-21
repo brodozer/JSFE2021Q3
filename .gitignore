@@ -102,3 +102,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# EditorConfig
+.editorconfig
+
+# CSScomb
+csscomb.json
+
+# SASS
+sass/
