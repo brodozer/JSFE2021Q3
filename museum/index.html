@@ -5,10 +5,106 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Museum</title>
+		<link rel="icon" href="assets/favicon.ico" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Forum&display=swap"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
+		/>
 		<link rel="stylesheet" href="css/normalize.css" />
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
 	<body>
+		<header class="header black">
+			<div class="container">
+				<div class="header-logo">Louvre</div>
+				<nav class="header-nav">
+					<ul class="nav-list">
+						<li class="nav-item">
+							<a class="nav-link" href="explore">Explore</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="video">Video</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="gallery">Gallery</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="tickets">Tickets</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="contacts">Contacts</a>
+						</li>
+					</ul>
+				</nav>
+				<button class="d-none">menu</button>
+			</div>
+		</header>
+		<main>
+			<section class="section-welcome black" id="welcome">
+				<div class="container">
+					<div class="welcome-title">
+						<h1>
+							Welcome<br />
+							to the Louvre
+						</h1>
+						<p>From the castle to the museum</p>
+						<a href="tours/tour1.html" target="_blank">Discover the Louvre</a>
+					</div>
+					<div class="welcome-slider">
+						<!-- Slider main container -->
+						<div class="swiper swiper-welcome">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">
+									<img src="assets/img/welcome-slider/1.jpg" alt="1" />
+								</div>
+								<div class="swiper-slide">
+									<img src="assets/img/welcome-slider/2.jpg" alt="2" />
+								</div>
+								<div class="swiper-slide">
+									<img src="assets/img/welcome-slider/3.jpg" alt="3" />
+								</div>
+								<div class="swiper-slide">
+									<img src="assets/img/welcome-slider/4.jpg" alt="4" />
+								</div>
+								<div class="swiper-slide">
+									<img src="assets/img/welcome-slider/5.jpg" alt="5" />
+								</div>
+							</div>
+							<div class="controls">
+								<div class="fraction">
+									<span class="current">01</span>
+									<span class="separator">|</span>
+									<span>05</span>
+								</div>
+								<div class="pagination"></div>
+								<div class="navigation">
+									<button class="button-prev"></button>
+									<button class="button-next"></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="section-visiting section" id="visiting"></section>
+			<section class="section-explore section" id="explore"></section>
+			<section class="section-video section" id="video"></section>
+			<section class="section-gallery" id="gallery"></section>
+			<section class="section-tickets" id="tickets"></section>
+			<section class="section-contacts" id="contacts"></section>
+		</main>
+		<footer></footer>
+		<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 		<script src="js/index.js"></script>
 	</body>
 </html>
