@@ -85,6 +85,10 @@ ul > li {
     list-style-type: none;
 }
 
+iframe {
+    border: none;
+}
+
 .d-none {
     display: none;
 }

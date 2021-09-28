@@ -106,10 +106,11 @@ const videoSwiper = new Swiper(".video-swiper", {
 	slidesPerView: 1,
 });
 
-youtubeSwiper.on("slideChange", function () {
-	let index = this.realIndex;
-	videoSwiper.slideTo(++index);
-});
+// change main video
+// youtubeSwiper.on("slideChange", function () {
+// 	let index = this.realIndex;
+// 	videoSwiper.slideTo(++index);
+// });
 
 const inputs = document.querySelectorAll('.video-controls input[type="range"]');
 const volumes = document.querySelectorAll(".video-controls .volume");
