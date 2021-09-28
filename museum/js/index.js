@@ -30,7 +30,6 @@ const overlay = imgCompare.querySelector(".img-before");
 
 compareSlider.addEventListener("input", () => {
 	let sliderVal = compareSlider.value;
-	console.log(sliderVal);
 	dragLine.style.left = `${sliderVal}%`;
 	overlay.style.width = `${sliderVal}%`;
 });
@@ -38,21 +37,21 @@ compareSlider.addEventListener("input", () => {
 // art gallery
 
 const gallery = [
-	'<img src="/assets/img/galery/galery1.jpg" alt="galery1" />',
-	'<img src="/assets/img/galery/galery2.jpg" alt="galery2" />',
-	'<img src="/assets/img/galery/galery3.jpg" alt="galery3" />',
-	'<img src="/assets/img/galery/galery4.jpg" alt="galery4" />',
-	'<img src="/assets/img/galery/galery5.jpg" alt="galery5" />',
-	'<img src="/assets/img/galery/galery6.jpg" alt="galery6" />',
-	'<img src="/assets/img/galery/galery7.jpg" alt="galery7" />',
-	'<img src="/assets/img/galery/galery8.jpg" alt="galery8" />',
-	'<img src="/assets/img/galery/galery9.jpg" alt="galery9" />',
-	'<img src="/assets/img/galery/galery10.jpg" alt="galery10" />',
-	'<img src="/assets/img/galery/galery11.jpg" alt="galery11" />',
-	'<img src="/assets/img/galery/galery12.jpg" alt="galery12" />',
-	'<img src="/assets/img/galery/galery13.jpg" alt="galery13" />',
-	'<img src="/assets/img/galery/galery14.jpg" alt="galery14" />',
-	'<img src="/assets/img/galery/galery15.jpg" alt="galery15" />',
+	"/assets/img/galery/galery1.jpg",
+	"/assets/img/galery/galery2.jpg",
+	"/assets/img/galery/galery3.jpg",
+	"/assets/img/galery/galery4.jpg",
+	"/assets/img/galery/galery5.jpg",
+	"/assets/img/galery/galery6.jpg",
+	"/assets/img/galery/galery7.jpg",
+	"/assets/img/galery/galery8.jpg",
+	"/assets/img/galery/galery9.jpg",
+	"/assets/img/galery/galery10.jpg",
+	"/assets/img/galery/galery11.jpg",
+	"/assets/img/galery/galery12.jpg",
+	"/assets/img/galery/galery13.jpg",
+	"/assets/img/galery/galery14.jpg",
+	"/assets/img/galery/galery15.jpg",
 ];
 
 const pictureInnerContainer = document.querySelector(
@@ -75,13 +74,13 @@ const shuffle = (array) => {
 	return array;
 };
 
-let html = "";
-
-shuffle(gallery).forEach((img) => {
-	html += img;
+shuffle(gallery).forEach((src, i) => {
+	const img = document.createElement("img");
+	img.classList.add("gallery-img");
+	img.src = src;
+	img.alt = `galery1${i + 1}`;
+	pictureInnerContainer.append(img);
 });
-
-pictureInnerContainer.innerHTML = html;
 
 // video
 
@@ -114,8 +113,6 @@ youtubeSwiper.on("slideChange", function () {
 
 const inputs = document.querySelectorAll('.video-controls input[type="range"]');
 const volumes = document.querySelectorAll(".video-controls .volume");
-console.log(volumes);
-console.log(inputs);
 
 const changeProgress = (el, val) => {
 	el.style.background = `linear-gradient(to right, #710707 0%, #710707 ${val}%, #c4c4c4 ${val}%, #c4c4c4 100%)`;
@@ -137,7 +134,6 @@ volumes.forEach((v) => {
 // tickets
 
 const counts = document.querySelectorAll(".counts, .input-wr");
-console.log("counts ", counts);
 counts.forEach((e) => {
 	let incBtn = e.querySelector(".increase");
 	let decBtn = e.querySelector(".decrease");
@@ -221,7 +217,6 @@ modals.addEventListener("click", function (e) {
 
 const form = document.querySelector(".booking form");
 form.addEventListener("submit", (e) => {
-	console.log("form not submit");
 	e.preventDefault();
 });
 
