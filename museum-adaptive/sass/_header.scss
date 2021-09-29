@@ -1,17 +1,5 @@
 .header-logo {
-	padding-left: 74px;
-	background: {
-		image: url("../assets/svg/louvre.svg");
-		size: 49px 26px;
-		repeat: no-repeat;
-	}
-	font-family: "Forum", cursive;
-	font-size: $fz_28;
-	line-height: 31px;
-	letter-spacing: 5px;
-	text-transform: uppercase;
 	cursor: pointer;
-	transition: filter ease 0.2s;
 	&:hover {
 		filter: invert(57%) sepia(33%) saturate(359%) hue-rotate(356deg)
 			brightness(89%) contrast(85%);
@@ -24,6 +12,18 @@
 		justify-content: space-between;
 		align-items: center;
 		height: 150px;
+		.burger-menu {
+			display: none;
+			width: 32px;
+			height: 32px;
+			background-image: url("../assets/svg/burger_menu.svg");
+			background-position: center right;
+			background-repeat: no-repeat;
+			transition: all ease 0.3s;
+			&.toggle {
+				background-image: url("../assets/svg/close_white.svg");
+			}
+		}
 		.nav-list {
 			display: flex;
 			.nav-item {
@@ -44,6 +44,39 @@
 					&:active {
 						color: #7e6c51;
 					}
+				}
+			}
+		}
+	}
+	@include lg {
+		.container {
+			height: 130px;
+			.header-logo {
+				padding-top: 5px;
+			}
+			.nav-list {
+				display: none;
+			}
+			.burger-menu {
+				display: block;
+			}
+		}
+	}
+	@include md {
+		.container {
+			height: 110px;
+			.header-logo {
+				padding-top: 13px;
+			}
+		}
+	}
+	@include sm {
+		.container {
+			height: 90px;
+			.header-logo {
+				padding-top: 5px;
+				img {
+					width: 125px;
 				}
 			}
 		}

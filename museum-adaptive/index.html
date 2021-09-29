@@ -27,7 +27,9 @@
 	<body>
 		<header class="header black">
 			<div class="container">
-				<div class="header-logo">Louvre</div>
+				<a class="header-logo">
+					<img src="assets/svg/main_logo.svg" alt="logo" />
+				</a>
 				<nav class="header-nav">
 					<ul class="nav-list">
 						<li class="nav-item">
@@ -50,7 +52,7 @@
 						</li>
 					</ul>
 				</nav>
-				<button class="d-none">menu</button>
+				<button class="burger-menu" type="button"></button>
 			</div>
 		</header>
 		<main>
@@ -99,7 +101,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="section-visiting section" id="visiting">
+			<!-- <section class="section-visiting section" id="visiting">
 				<div class="container">
 					<h2 class="underline-title">Virtual Tour</h2>
 					<div class="virtual-tour">
@@ -153,8 +155,8 @@
 						</a>
 					</div>
 				</div>
-			</section>
-			<section class="section-explore black" id="explore">
+			</section> -->
+			<!-- <section class="section-explore black" id="explore">
 				<div class="container">
 					<div class="descriptions">
 						<h2 class="underline-title">Picture explore</h2>
@@ -174,12 +176,8 @@
 					</div>
 					<div class="explore">
 						<div class="img-comp-container">
-							<div class="img-comp-img img-after">
-								<!-- <img src="assets/img/explore-slider/after.jpg" /> -->
-							</div>
-							<div class="img-comp-img img-before">
-								<!-- <img src="assets/img/explore-slider/before.jpg" /> -->
-							</div>
+							<div class="img-comp-img img-after"></div>
+							<div class="img-comp-img img-before"></div>
 						</div>
 						<div class="img-comp-slider">
 							<div class="slider-drag-line">
@@ -235,7 +233,7 @@
 										</div>
 									</div>
 								</div>
-								<!-- <div class="swiper-slide">
+								<div class="swiper-slide">
 									<div class="video-container">
 										<video
 											src="assets/video/video1.mp4"
@@ -262,8 +260,8 @@
 											<button class="fs" type="button"></button>
 										</div>
 									</div>
-								</div> -->
-								<!-- <div class="swiper-slide">
+								</div>
+								<div class="swiper-slide">
 									<div class="video-container">
 										<video
 											src="assets/video/video2.mp4"
@@ -290,7 +288,7 @@
 											<button class="fs" type="button"></button>
 										</div>
 									</div>
-								</div> -->
+								</div>
 							</div>
 						</div>
 						<div class="swiper youtube-swiper">
@@ -446,9 +444,9 @@
 						</div>
 					</div>
 				</div>
-			</section>
+			</section> -->
 		</main>
-		<footer class="footer black">
+		<!-- <footer class="footer black">
 			<div class="container">
 				<div class="top">
 					<div class="header-logo">Louvre</div>
@@ -476,7 +474,7 @@
 							</ul>
 						</nav>
 						<div class="social">
-							<ul>
+							<ul class="social-list">
 								<li>
 									<a
 										class="youtube"
@@ -522,10 +520,76 @@
 					<span>brodozer</span>
 				</div>
 			</div>
-		</footer>
-		<div class="modals">
-			<button class="close-modals d-none" type="button">close</button>
-			<div class="menu"></div>
+		</footer> -->
+		<div class="modal-menu">
+			<div class="menu">
+				<ul class="nav-list">
+					<li class="nav-item">
+						<a class="nav-link" href="#visiting">Visiting</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#explore">Explore</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#video">Video</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#gallery">Gallery</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#tickets">Tickets</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#contacts">Contacts</a>
+					</li>
+				</ul>
+				<div class="gallery">
+					<img src="assets/img/menu/menu1.jpg" alt="menu1" />
+					<img src="assets/img/menu/menu2.jpg" alt="menu2" />
+					<img src="assets/img/menu/menu3.jpg" alt="menu3" />
+				</div>
+				<div class="social">
+					<ul class="social-list">
+						<li>
+							<a
+								class="youtube"
+								href="https://www.youtube.com/user/louvre"
+								target="_blank"
+							></a>
+						</li>
+						<li>
+							<a
+								class="insta"
+								href="https://www.instagram.com/museelouvre/"
+								target="_blank"
+							></a>
+						</li>
+						<li>
+							<a
+								class="fb"
+								href="https://www.facebook.com/museedulouvre"
+								target="_blank"
+							></a>
+						</li>
+						<li>
+							<a
+								class="tw"
+								href="http://twitter.com/museelouvre"
+								target="_blank"
+							></a>
+						</li>
+						<li>
+							<a
+								class="pin"
+								href="https://www.pinterest.fr/museedulouvre/"
+								target="_blank"
+							></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="modal-booking">
 			<div class="booking">
 				<button class="close-book" type="button"></button>
 				<div class="container">

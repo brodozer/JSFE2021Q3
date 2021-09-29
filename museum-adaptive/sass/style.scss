@@ -115,7 +115,17 @@ iframe {
 
 .container {
 	max-width: $cw_xl;
+	padding: 0 20px;
 	margin: 0 auto;
+	@include lg {
+		max-width: $cw_lg;
+	}
+	@include md {
+		max-width: $cw_md;
+	}
+	@include sm {
+		max-width: $cw_sm;
+	}
 }
 
 .responsive {
@@ -204,7 +214,124 @@ iframe {
 	}
 }
 
-.modals {
+.modal-menu {
+	position: fixed;
+	z-index: 1000;
+	top: 130px;
+	left: 0;
+	width: 30%;
+	transform: translateX(-100%);
+	transition: all ease 0.3s;
+	background-color: #030303;
+	font-size: 20px;
+	font-weight: 300;
+	letter-spacing: 2px;
+	color: #fff;
+	.menu {
+		max-width: 698px;
+		margin: 0 auto;
+		padding: 0 20px;
+	}
+	.nav-list {
+		margin-top: 34px;
+		padding-left: 36px;
+		.nav-item {
+			margin-bottom: 25px;
+			width: 122px;
+			&:last-child {
+				margin-bottom: 0;
+			}
+			a {
+				display: block;
+				width: 100%;
+				background-image: url("../assets/svg/menu_arrow.svg");
+				background-repeat: no-repeat;
+				background-position: right center;
+				&:hover {
+					color: $gold;
+				}
+			}
+		}
+	}
+	.gallery,
+	.social {
+		visibility: hidden;
+		opacity: 0;
+	}
+	.gallery {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+		padding-bottom: 16px;
+		img {
+			max-width: 100%;
+			margin-bottom: 20px;
+			&:nth-child(2),
+			&:nth-child(3) {
+				width: calc(100% / 2 - 10px);
+			}
+		}
+	}
+	.social {
+		padding: 35px 0 40px 0;
+		.social-list {
+			justify-content: center;
+			li {
+				margin-left: 25px;
+				&:first-child {
+					margin-left: 0;
+				}
+			}
+		}
+	}
+	&.toggle {
+		transform: translateX(0);
+	}
+	@include md {
+		top: 110px;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		.nav-list {
+			padding-left: 0;
+			margin-bottom: 35px;
+		}
+		.gallery,
+		.social {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+	@include sm {
+		top: 90px;
+		.menu {
+			max-width: 350px;
+		}
+		.gallery {
+			padding-bottom: 0;
+			img {
+				width: 95px !important;
+				height: 95px;
+				object-fit: cover;
+				&:first-child {
+					order: 2;
+				}
+				&:last-child {
+					order: 3;
+				}
+			}
+		}
+		.social {
+			padding-top: 24px;
+			.social-list li {
+				margin-left: 5px;
+			}
+		}
+	}
+}
+
+.modal-booking {
 	position: fixed;
 	display: flex;
 	justify-content: center;
@@ -218,11 +345,6 @@ iframe {
 	transition: opacity 600ms;
 	visibility: hidden;
 	opacity: 0;
-	.close-modals {
-		position: absolute;
-		top: 30px;
-		right: 30px;
-	}
 	&.toggle {
 		visibility: visible;
 		opacity: 1;
