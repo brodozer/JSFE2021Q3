@@ -1,0 +1,51 @@
+.header-logo {
+	padding-left: 74px;
+	background: {
+		image: url("../assets/svg/louvre.svg");
+		size: 49px 26px;
+		repeat: no-repeat;
+	}
+	font-family: "Forum", cursive;
+	font-size: $fz_28;
+	line-height: 31px;
+	letter-spacing: 5px;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: filter ease 0.2s;
+	&:hover {
+		filter: invert(57%) sepia(33%) saturate(359%) hue-rotate(356deg)
+			brightness(89%) contrast(85%);
+	}
+}
+
+.header {
+	.container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 150px;
+		.nav-list {
+			display: flex;
+			.nav-item {
+				margin-right: 56px;
+				&:last-child {
+					margin-right: 0;
+				}
+				.nav-link {
+					display: block;
+					font-weight: 200;
+					font-size: $fz_22;
+					line-height: 150px;
+					letter-spacing: 2px;
+					transition: color ease 0.3s;
+					&:hover {
+						color: $gold;
+					}
+					&:active {
+						color: #7e6c51;
+					}
+				}
+			}
+		}
+	}
+}
