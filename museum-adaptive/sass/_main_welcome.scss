@@ -1,0 +1,122 @@
+.section-welcome {
+	.container {
+		position: relative;
+		.welcome-title {
+			position: absolute;
+			z-index: 100;
+			top: 150px;
+			left: 0;
+			p {
+				padding: 25px 0;
+				font-size: $fz_28;
+				font-weight: 300;
+				letter-spacing: 2px;
+			}
+			a {
+				display: block;
+				margin-top: 49px;
+				width: 360px;
+				height: 75px;
+				border-radius: 8px;
+				background-color: $red;
+				color: $white;
+				font-weight: 300;
+				font-size: $fz_22;
+				letter-spacing: 2px;
+				line-height: 75px;
+				text-align: center;
+				transition: background-color ease 0.3s;
+				&:hover {
+					background-color: $gold;
+				}
+			}
+		}
+		.welcome-slider {
+			max-width: 1000px;
+			margin-left: auto;
+			.swiper-slide img {
+				width: 100%;
+			}
+			.swiper-slide:after {
+				content: "";
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				background: linear-gradient(
+					90deg,
+					#000000 0%,
+					rgba(0, 0, 0, 0.5) 16.19%,
+					rgba(0, 0, 0, 0) 30.73%
+				);
+				z-index: 2;
+			}
+			.controls {
+				position: relative;
+				z-index: 10;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-left: auto;
+				margin-top: -65px;
+				width: 600px;
+				height: 120px;
+				background-color: $dark;
+				.fraction {
+					font-size: $fz_22;
+					.separator {
+						display: inline-block;
+						margin: 0 4px 0 6px;
+					}
+				}
+				.pagination {
+					width: 180px;
+					display: flex;
+					justify-content: space-between;
+					margin: 0 58px 0 56px;
+					.swiper-pagination-bullet {
+						width: 16px;
+						height: 16px;
+						margin: 0;
+						border-radius: 0;
+						background-color: $white;
+						transition: background-color ease 0.3s;
+						opacity: 1;
+						cursor: pointer;
+						&:last-child {
+							margin-right: 0;
+						}
+						&:hover {
+							background-color: #9d8665;
+						}
+						&-active {
+							background-color: #d2b183;
+						}
+					}
+				}
+				.navigation {
+					display: flex;
+					.button-prev,
+					.button-next {
+						width: 30px;
+						height: 8px;
+						background-repeat: no-repeat;
+						background-size: 30px 8px;
+						cursor: pointer;
+						transition: filter ease 0.3s;
+						&:hover {
+							filter: invert(54%) sepia(43%) saturate(286%) hue-rotate(356deg)
+								brightness(92%) contrast(84%);
+						}
+					}
+					.button-prev {
+						margin-right: 20px;
+						background-image: url("../assets/svg/prev.svg");
+					}
+					.button-next {
+						background-image: url("../assets/svg/next.svg");
+					}
+				}
+			}
+		}
+	}
+}

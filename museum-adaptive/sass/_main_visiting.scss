@@ -1,0 +1,44 @@
+.section-visiting {
+	h2 {
+		color: $gold;
+	}
+	.virtual-tour {
+		display: flex;
+		flex-wrap: wrap;
+		row-gap: 75px;
+		column-gap: 60px;
+		.tour-card {
+			display: block;
+			flex: 1 1 calc((100% / 3) - 120px);
+			img {
+				display: block;
+				width: 100%;
+			}
+			.underline-title {
+				margin: 25px 0 23px;
+				&:after {
+					bottom: -12px;
+					width: 300px;
+					height: 2px;
+					transition: width ease 0.3s;
+				}
+			}
+			p {
+				font-weight: 200;
+				font-size: 22px;
+				line-height: 26px;
+				span {
+					display: block;
+					padding-top: 10px;
+					font-size: 18px;
+					line-height: 19px;
+				}
+			}
+			&:hover {
+				.underline-title:after {
+					width: 100%;
+				}
+			}
+		}
+	}
+}
