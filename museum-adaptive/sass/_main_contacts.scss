@@ -1,0 +1,25 @@
+.section-contacts {
+	padding-bottom: 70px;
+	h2 {
+		color: $gold;
+	}
+	.wrap {
+		display: flex;
+		justify-content: space-between;
+		p {
+			max-width: 227px;
+			font-weight: 500;
+			font-size: $fz_28;
+			line-height: 33px;
+			margin-bottom: 51px;
+		}
+		li {
+			margin-bottom: 25px;
+			font-size: $fz_22;
+			font-weight: 300;
+		}
+		.map {
+			max-width: 100%;
+		}
+	}
+}
