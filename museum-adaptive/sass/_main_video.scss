@@ -1,6 +1,25 @@
 .section-video {
+	@include lg {
+		padding: 53px 0 58px 0;
+	}
+	@include md {
+		padding: 41px 0 80px 0;
+	}
+	@include sm {
+		padding: 37px 0 40px 0;
+	}
 	.title {
 		display: flex;
+		margin-bottom: 72px;
+		@include lg {
+			margin-bottom: 32px;
+		}
+		@include md {
+			margin-bottom: 19px;
+		}
+		@include sm {
+			margin-bottom: 20px;
+		}
 		h2,
 		p {
 			width: 50%;
@@ -8,27 +27,51 @@
 		h2 {
 			color: $gold;
 			margin-bottom: 0;
+			@include md {
+				width: 100%;
+			}
 		}
 		p {
 			padding-top: 9px;
 			font-weight: 300;
 			font-size: $fz_22;
 			line-height: 38px;
+			@include lg {
+				display: none;
+			}
 		}
 	}
-	.slider {
-		padding: 77px 0 0 0;
-		//margin-top: -7px;
-	}
 	.video-swiper {
-		margin-bottom: 40px;
+		margin-bottom: 44px;
+		@include md {
+			margin-bottom: 19px;
+		}
+		@include sm {
+			margin-bottom: 40px;
+		}
+		@include xs {
+			margin-bottom: 20px;
+		}
 		.video-container {
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
+			&.responsive {
+				padding-bottom: 51%;
+				@include md {
+					padding-bottom: 53%;
+				}
+				@include sm {
+					padding-bottom: 59%;
+				}
+			}
 			video {
-				width: 100%;
-				height: 100%;
+				height: auto;
+				top: 50%;
+				transform: translate3d(0, -50%, 0);
+				@include sm {
+					width: 105%;
+				}
 			}
 			.play {
 				position: absolute;
@@ -49,16 +92,42 @@
 					left: 50%;
 					margin-left: 10px;
 					transform: translate3d(-50%, -50%, 0);
-					border-top: 60px solid transparent;
-					border-bottom: 60px solid transparent;
-					border-left: 90px solid #fff;
+					border-style: solid;
+					border-width: 60px 0 60px 91px;
+					border-color: transparent transparent transparent #fff;
+				}
+				@include lg {
+					width: 152px;
+					height: 152px;
+					border-width: 6px;
+					margin-top: -30px;
+					&:after {
+						border-width: 41.5px 0 41.5px 63px;
+					}
+				}
+				@include md {
+					width: 80px;
+					height: 80px;
+					border-width: 3px;
+					margin-top: -26px;
+					&:after {
+						border-width: 21.5px 0 21.5px 33px;
+						margin-left: 4px;
+					}
+				}
+				@include sm {
+					width: 50px;
+					height: 50px;
+					&:after {
+						border-width: 13.5px 0 13.5px 21px;
+					}
 				}
 			}
 			.video-controls {
-				//position: absolute;
-				//right: 0;
-				//bottom: 0;
-				//left: 0;
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				left: 0;
 				display: flex;
 				align-items: center;
 				padding: 0 30px;
@@ -68,6 +137,8 @@
 				.mute,
 				.fs {
 					background-repeat: no-repeat;
+					background-size: contain;
+					background-position: center;
 					cursor: pointer;
 					&:hover {
 						filter: invert(65%) sepia(13%) saturate(0%) hue-rotate(159deg)
@@ -127,6 +198,81 @@
 						background: #fff;
 					}
 				}
+				@include lg {
+					height: 60px;
+					padding: 0 40px;
+					.playpause {
+						width: 23px;
+						height: 30px;
+					}
+					.mute {
+						width: 26px;
+						height: 20px;
+					}
+					.fs {
+						width: 26px;
+						height: 26px;
+					}
+					input[type="range"] {
+						height: 5px;
+						margin: 0 30px;
+						&::-webkit-slider-thumb {
+							width: 15px;
+							height: 15px;
+						}
+					}
+					.volume {
+						flex-basis: 143px;
+					}
+				}
+				@include md {
+					padding: 0 30px;
+					height: 56px;
+					.playpause {
+						margin-right: 35px;
+					}
+					.progress {
+						position: absolute;
+						top: -4px;
+						left: 0;
+						margin: 0 !important;
+						width: 100%;
+					}
+					.volume {
+						flex: 1 1 auto;
+					}
+					input[type="range"] {
+						height: 4px;
+						&::-webkit-slider-thumb {
+							width: 13px;
+							height: 13px;
+						}
+					}
+				}
+				@include sm {
+					height: 50px;
+					padding: 0 20px;
+					.playpause {
+						width: 14px;
+						height: 18px;
+						margin-right: 30px;
+					}
+					.mute {
+						width: 18px;
+						height: 14px;
+					}
+					.fs {
+						width: 18px;
+						height: 18px;
+					}
+					.volume {
+						margin: 0 30px;
+					}
+					input[type="range"]::-webkit-slider-thumb {
+						width: 10px;
+						height: 10px;
+					}
+				}
 			}
 		}
 	}
@@ -136,6 +282,15 @@
 			justify-content: center;
 			align-items: flex-end;
 			height: 52px;
+			@include lg {
+				height: 55px;
+			}
+			@include md {
+				height: 33px;
+			}
+			@include sm {
+				height: 50px;
+			}
 			.pagination {
 				display: flex;
 				align-items: center;
@@ -154,6 +309,14 @@
 					&-active {
 						background: #333333;
 					}
+					@include md {
+						width: 10px;
+						height: 10px;
+					}
+					@include sm {
+						width: 8px;
+						height: 8px;
+					}
 				}
 			}
 			.button-next,
@@ -163,6 +326,12 @@
 				height: 12px;
 				cursor: pointer;
 				transition: all ease 0.3s;
+				background-image: no-repeat;
+				background-size: contain;
+				@include sm {
+					width: 7px;
+					height: 8px;
+				}
 			}
 			.button-next {
 				background-image: url("../assets/svg/thumbs_right.svg");

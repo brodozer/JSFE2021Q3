@@ -1,0 +1,23 @@
+@mixin xs {
+	@media (max-width: $gb_xs) {
+		@content;
+	}
+}
+
+@mixin sm {
+	@media (max-width: $gb_sm) {
+		@content;
+	}
+}
+
+@mixin md {
+	@media (max-width: $gb_md) {
+		@content;
+	}
+}
+
+@mixin lg {
+	@media (max-width: $gb_lg) {
+		@content;
+	}
+}

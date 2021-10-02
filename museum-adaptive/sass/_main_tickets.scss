@@ -1,9 +1,36 @@
 .section-tickets {
+	padding-bottom: 64px;
 	h2 {
 		color: $gold;
 	}
 	.img-container {
 		width: 50%;
+		@include lg {
+			width: 71%;
+		}
+		@include md {
+			width: 61%;
+		}
+		@include sm {
+			width: 100%;
+		}
+		.responsive {
+			padding-bottom: 78%;
+			img {
+				height: auto;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+			@include lg {
+				padding-bottom: 63%;
+			}
+			@include md {
+				padding-bottom: 77%;
+			}
+			@include sm {
+				padding-bottom: 42%;
+			}
+		}
 		img {
 			display: block;
 			max-width: 100%;
@@ -12,6 +39,16 @@
 	.form-container {
 		width: 50%;
 		padding-left: 60px;
+		@include lg {
+			width: auto;
+			padding-left: 82px;
+		}
+		@include md {
+			padding-left: 60px;
+		}
+		@include sm {
+			padding-left: 0;
+		}
 		form {
 			display: flex;
 			justify-content: space-between;
@@ -25,9 +62,14 @@
 				font-size: 22px;
 				line-height: 26px;
 			}
-			.ticket-type p {
-				word-spacing: 3px;
-				margin-bottom: 52px;
+			.ticket-type {
+				@include lg {
+					display: none;
+				}
+				p {
+					word-spacing: 3px;
+					margin-bottom: 52px;
+				}
 			}
 			.check-container {
 				display: block;
@@ -71,14 +113,44 @@
 				display: flex;
 				flex-direction: column;
 				align-items: flex-end;
+				@include lg {
+					align-items: flex-start;
+				}
+				@include sm {
+					align-items: center;
+				}
 				p {
 					margin-bottom: 28px;
 					text-align: right;
+					@include lg {
+						text-align-last: left;
+						margin-bottom: 29px;
+					}
+					@include md {
+						margin-bottom: 39px;
+					}
+					@include sm {
+						font-size: 16px;
+						padding-top: 33px;
+						margin-bottom: 10px;
+					}
 				}
 				.total {
 					padding-top: 40px;
 					margin-bottom: 60px;
 					letter-spacing: 2px;
+					@include lg {
+						padding: 0;
+						margin-bottom: 67px;
+					}
+					@include md {
+						padding-top: 12px;
+						margin-bottom: 41px;
+					}
+					@include sm {
+						margin-bottom: 34px;
+						letter-spacing: 1px;
+					}
 				}
 				.btn-buy-now {
 					width: 175px;
@@ -88,10 +160,14 @@
 					color: #fff;
 					font-weight: 300;
 					font-size: $fz_22;
+					letter-spacing: 2px;
 					transition: all ease 0.3s;
 					&:hover {
 						background-color: $gold;
 						color: #000;
+					}
+					@include sm {
+						font-size: 16px;
 					}
 				}
 				.form-group {
@@ -100,8 +176,38 @@
 						display: block;
 						margin-bottom: 14px;
 					}
+					@include lg {
+						margin-bottom: 28px;
+						label {
+							margin-bottom: 10px;
+						}
+						.counts {
+							width: 175px;
+						}
+					}
+					@include md {
+						margin-bottom: 26px;
+					}
+					@include sm {
+						margin-bottom: 20px;
+						label {
+							font-size: 16px;
+						}
+					}
 				}
 			}
+		}
+	}
+	@include lg {
+		padding-bottom: 61px;
+	}
+	@include md {
+		padding-bottom: 38px;
+	}
+	@include sm {
+		.d-flex {
+			flex-wrap: wrap;
+			justify-content: center;
 		}
 	}
 }

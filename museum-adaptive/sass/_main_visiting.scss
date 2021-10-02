@@ -1,4 +1,14 @@
 .section-visiting {
+	padding-bottom: 79px;
+	@include lg {
+		padding-bottom: 57px;
+	}
+	@include md {
+		padding-bottom: 76px;
+	}
+	@include sm {
+		padding-bottom: 41px;
+	}
 	h2 {
 		color: $gold;
 	}
@@ -37,6 +47,55 @@
 			&:hover {
 				.underline-title:after {
 					width: 100%;
+				}
+			}
+		}
+	}
+	@include lg {
+		.virtual-tour {
+			justify-content: center;
+			row-gap: 62px;
+			column-gap: 107px;
+			.tour-card {
+				flex: 0 1 330px;
+				.underline-title:after {
+					bottom: -12px;
+					width: 150px;
+				}
+				p {
+					font-size: 20px;
+					line-height: 23px;
+					span {
+						font-size: 16px;
+					}
+				}
+			}
+		}
+	}
+	@include md {
+		.virtual-tour {
+			row-gap: 36px;
+			column-gap: 56px;
+			.tour-card {
+				flex-basis: 280px;
+				p {
+					font-size: 18px;
+				}
+			}
+		}
+	}
+	@include sm {
+		.virtual-tour {
+			.tour-card .underline-title {
+				margin: 24px 0 18px;
+				&:after {
+					bottom: -12px;
+				}
+			}
+			.tour-card p {
+				font-size: 16px;
+				span {
+					padding-top: 9px;
 				}
 			}
 		}
