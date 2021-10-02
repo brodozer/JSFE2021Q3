@@ -6,7 +6,7 @@
 	.picture-container {
 		overflow: hidden;
 		position: relative;
-		max-height: 2200px;
+		max-height: 1960px;
 		&:after {
 			position: absolute;
 			bottom: 0;
@@ -25,6 +25,48 @@
 				&:nth-child(1),
 				&:nth-child(11) {
 					margin-top: 50px;
+				}
+			}
+		}
+	}
+	@include lg {
+		padding-top: 53px;
+		h2 {
+			margin-bottom: 52px;
+		}
+		.picture-container {
+			max-height: 1265px;
+		}
+	}
+	@include md {
+		padding-top: 39px;
+		h2 {
+			margin-bottom: 40px;
+		}
+		.picture-container {
+			max-height: 1080px;
+			.picture-inner-container {
+				column-gap: 24px;
+				column-count: 2;
+				img:nth-child(11) {
+					margin-top: 0;
+				}
+			}
+		}
+	}
+	@include sm {
+		padding-top: 42px;
+		.picture-container {
+			max-height: 637px;
+		}
+	}
+	@include xs {
+		.picture-container .picture-inner-container {
+			column-gap: 14px;
+			img {
+				margin-bottom: 14px;
+				&:nth-child(1) {
+					margin-top: 30px;
 				}
 			}
 		}

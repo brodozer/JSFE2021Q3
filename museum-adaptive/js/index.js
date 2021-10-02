@@ -6,6 +6,7 @@ const menu = () => {
 	const burgerMenu = document.querySelector(".burger-menu");
 	const welcomTitle = document.querySelector(".welcome-title");
 	const modalMenu = document.querySelector(".modal-menu");
+	const sectionWelcome = document.querySelector(".section-welcome");
 
 	const links = modalMenu.querySelectorAll(".nav-link");
 
@@ -15,6 +16,12 @@ const menu = () => {
 		modalMenu.classList.toggle("toggle");
 	};
 
+	const setHeight = () => {
+		if (modalMenu.offsetHeight > sectionWelcome.offsetHeight) {
+			sectionWelcome.style.height = modalMenu.offsetHeight + "px";
+		}
+	};
+
 	links.forEach((l) => {
 		l.addEventListener("click", () => {
 			toggleClass();
@@ -22,6 +29,11 @@ const menu = () => {
 	});
 
 	burgerMenu.addEventListener("click", function (e) {
+		if (burgerMenu.classList.contains("toggle")) {
+			sectionWelcome.removeAttribute("style");
+		} else {
+			setHeight();
+		}
 		toggleClass();
 	});
 };
@@ -52,130 +64,136 @@ swiperWelcome.on("slideChange", function () {
 
 // slider compare
 
-// const imgCompare = document.querySelector(".explore");
+const imgCompare = document.querySelector(".explore");
 
-// const compareSlider = imgCompare.querySelector(".img-comp-slider input");
-// const dragLine = imgCompare.querySelector(".slider-drag-line");
-// const overlay = imgCompare.querySelector(".img-before");
+const compareSlider = imgCompare.querySelector(".img-comp-slider input");
+const dragLine = imgCompare.querySelector(".slider-drag-line");
+const overlay = imgCompare.querySelector(".img-before");
 
-// compareSlider.addEventListener("input", () => {
-// 	let sliderVal = compareSlider.value;
-// 	dragLine.style.left = `${sliderVal}%`;
-// 	overlay.style.width = `${sliderVal}%`;
-// });
+compareSlider.addEventListener("input", () => {
+	let sliderVal = compareSlider.value;
+	dragLine.style.left = `${sliderVal}%`;
+	overlay.style.width = `${sliderVal}%`;
+});
 
 // art gallery
 
-// const gallery = [
-// 	"assets/img/galery/galery1.jpg",
-// 	"assets/img/galery/galery2.jpg",
-// 	"assets/img/galery/galery3.jpg",
-// 	"assets/img/galery/galery4.jpg",
-// 	"assets/img/galery/galery5.jpg",
-// 	"assets/img/galery/galery6.jpg",
-// 	"assets/img/galery/galery7.jpg",
-// 	"assets/img/galery/galery8.jpg",
-// 	"assets/img/galery/galery9.jpg",
-// 	"assets/img/galery/galery10.jpg",
-// 	"assets/img/galery/galery11.jpg",
-// 	"assets/img/galery/galery12.jpg",
-// 	"assets/img/galery/galery13.jpg",
-// 	"assets/img/galery/galery14.jpg",
-// 	"assets/img/galery/galery15.jpg",
-// ];
+const gallery = [
+	"assets/img/galery/galery1.jpg",
+	"assets/img/galery/galery2.jpg",
+	"assets/img/galery/galery3.jpg",
+	"assets/img/galery/galery4.jpg",
+	"assets/img/galery/galery5.jpg",
+	"assets/img/galery/galery6.jpg",
+	"assets/img/galery/galery7.jpg",
+	"assets/img/galery/galery8.jpg",
+	"assets/img/galery/galery9.jpg",
+	"assets/img/galery/galery10.jpg",
+	"assets/img/galery/galery11.jpg",
+	"assets/img/galery/galery12.jpg",
+	"assets/img/galery/galery13.jpg",
+	"assets/img/galery/galery14.jpg",
+	"assets/img/galery/galery15.jpg",
+];
 
-// const pictureInnerContainer = document.querySelector(
-// 	".picture-inner-container"
-// );
+const pictureInnerContainer = document.querySelector(
+	".picture-inner-container"
+);
 
-// const shuffle = (array) => {
-// 	let currentIndex = array.length,
-// 		randomIndex;
-// 	while (currentIndex != 0) {
-// 		randomIndex = Math.floor(Math.random() * currentIndex);
-// 		currentIndex--;
+const shuffle = (array) => {
+	let currentIndex = array.length,
+		randomIndex;
+	while (currentIndex != 0) {
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex--;
 
-// 		[array[currentIndex], array[randomIndex]] = [
-// 			array[randomIndex],
-// 			array[currentIndex],
-// 		];
-// 	}
+		[array[currentIndex], array[randomIndex]] = [
+			array[randomIndex],
+			array[currentIndex],
+		];
+	}
 
-// 	return array;
-// };
+	return array;
+};
 
-// shuffle(gallery).forEach((src, i) => {
-// 	const img = document.createElement("img");
-// 	img.classList.add("gallery-img");
-// 	img.src = src;
-// 	img.alt = `galery1${i + 1}`;
-// 	pictureInnerContainer.append(img);
-// });
+shuffle(gallery).forEach((src, i) => {
+	const img = document.createElement("img");
+	img.classList.add("gallery-img");
+	img.src = src;
+	img.alt = `galery1${i + 1}`;
+	pictureInnerContainer.append(img);
+});
 
 // video
 
-// const youtubeSwiper = new Swiper(".youtube-swiper", {
-// 	loop: true,
-// 	spaceBetween: 45,
-// 	slidesPerView: 3,
-// 	navigation: {
-// 		nextEl: ".button-next",
-// 		prevEl: ".button-prev",
-// 	},
-// 	pagination: {
-// 		el: ".pagination",
-// 		clickable: true,
-// 	},
-// });
+const youtubeSwiper = new Swiper(".youtube-swiper", {
+	loop: true,
+	spaceBetween: 22,
+	slidesPerView: 2,
+	navigation: {
+		nextEl: ".button-next",
+		prevEl: ".button-prev",
+	},
+	pagination: {
+		el: ".pagination",
+		clickable: true,
+	},
+	breakpoints: {
+		960: {
+			slidesPerView: 3,
+			spaceBetween: 45,
+		},
+	},
+});
 
-// const videoSwiper = new Swiper(".video-swiper", {
-// 	loop: true,
-// 	allowTouchMove: false,
-// 	autoHeight: true,
-// 	spaceBetween: 10,
-// 	slidesPerView: 1,
-// });
+const videoSwiper = new Swiper(".video-swiper", {
+	loop: true,
+	allowTouchMove: false,
+	autoHeight: true,
+	spaceBetween: 10,
+	slidesPerView: 1,
+});
 
 // change main video
-// youtubeSwiper.on("slideChange", function () {
-// 	let index = this.realIndex;
-// 	videoSwiper.slideTo(++index);
-// });
+youtubeSwiper.on("slideChange", function () {
+	let index = this.realIndex;
+	videoSwiper.slideTo(++index);
+});
 
-// const inputs = document.querySelectorAll('.video-controls input[type="range"]');
-// const volumes = document.querySelectorAll(".video-controls .volume");
+const inputs = document.querySelectorAll('.video-controls input[type="range"]');
+const volumes = document.querySelectorAll(".video-controls .volume");
 
-// const changeProgress = (el, val) => {
-// 	el.style.background = `linear-gradient(to right, #710707 0%, #710707 ${val}%, #c4c4c4 ${val}%, #c4c4c4 100%)`;
-// };
+const changeProgress = (el, val) => {
+	el.style.background = `linear-gradient(to right, #710707 0%, #710707 ${val}%, #c4c4c4 ${val}%, #c4c4c4 100%)`;
+};
 
-// inputs.forEach((i) => {
-// 	i.addEventListener("input", () => {
-// 		changeProgress(i, i.value);
-// 	});
-// });
+inputs.forEach((i) => {
+	i.addEventListener("input", () => {
+		changeProgress(i, i.value);
+	});
+});
 
-// volumes.forEach((v) => {
-// 	v.value = 50;
-// 	changeProgress(v, 50);
-// });
+volumes.forEach((v) => {
+	v.value = 50;
+	changeProgress(v, 50);
+});
 //volume.value = 50;
 //changeProgress(volume, 50);
 
 // tickets
 
-// const counts = document.querySelectorAll(".counts, .input-wr");
-// counts.forEach((e) => {
-// 	let incBtn = e.querySelector(".increase");
-// 	let decBtn = e.querySelector(".decrease");
-// 	let number = e.querySelector("input[type='number']");
-// 	incBtn.addEventListener("click", () => {
-// 		number.stepUp();
-// 	});
-// 	decBtn.addEventListener("click", () => {
-// 		number.stepDown();
-// 	});
-// });
+const counts = document.querySelectorAll(".counts, .input-wr");
+counts.forEach((e) => {
+	let incBtn = e.querySelector(".increase");
+	let decBtn = e.querySelector(".decrease");
+	let number = e.querySelector("input[type='number']");
+	incBtn.addEventListener("click", () => {
+		number.stepUp();
+	});
+	decBtn.addEventListener("click", () => {
+		number.stepDown();
+	});
+});
 
 // custom select
 
@@ -276,3 +294,76 @@ swiperWelcome.on("slideChange", function () {
 // 		setTimeout(() => circle.remove(), 500);
 // 	});
 // });
+
+//MAPBOX
+
+mapboxgl.accessToken =
+	"pk.eyJ1IjoiYnJvZG96ZXIiLCJhIjoiY2t1NzlmYjluMDY2cDJxbnptZmJ0YnV3aiJ9.RCq-BVqBx9-GedAVEXD0HQ";
+
+// const geojson = {
+// 	type: "FeatureCollection",
+// 	features: [
+// 		{
+// 			type: "Feature",
+// 			geometry: {
+// 				type: "Point",
+// 				coordinates: [-77.032, 38.913],
+// 			},
+// 			properties: {
+// 				title: "Mapbox",
+// 				description: "Washington, D.C.",
+// 			},
+// 		},
+// 		{
+// 			type: "Feature",
+// 			geometry: {
+// 				type: "Point",
+// 				coordinates: [-122.414, 37.776],
+// 			},
+// 			properties: {
+// 				title: "Mapbox",
+// 				description: "San Francisco, California",
+// 			},
+// 		},
+// 	],
+// };
+
+const geojson = [
+	{
+		coordinates: [2.3364, 48.86091],
+		color: "black",
+	},
+	{
+		coordinates: [2.3333, 48.8602],
+		color: "grey",
+	},
+	{
+		coordinates: [2.3397, 48.8607],
+		color: "grey",
+	},
+	{
+		coordinates: [2.333, 48.8619],
+		color: "grey",
+	},
+	{
+		coordinates: [2.3365, 48.8625],
+		color: "grey",
+	},
+];
+
+const map = new mapboxgl.Map({
+	container: "map",
+	style: "mapbox://styles/mapbox/light-v10",
+	center: [2.3364, 48.86091],
+	zoom: 16,
+});
+
+map.addControl(new mapboxgl.NavigationControl());
+
+geojson.forEach((geo) => {
+	new mapboxgl.Marker({
+		color: geo.color,
+	})
+		.setLngLat(geo.coordinates)
+		.addTo(map);
+});

@@ -1,3 +1,9 @@
+@mixin xs {
+	@media (max-width: $gb_xs) {
+		@content;
+	}
+}
+
 @mixin sm {
 	@media (max-width: $gb_sm) {
 		@content;

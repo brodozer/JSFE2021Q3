@@ -1,25 +1,88 @@
 .section-contacts {
-	padding-bottom: 70px;
+	padding-bottom: 60px;
+	@include lg {
+		padding-bottom: 62px;
+	}
+	@include md {
+		padding-bottom: 70px;
+	}
+	@include sm {
+		padding-bottom: 42px;
+	}
 	h2 {
 		color: $gold;
 	}
 	.wrap {
 		display: flex;
 		justify-content: space-between;
+		@include md {
+			flex-wrap: wrap;
+		}
+		.contacts {
+			padding-right: 20px;
+			@include lg {
+				padding-right: 0;
+			}
+			@include md {
+				margin-bottom: 25px;
+			}
+		}
 		p {
 			max-width: 227px;
 			font-weight: 500;
 			font-size: $fz_28;
 			line-height: 33px;
 			margin-bottom: 51px;
+			@include lg {
+				font-size: 24px;
+				line-height: 28px;
+				margin-bottom: 34px;
+			}
+			@include md {
+				font-size: 20px;
+				line-height: 24px;
+				margin-bottom: 39px;
+			}
+			@include sm {
+				line-height: 21px;
+				font-size: 16px;
+			}
 		}
 		li {
 			margin-bottom: 25px;
 			font-size: $fz_22;
 			font-weight: 300;
+			@include lg {
+				margin-bottom: 13px;
+			}
+			@include md {
+				font-size: 18px;
+				margin-bottom: 15px;
+			}
+			@include sm {
+				font-size: 16px;
+			}
 		}
 		.map {
-			max-width: 100%;
+			flex-basis: 920px;
+			@include lg {
+				flex-basis: 694px;
+			}
+			@include md {
+				flex-basis: 100%;
+			}
+			.responsive {
+				padding-bottom: 69.1%;
+				@include lg {
+					padding-bottom: 65.1%;
+				}
+				.content {
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+				}
+			}
 		}
 	}
 }

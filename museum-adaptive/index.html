@@ -16,6 +16,14 @@
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css2?family=Forum&display=swap"
 		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Open+Sans"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css"
+		/>
 		<!-- <link
 			rel="stylesheet"
 			href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
@@ -100,8 +108,103 @@
 						</div>
 					</div>
 				</div>
+				<div class="modal-menu">
+					<div class="menu">
+						<ul class="nav-list">
+							<li class="nav-item">
+								<a class="nav-link" href="#visiting">Visiting</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#explore">Explore</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#video">Video</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#gallery">Gallery</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#tickets">Tickets</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#contacts">Contacts</a>
+							</li>
+						</ul>
+						<div class="gallery">
+							<img
+								srcset="
+									assets/img/menu/menu1_sm.jpg 560w,
+									assets/img/menu/menu1.jpg    768w
+								"
+								sizes="(max-width: 560px) 96px,
+													(max-width: 768px) 658px"
+								src="assets/img/menu/menu.jpg"
+								alt="menu1"
+							/>
+							<img
+								srcset="
+									assets/img/menu/menu2_sm.jpg 560w,
+									assets/img/menu/menu2.jpg    768w
+								"
+								sizes="(max-width: 560px) 96px,
+											(max-width: 768px) 658px"
+								src="assets/img/menu/menu2.jpg"
+								alt="menu2"
+							/>
+							<img
+								srcset="
+									assets/img/menu/menu3_sm.jpg 560w,
+									assets/img/menu/menu3.jpg    768w
+								"
+								sizes="(max-width: 560px) 96px,
+											(max-width: 768px) 658px"
+								src="assets/img/menu/menu3.jpg"
+								alt="menu3"
+							/>
+						</div>
+						<div class="social">
+							<ul class="social-list">
+								<li>
+									<a
+										class="youtube"
+										href="https://www.youtube.com/user/louvre"
+										target="_blank"
+									></a>
+								</li>
+								<li>
+									<a
+										class="insta"
+										href="https://www.instagram.com/museelouvre/"
+										target="_blank"
+									></a>
+								</li>
+								<li>
+									<a
+										class="fb"
+										href="https://www.facebook.com/museedulouvre"
+										target="_blank"
+									></a>
+								</li>
+								<li>
+									<a
+										class="tw"
+										href="http://twitter.com/museelouvre"
+										target="_blank"
+									></a>
+								</li>
+								<li>
+									<a
+										class="pin"
+										href="https://www.pinterest.fr/museedulouvre/"
+										target="_blank"
+									></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</section>
-			<!-- <section class="section-visiting section" id="visiting">
+			<section class="section-visiting section" id="visiting">
 				<div class="container">
 					<h2 class="underline-title">Virtual Tour</h2>
 					<div class="virtual-tour">
@@ -155,8 +258,8 @@
 						</a>
 					</div>
 				</div>
-			</section> -->
-			<!-- <section class="section-explore black" id="explore">
+			</section>
+			<section class="section-explore black" id="explore">
 				<div class="container">
 					<div class="descriptions">
 						<h2 class="underline-title">Picture explore</h2>
@@ -175,17 +278,21 @@
 						</p>
 					</div>
 					<div class="explore">
-						<div class="img-comp-container">
-							<div class="img-comp-img img-after"></div>
-							<div class="img-comp-img img-before"></div>
-						</div>
-						<div class="img-comp-slider">
-							<div class="slider-drag-line">
-								<span class="line"></span>
-								<span class="circle"></span>
-								<span class="line"></span>
+						<div class="responsive">
+							<div class="content img-comp">
+								<div class="img-comp-container">
+									<div class="img-comp-img img-after"></div>
+									<div class="img-comp-img img-before"></div>
+								</div>
+								<div class="img-comp-slider">
+									<div class="slider-drag-line">
+										<span class="line"></span>
+										<span class="circle"></span>
+										<span class="line"></span>
+									</div>
+									<input type="range" max="100" min="0" value="61" />
+								</div>
 							</div>
-							<input type="range" max="100" min="0" value="61" />
 						</div>
 					</div>
 				</div>
@@ -203,15 +310,13 @@
 						<div class="swiper video-swiper">
 							<div class="swiper-wrapper">
 								<div class="swiper-slide">
-									<div class="video-container">
+									<div class="video-container responsive">
 										<video
 											id="test"
 											src="assets/video/video0.mp4"
-											poster="assets/video/video.jpg"
-											width="1400"
-											height="735"
+											poster="assets/video/poster0.jpg"
 										></video>
-										<button class="play">play</button>
+										<button class="play"></button>
 										<div class="video-controls">
 											<button class="playpause" type="button"></button>
 											<input
@@ -234,7 +339,7 @@
 									</div>
 								</div>
 								<div class="swiper-slide">
-									<div class="video-container">
+									<div class="video-container responsive">
 										<video
 											src="assets/video/video1.mp4"
 											poster="assets/video/poster1.jpg"
@@ -262,7 +367,7 @@
 									</div>
 								</div>
 								<div class="swiper-slide">
-									<div class="video-container">
+									<div class="video-container responsive">
 										<video
 											src="assets/video/video2.mp4"
 											poster="assets/video/poster2.jpg"
@@ -355,12 +460,9 @@
 					<h2 class="underline-title">Buy tickets</h2>
 					<div class="d-flex">
 						<div class="img-container">
-							<img
-								src="assets/img/tickets.jpg"
-								alt="tickets"
-								width="720"
-								height="550"
-							/>
+							<div class="responsive">
+								<img src="assets/img/tickets.jpg" alt="tickets" />
+							</div>
 						</div>
 						<div class="form-container">
 							<form>
@@ -428,7 +530,10 @@
 					<h2 class="underline-title">Contacts</h2>
 					<div class="wrap">
 						<div class="contacts">
-							<p>Palais Royal Musee du Louvre</p>
+							<p>
+								Palais Royal<br />
+								Musee du Louvre
+							</p>
 							<ul>
 								<li>address: 75001 Paris, France</li>
 								<li>
@@ -440,16 +545,20 @@
 							</ul>
 						</div>
 						<div class="map">
-							<img src="assets/img/map.jpg" alt="map" />
+							<div class="responsive">
+								<div class="content" id="map"></div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</section> -->
+			</section>
 		</main>
-		<!-- <footer class="footer black">
+		<footer class="footer black">
 			<div class="container">
 				<div class="top">
-					<div class="header-logo">Louvre</div>
+					<a class="header-logo">
+						<img src="assets/svg/main_logo.svg" alt="logo" />
+					</a>
 					<div class="d-flex">
 						<nav class="footer-nav">
 							<ul class="nav-list">
@@ -520,75 +629,7 @@
 					<span>brodozer</span>
 				</div>
 			</div>
-		</footer> -->
-		<div class="modal-menu">
-			<div class="menu">
-				<ul class="nav-list">
-					<li class="nav-item">
-						<a class="nav-link" href="#visiting">Visiting</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#explore">Explore</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#video">Video</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#gallery">Gallery</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#tickets">Tickets</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#contacts">Contacts</a>
-					</li>
-				</ul>
-				<div class="gallery">
-					<img src="assets/img/menu/menu1.jpg" alt="menu1" />
-					<img src="assets/img/menu/menu2.jpg" alt="menu2" />
-					<img src="assets/img/menu/menu3.jpg" alt="menu3" />
-				</div>
-				<div class="social">
-					<ul class="social-list">
-						<li>
-							<a
-								class="youtube"
-								href="https://www.youtube.com/user/louvre"
-								target="_blank"
-							></a>
-						</li>
-						<li>
-							<a
-								class="insta"
-								href="https://www.instagram.com/museelouvre/"
-								target="_blank"
-							></a>
-						</li>
-						<li>
-							<a
-								class="fb"
-								href="https://www.facebook.com/museedulouvre"
-								target="_blank"
-							></a>
-						</li>
-						<li>
-							<a
-								class="tw"
-								href="http://twitter.com/museelouvre"
-								target="_blank"
-							></a>
-						</li>
-						<li>
-							<a
-								class="pin"
-								href="https://www.pinterest.fr/museedulouvre/"
-								target="_blank"
-							></a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+		</footer>
 		<div class="modal-booking">
 			<div class="booking">
 				<button class="close-book" type="button"></button>
@@ -744,6 +785,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
 		<script src="js/swiper-bundle.min.js"></script>
 		<!-- <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script> -->
 		<script src="js/index.js"></script>

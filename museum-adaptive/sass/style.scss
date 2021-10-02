@@ -38,15 +38,42 @@ h1,
 h2 {
 	font-size: $fz_80;
 	line-height: 90px;
+	@include lg {
+		font-size: 50px;
+	}
+	@include md {
+		line-height: 60px;
+		font-size: 40px;
+	}
+	@include sm {
+		line-height: 40px;
+		font-size: 28px;
+	}
 }
 
 h2 {
 	margin-bottom: 103px;
+	@include lg {
+		margin-bottom: 75px;
+	}
+	@include md {
+		margin-bottom: 62px;
+	}
 }
 
 h3 {
 	font-size: $fz_32;
 	line-height: 35px;
+	@include lg {
+		font-size: $fz_28;
+		line-height: 31px;
+		letter-spacing: 1px;
+	}
+	@include md {
+		font-size: $fz_22;
+		line-height: 24px;
+		letter-spacing: 3px;
+	}
 }
 
 a {
@@ -101,6 +128,12 @@ iframe {
 
 .section {
 	padding: 75px 0;
+	@include lg {
+		padding: 53px 0;
+	}
+	@include md {
+		padding: 40px 0;
+	}
 }
 
 .white {
@@ -135,12 +168,33 @@ iframe {
 	height: 0;
 	img,
 	video,
-	iframe {
+	iframe,
+	.content {
 		position: absolute;
 		height: 100%;
 		width: 100%;
 	}
 }
+
+// #map {
+// 	width: 960px;
+// 	height: 620px;
+// 	.marker {
+// 		background-image: url("../assets/img/mapbox-icon.png");
+// 		background-size: cover;
+// 		width: 50px;
+// 		height: 50px;
+// 		border-radius: 50%;
+// 		cursor: pointer;
+// 	}
+// 	.mapboxgl-popup {
+// 		max-width: 200px;
+// 	}
+// 	.mapboxgl-popup-content {
+// 		text-align: center;
+// 		font-family: "Open Sans", sans-serif;
+// 	}
+// }
 
 .underline-title {
 	position: relative;
@@ -152,6 +206,12 @@ iframe {
 		right: 0;
 		height: 3px;
 		background-color: $red;
+		@include lg {
+			bottom: -15px;
+		}
+		@include md {
+			bottom: -23px;
+		}
 	}
 }
 
@@ -212,12 +272,18 @@ iframe {
 		position: center;
 		size: cover;
 	}
+	@include lg {
+		background-position: center bottom;
+	}
+	@include md {
+		height: 300px;
+	}
 }
 
 .modal-menu {
-	position: fixed;
+	position: absolute;
 	z-index: 1000;
-	top: 130px;
+	top: 0;
 	left: 0;
 	width: 30%;
 	transform: translateX(-100%);
@@ -253,25 +319,21 @@ iframe {
 			}
 		}
 	}
-	.gallery,
-	.social {
-		visibility: hidden;
-		opacity: 0;
-	}
 	.gallery {
-		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 		padding-bottom: 16px;
 		img {
-			max-width: 100%;
+			display: block;
+			width: 100%;
 			margin-bottom: 20px;
 			&:nth-child(2),
 			&:nth-child(3) {
 				width: calc(100% / 2 - 10px);
 			}
 		}
+		display: none;
 	}
 	.social {
 		padding: 35px 0 40px 0;
@@ -288,32 +350,33 @@ iframe {
 	&.toggle {
 		transform: translateX(0);
 	}
+	.gallery,
+	.social {
+		display: none;
+	}
 	@include md {
-		top: 110px;
-		right: 0;
-		bottom: 0;
+		//bottom: 0;
 		width: 100%;
 		.nav-list {
 			padding-left: 0;
 			margin-bottom: 35px;
 		}
-		.gallery,
+		.gallery {
+			display: flex;
+		}
 		.social {
-			visibility: visible;
-			opacity: 1;
+			padding: 34px 0;
+			display: block;
 		}
 	}
 	@include sm {
-		top: 90px;
 		.menu {
 			max-width: 350px;
 		}
 		.gallery {
 			padding-bottom: 0;
 			img {
-				width: 95px !important;
-				height: 95px;
-				object-fit: cover;
+				width: calc(100% / 3 - 10px) !important;
 				&:first-child {
 					order: 2;
 				}
@@ -323,7 +386,7 @@ iframe {
 			}
 		}
 		.social {
-			padding-top: 24px;
+			padding: 24px 0;
 			.social-list li {
 				margin-left: 5px;
 			}
