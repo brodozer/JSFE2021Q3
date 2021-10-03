@@ -197,70 +197,70 @@ counts.forEach((e) => {
 
 // custom select
 
-// const select = () => {
-// 	const customSelect = document.querySelectorAll(".custom-select");
-// 	customSelect.forEach((wraper) => {
-// 		const sel = wraper.querySelector("select");
-// 		sel.classList.add("d-none");
-// 		const div = document.createElement("div");
-// 		div.setAttribute("class", "select");
-// 		let html = "";
-// 		html +=
-// 			'<div class="select-selected"><span class="icon ticket"></span><span class="select-value">' +
-// 			sel[0].innerHTML +
-// 			'</span><span class="icon arrow"></span></div>';
-// 		html += '<div class="select-items">';
-// 		for (let i = 1; i < sel.length; i++) {
-// 			if (i == 2) {
-// 				html += '<span class="option active">' + sel[i].innerHTML + "</span>";
-// 			} else {
-// 				html += '<span class="option">' + sel[i].innerHTML + "</span>";
-// 			}
-// 		}
-// 		html += "</div>";
-// 		console.log(html);
-// 		div.innerHTML = html;
-// 		wraper.appendChild(div);
+const select = () => {
+	const customSelect = document.querySelectorAll(".custom-select");
+	customSelect.forEach((wraper) => {
+		const sel = wraper.querySelector("select");
+		sel.classList.add("d-none");
+		const div = document.createElement("div");
+		div.setAttribute("class", "select");
+		let html = "";
+		html +=
+			'<div class="select-selected"><span class="icon ticket"></span><span class="select-value">' +
+			sel[0].innerHTML +
+			'</span><span class="icon arrow"></span></div>';
+		html += '<div class="select-items">';
+		for (let i = 1; i < sel.length; i++) {
+			if (i == 2) {
+				html += '<span class="option active">' + sel[i].innerHTML + "</span>";
+			} else {
+				html += '<span class="option">' + sel[i].innerHTML + "</span>";
+			}
+		}
+		html += "</div>";
+		console.log(html);
+		div.innerHTML = html;
+		wraper.appendChild(div);
 
-// 		div.addEventListener("click", function () {
-// 			this.classList.toggle("open");
-// 		});
+		div.addEventListener("click", function () {
+			this.classList.toggle("open");
+		});
 
-// 		div.querySelectorAll(".option").forEach((option) => {
-// 			option.addEventListener("click", function () {
-// 				if (!this.classList.contains("active")) {
-// 					this.parentNode
-// 						.querySelector(".option.active")
-// 						.classList.remove("active");
-// 					this.classList.add("active");
-// 					//this.closest(".select").querySelector(".select-value").textContent = this.textContent;
-// 					sel.value = this.textContent; // change select value
-// 				}
-// 			});
-// 		});
-// 	});
-// };
+		div.querySelectorAll(".option").forEach((option) => {
+			option.addEventListener("click", function () {
+				if (!this.classList.contains("active")) {
+					this.parentNode
+						.querySelector(".option.active")
+						.classList.remove("active");
+					this.classList.add("active");
+					//this.closest(".select").querySelector(".select-value").textContent = this.textContent;
+					sel.value = this.textContent; // change select value
+				}
+			});
+		});
+	});
+};
 
-// select();
+select();
 
 // modals
 
-// const modals = document.querySelector(".modals");
-// const buyNow = document.querySelector(".btn-buy-now");
+const booking = document.querySelector(".modal-booking");
+const buyNow = document.querySelector(".btn-buy-now");
 
-// buyNow.addEventListener("click", function () {
-// 	modals.classList.add("toggle");
-// });
+buyNow.addEventListener("click", function () {
+	booking.classList.add("toggle");
+});
 
-// modals.addEventListener("click", function (e) {
-// 	let target = e.target;
-// 	if (
-// 		target.classList.contains("modals") ||
-// 		target.classList.contains("close-book")
-// 	) {
-// 		modals.classList.remove("toggle");
-// 	}
-// });
+booking.addEventListener("click", function (e) {
+	let target = e.target;
+	if (
+		target.classList.contains("modal-booking") ||
+		target.classList.contains("close-book")
+	) {
+		booking.classList.remove("toggle");
+	}
+});
 
 // // form
 
@@ -367,3 +367,15 @@ geojson.forEach((geo) => {
 		.setLngLat(geo.coordinates)
 		.addTo(map);
 });
+
+console.log(`
+	Оценка работы 150
+
+[+]	1 Вёрстка соответствует макету. Ширина экрана 1024px (40)
+[+]	2 Вёрстка соответствует макету. Ширина экрана 768px (40)
+[+]	3 Вёрстка соответствует макету. Ширина экрана 420px (40)
+[+]	4 Ни на одном из разрешений до 320px включительно не появляется горизонтальная полоса прокрутки (6)
+[+]	5 Совмещается адаптивная и респонсивная (резиновая) вёрстка (14)
+[±]	6 На ширине экрана 1024рх и меньше реализовано адаптивное меню (10/12)
+[-]	7 Оптимизация скорости загрузки страницы (0/8)
+`);
