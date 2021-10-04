@@ -314,7 +314,9 @@ iframe {
 				background-repeat: no-repeat;
 				background-position: right center;
 				&:hover {
-					color: $gold;
+					//color: $gold;
+					filter: invert(57%) sepia(33%) saturate(359%) hue-rotate(356deg)
+						brightness(89%) contrast(85%);
 				}
 			}
 		}
