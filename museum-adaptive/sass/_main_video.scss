@@ -69,8 +69,14 @@
 				height: auto;
 				top: 50%;
 				transform: translate3d(0, -50%, 0);
+				@include lg {
+					top: 44%;
+				}
+				@include md {
+					top: 42%;
+				}
 				@include sm {
-					width: 105%;
+					top: 39%;
 				}
 			}
 			.play {
@@ -217,8 +223,8 @@
 						height: 5px;
 						margin: 0 30px;
 						&::-webkit-slider-thumb {
-							width: 15px;
-							height: 15px;
+							width: 13px;
+							height: 13px;
 						}
 					}
 					.volume {
