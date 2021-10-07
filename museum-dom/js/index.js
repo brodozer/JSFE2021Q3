@@ -212,22 +212,23 @@ counts.forEach((e) => {
 const textTime = document.querySelector(".payment .time"); // поле для времени
 const textDate = document.querySelector(".payment .date"); // поле для даты
 const textTicket = document.querySelector(".payment .ticket"); // поле для тип билета
-const textTotal = document.querySelectorAll(".sum"); // total price all ticket
+
+const totalPriceSenior = document.querySelector(".total-price-senior");
+const totalPriceBasic = document.querySelector(".total-price-basic");
+const totalPrice = document.querySelectorAll(".sum"); // total price all ticket
 
 const inputCount = document.querySelectorAll(
 	'input[name="basic"], input[name="senior"]'
 );
 
-const textEntryBasic = document.querySelector(".ticket-type-basic");
-const textEntrySenior = document.querySelector(".ticket-type-senior");
-//const numSenior = document.querySelectorAll(".senior-ticket .number");
-//const numBasic = document.querySelectorAll(".basic-ticket .number");
+const ticketPriceBasic = document.querySelectorAll(".ticket-price-basic"); // price basic
+const ticketPriceSenior = document.querySelectorAll(".ticket-price-senior"); // price senior
 
-const basicTicket = document.querySelector(".basic-ticket");
-const seniorTicket = document.querySelector(".senior-ticket");
+const ticketNumberSenior = document.querySelector(".ticket-number-senior"); // кол-во билетов senior
+const ticketNumberBasic = document.querySelector(".ticket-number-basic"); // кол-во билетов basic
 
-const selectTicket = document.querySelector(".select-ticket");
-const selectTime = document.querySelector(".select-time");
+const selectTicket = document.querySelector(".select-ticket"); // список билетов
+const selectTime = document.querySelector(".select-time"); // список времени
 
 const dropDown = (el, cb) => {
 	// @el  родитель, куда будем инжектить список
@@ -309,9 +310,13 @@ const listActive = (list, value) => {
 	});
 };
 
+const ticketPrice = () => {
+	injectText(ticketPriceBasic, String(tickets.ticket_price));
+	injectText(ticketPriceSenior, String(tickets.ticket_price / 2));
+	textTicket.textContent = tickets.ticket_type;
+};
+
 const total = () => {
-	// запускать если меняем кол-во билетов или тип билета
-	//let price = [25, 20, 40];
 	let price = {
 		temporary: 20,
 		permanent: 25,
@@ -326,32 +331,12 @@ const total = () => {
 
 	let sum = priceTicket * tickets.basic + (priceTicket / 2) * tickets.senior;
 
-	// textTicketType.forEach((t) => {
-	// 	if (t.classList.contains("ticket-type-basic")) {
-	// 		injectText(t, priceTicket);
-	// 	} else {
-	// 		injectText(t, priceTicket / 2);
-	// 	}
-	// });
+	injectText(totalPrice, sum + "€");
 
-	let basic = `<div><span class="number">${
-		tickets.basic
-	}</span>Basic (${priceTicket} €)</div><div>${
-		priceTicket * tickets.basic
-	} €</div>`;
-	let senior = `<div><span class="number">${tickets.senior}</span>Senior (${
-		priceTicket / 2
-	} €)</div><div>${(priceTicket / 2) * tickets.senior} €</div>`;
+	totalPriceSenior.textContent = `${(priceTicket / 2) * tickets.senior} €`;
+	totalPriceBasic.textContent = `${priceTicket * tickets.basic} €`;
 
-	textTotal.forEach((e) => {
-		injectText(e, `${sum} €`);
-	});
-	injectText(basicTicket, basic);
-	injectText(seniorTicket, senior);
-	injectText(textEntryBasic, priceTicket);
-	injectText(textEntrySenior, priceTicket / 2);
-	// как то разделить инжект для типа билета и стоимости????
-	writeLocalStorage("total", sum);
+	writeLocalStorage("ticket_price", priceTicket);
 };
 
 const writeLocalStorage = (key, value) => {
@@ -359,36 +344,36 @@ const writeLocalStorage = (key, value) => {
 	localStorage.tickets = JSON.stringify(tickets);
 };
 
-const injectText = (elem, value) => {
-	elem.innerHTML = value;
+const injectText = (col, value) => {
+	col.forEach((e) => {
+		e.innerHTML = value;
+	});
 };
 
 const changeCountTicket = (input, value) => {
-	// частично перекинуть сюда из total????
 	writeLocalStorage(input.name, value);
 	inputCount.forEach((i) => {
 		if (i.name === input.name && i.value !== value) {
 			i.value = value;
 		}
 	});
-	// if (input.name == "senior") {
-	// 	injectText(numSenior, value);
-	// } else {
-	// 	injectText(numBasic, value);
-	// }
-
+	if (input.name == "senior") {
+		ticketNumberSenior.innerHTML = value;
+	} else {
+		ticketNumberBasic.innerHTML = value;
+	}
 	total();
 };
 
 const setTime = (value) => {
-	injectText(textTime, value);
+	textTime.innerHTML = value;
 };
 
 const setTicket = (value) => {
 	writeLocalStorage("ticket_type", value);
 	radioCheck(value);
-	injectText(textTicket, value);
 	total();
+	ticketPrice();
 };
 
 // init!!!!!!!
@@ -399,7 +384,7 @@ if (localStorage.tickets) {
 		if (k === "senior" || k === "basic") {
 			inputCount.forEach((i) => {
 				if (i.name === k) {
-					i.value = tickets[k]; // меняем инпутам значения из ls
+					i.value = tickets[k]; // меняем инпутам значения из tickets
 				}
 			});
 		}
@@ -407,13 +392,16 @@ if (localStorage.tickets) {
 			radioCheck(tickets[k]);
 		}
 	}
-	total(); // не инжектить через тотал, а забрать значение общей стоимости из tickets и заинжектить его на страницу... total запускать перед открытием модалки
+	ticketNumberSenior.innerHTML = tickets.senior;
+	ticketNumberBasic.innerHTML = tickets.basic;
+	ticketPrice();
+	total();
 } else {
 	tickets = {
 		senior: 1,
 		basic: 1,
 		ticket_type: "Temporary exhibition",
-		total: 30,
+		ticket_price: 20,
 	};
 	localStorage.tickets = JSON.stringify(tickets);
 }
@@ -425,9 +413,9 @@ dropDown(selectTime, setTime);
 
 radioBtn.forEach((btn) => {
 	btn.addEventListener("change", function () {
-		console.log("radio ", this);
 		writeLocalStorage(this.name, this.value);
 		total();
+		ticketPrice();
 	});
 });
 
@@ -440,8 +428,8 @@ buyNow.addEventListener("click", function () {
 	listActive(selectTicket.querySelectorAll(".option"), tickets.ticket_type);
 	listActive(selectTime.querySelectorAll(".option"), "09 : 00");
 
-	injectText(textTicket, tickets.ticket_type);
-	injectText(textTime, "09 : 00");
+	textTicket.innerHTML = tickets.ticket_type;
+	textTime.innerHTML = "09 : 00";
 	// открываем модалку
 	booking.classList.add("toggle");
 });
