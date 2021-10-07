@@ -1,0 +1,228 @@
+.section-welcome {
+	position: relative;
+	.container {
+		position: relative;
+		.welcome-title {
+			position: absolute;
+			z-index: 100;
+			top: 150px;
+			left: 20px;
+			transition: all 0.3s ease;
+			p {
+				padding: 25px 0;
+				font-size: $fz_28;
+				font-weight: 300;
+				letter-spacing: 2px;
+			}
+			a {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-top: 49px;
+				width: 360px;
+				height: 75px;
+				border-radius: 8px;
+				background-color: $red;
+				color: $white;
+				font-weight: 300;
+				font-size: $fz_22;
+				letter-spacing: 2px;
+				transition: background-color ease 0.3s;
+				&:hover {
+					background-color: $gold;
+				}
+			}
+			&.toggle {
+				transform: translateX(-100%);
+			}
+			@include lg {
+				top: 50px;
+				p {
+					font-size: 24px;
+				}
+				a {
+					width: 300px;
+					height: 60px;
+					margin-top: 25px;
+					font-size: 20px;
+				}
+			}
+			@include md {
+				position: relative;
+				top: 0;
+				left: 0;
+				text-align: center;
+				p {
+					padding: 26px 0 20px 0;
+					font-size: 20px;
+				}
+				a {
+					display: none;
+				}
+			}
+			@include sm {
+				h1 {
+					padding-top: 6px;
+				}
+				p {
+					font-size: 16px;
+					padding-top: 25px;
+				}
+			}
+		}
+		.welcome-slider {
+			max-width: 1000px;
+			width: 75%;
+			margin-left: auto;
+			@include lg {
+				max-width: 700px;
+			}
+			@include md {
+				padding-top: 26px;
+				width: 100%;
+				max-width: 100%;
+			}
+			@include sm {
+				padding-top: 30px;
+			}
+			.swiper-slide img {
+				width: 100%;
+			}
+			.swiper-slide:after {
+				content: "";
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				background: linear-gradient(
+					90deg,
+					#000000 0%,
+					rgba(0, 0, 0, 0.5) 16.19%,
+					rgba(0, 0, 0, 0) 30.73%
+				);
+				z-index: 2;
+				@include md {
+					opacity: 0;
+					visibility: hidden;
+				}
+			}
+			.controls {
+				position: relative;
+				z-index: 100;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-left: auto;
+				margin-top: -65px;
+				width: 600px;
+				height: 120px;
+				background-color: $dark;
+				@include lg {
+					width: 100%;
+					margin-top: -65px;
+					margin-left: 0;
+					padding-right: 75px;
+					justify-content: flex-end;
+					.fraction {
+						font-size: 20px;
+					}
+				}
+				@include md {
+					margin-top: -5px;
+					height: 100px;
+					justify-content: center;
+					padding-right: 0;
+				}
+				@include sm {
+					margin-top: -5px;
+					height: 80px;
+				}
+				.fraction {
+					font-size: $fz_22;
+					.separator {
+						display: inline-block;
+						margin: 0 4px 0 6px;
+					}
+					@include sm {
+						font-size: 16px;
+						.separator {
+							margin: 0;
+						}
+					}
+				}
+				.pagination {
+					width: 180px;
+					display: flex;
+					justify-content: space-between;
+					margin: 0 58px 0 56px;
+					@include lg {
+						width: 160px;
+						margin: 0 45px 0 45px;
+					}
+					@include sm {
+						width: 74px;
+						margin: 0 24px;
+					}
+					.swiper-pagination-bullet {
+						width: 16px;
+						height: 16px;
+						margin: 0;
+						border-radius: 0;
+						background-color: $white;
+						transition: background-color ease 0.3s;
+						opacity: 1;
+						cursor: pointer;
+						@include lg {
+							width: 10px;
+							height: 10px;
+						}
+						&:last-child {
+							margin-right: 0;
+						}
+						&:hover {
+							background-color: #9d8665;
+						}
+						&-active {
+							background-color: #d2b183;
+						}
+						@include sm {
+							width: 7px;
+							height: 7px;
+						}
+					}
+				}
+				.navigation {
+					display: flex;
+					.button-prev,
+					.button-next {
+						width: 30px;
+						height: 8px;
+						background-repeat: no-repeat;
+						background-size: 30px 8px;
+						cursor: pointer;
+						transition: filter ease 0.3s;
+						&:hover {
+							filter: invert(54%) sepia(43%) saturate(286%) hue-rotate(356deg)
+								brightness(92%) contrast(84%);
+						}
+						@include sm {
+							width: 20px;
+							background-size: contain;
+						}
+					}
+					.button-prev {
+						margin-right: 20px;
+						background-image: url("../assets/svg/prev.svg");
+						@include sm {
+							margin-right: 12px;
+						}
+					}
+					.button-next {
+						background-image: url("../assets/svg/next.svg");
+					}
+				}
+			}
+		}
+	}
+}

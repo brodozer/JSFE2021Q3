@@ -1,0 +1,74 @@
+.section-gallery {
+	padding-top: 75px;
+	h2 {
+		margin-bottom: 75px;
+	}
+	.picture-container {
+		overflow: hidden;
+		position: relative;
+		max-height: 1960px;
+		&:after {
+			position: absolute;
+			bottom: 0;
+			content: "";
+			height: 360px;
+			width: 100%;
+			background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+		}
+		.picture-inner-container {
+			column-count: 3;
+			column-gap: 36px;
+			img {
+				display: inline-block;
+				max-width: 100%;
+				margin-bottom: 24px;
+				&:nth-child(1),
+				&:nth-child(11) {
+					margin-top: 50px;
+				}
+			}
+		}
+	}
+	@include lg {
+		padding-top: 53px;
+		h2 {
+			margin-bottom: 52px;
+		}
+		.picture-container {
+			max-height: 1265px;
+		}
+	}
+	@include md {
+		padding-top: 39px;
+		h2 {
+			margin-bottom: 40px;
+		}
+		.picture-container {
+			max-height: 1080px;
+			.picture-inner-container {
+				column-gap: 24px;
+				column-count: 2;
+				img:nth-child(11) {
+					margin-top: 0;
+				}
+			}
+		}
+	}
+	@include sm {
+		padding-top: 42px;
+		.picture-container {
+			max-height: 637px;
+		}
+	}
+	@include xs {
+		.picture-container .picture-inner-container {
+			column-gap: 14px;
+			img {
+				margin-bottom: 14px;
+				&:nth-child(1) {
+					margin-top: 30px;
+				}
+			}
+		}
+	}
+}
