@@ -214,8 +214,8 @@ const inputCount = document.querySelectorAll(
 
 const textEntryBasic = document.querySelector(".ticket-type-basic");
 const textEntrySenior = document.querySelector(".ticket-type-senior");
-//const numSenior = document.querySelectorAll(".senior-ticket .number");
-//const numBasic = document.querySelectorAll(".basic-ticket .number");
+//const numSenior = document.querySelector(".senior-ticket .number");
+//const numBasic = document.querySelector(".basic-ticket .number");
 
 const basicTicket = document.querySelector(".basic-ticket");
 const seniorTicket = document.querySelector(".senior-ticket");
@@ -360,12 +360,8 @@ const changeCountTicket = (input, value) => {
 			i.value = value;
 		}
 	});
-	// if (input.name == "senior") {
-	// 	injectText(numSenior, value);
-	// } else {
-	// 	injectText(numBasic, value);
-	// }
-
+	//injectText(numSenior, value);
+	//injectText(numBasic, value);
 	total();
 };
 

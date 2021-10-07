@@ -158,6 +158,12 @@ const videoSwiper = new Swiper(".video-swiper", {
 youtubeSwiper.on("slideChange", function () {
 	let index = this.realIndex;
 	videoSwiper.slideTo(++index);
+	players.forEach((player) => {
+		// вынести в отдельную ф-ю stopYtplayer
+		if (player.getPlayerState() == YT.PlayerState.PLAYING) {
+			player.pauseVideo();
+		}
+	});
 });
 
 const inputs = document.querySelectorAll('.video-controls input[type="range"]');
@@ -206,7 +212,7 @@ counts.forEach((e) => {
 const textTime = document.querySelector(".payment .time"); // поле для времени
 const textDate = document.querySelector(".payment .date"); // поле для даты
 const textTicket = document.querySelector(".payment .ticket"); // поле для тип билета
-const textTotal = document.querySelectorAll(".sum");
+const textTotal = document.querySelectorAll(".sum"); // total price all ticket
 
 const inputCount = document.querySelectorAll(
 	'input[name="basic"], input[name="senior"]'
@@ -229,10 +235,15 @@ const dropDown = (el, cb) => {
 
 	const sel = el.querySelector("select");
 	sel.classList.add("d-none");
-
+	let icon = "ticket";
+	if (el.classList.contains("select-time")) {
+		icon = "time";
+	}
 	let html = "";
 	html +=
-		'<div class="select-selected"><span class="icon ticket"></span><span class="select-value">' +
+		'<div class="select-selected"><span class="icon ' +
+		icon +
+		'"></span><span class="select-value">' +
 		sel[0].innerHTML +
 		'</span><span class="icon arrow"></span></div>';
 	html += '<div class="select-items">';
