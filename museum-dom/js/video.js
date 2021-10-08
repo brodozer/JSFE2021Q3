@@ -9,52 +9,55 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 let players = [];
 
-// function onYouTubeIframeAPIReady() {
-// 	document.querySelectorAll("iframe").forEach((iframe, i) => {
-// 		if (iframe.src.indexOf("https://www.youtube.com/") == 0) {
-// 			if (!iframe.hasAttribute("id")) {
-// 				iframe.setAttribute("id", "ytplayer_" + i);
-// 			}
+function onYouTubeIframeAPIReady() {
+	document.querySelectorAll("iframe").forEach((iframe, i) => {
+		if (iframe.src.indexOf("https://www.youtube.com/") == 0) {
+			if (!iframe.hasAttribute("id")) {
+				iframe.setAttribute("id", "ytplayer_" + i);
+			}
 
-// 			players.push(
-// 				new YT.Player(iframe.id, {
-// 					host: "https://www.youtube.com",
-// 					events: {
-// 						onStateChange: function (event) {
-// 							if (event.data == YT.PlayerState.PLAYING) {
-// 								players.forEach((player) => {
-// 									if (player.id != event.target.id) {
-// 										player.pauseVideo();
-// 									}
-// 								});
-// 							}
-// 						},
-// 					},
-// 				})
-// 			);
-// 		}
-// 	});
-// }
+			players.push(
+				new YT.Player(iframe.id, {
+					host: "https://www.youtube.com",
+					events: {
+						onStateChange: function (event) {
+							if (event.data == YT.PlayerState.PLAYING) {
+								players.forEach((player) => {
+									if (player.id != event.target.id) {
+										player.pauseVideo();
+									}
+								});
+							}
+						},
+					},
+				})
+			);
+		}
+	});
+}
 
 console.log("players ", players);
 
-//const videoContainer = document.querySelectorAll(".video-container");
-const videoContainer = document.querySelector("#test");
+const changeProgress = (el, val) => {
+	el.style.background = `linear-gradient(to right, #710707 0%, #710707 ${
+		val * 100
+	}%, #c4c4c4 ${val * 100}%, #c4c4c4 100%)`;
+};
+
+const videoPlayers = document.querySelectorAll("video");
+const videoHTML5 = document.querySelectorAll(".video-container");
+//const videoContainer = document.querySelector("#test");
 
 const mainVideo = (container) => {
 	const video = container.querySelector("video");
 	const playbackAnimation = container.querySelector(".play");
 	const playButton = container.querySelector(".playpause");
 	const progressBar = container.querySelector(".progress");
+	const seek = container.querySelector(".seek");
 	const volumeButton = container.querySelector(".mute");
 	const volume = container.querySelector(".volume"); // input type range
 	const fullscreenButton = container.querySelector(".fs");
 
-	// Add functions here
-
-	// togglePlay toggles the playback state of the video.
-	// If the video playback is paused or ended, the video is played
-	// otherwise, the video is paused
 	function togglePlay() {
 		if (video.paused || video.ended) {
 			video.play();
@@ -71,40 +74,32 @@ const mainVideo = (container) => {
 	// initializeVideo sets the video duration, and maximum value of the
 	// progressBar
 	function initializeVideo() {
-		//const videoDuration = Math.round(video.duration);
-		//progressBar.setAttribute("max", videoDuration);
-		// инит уровня громкости !!!
-		progressBar.setAttribute("max", 100);
+		const videoDuration = Math.round(video.duration);
+		progressBar.setAttribute("max", videoDuration);
+		seek.setAttribute("max", videoDuration);
+		// тут можно инитить уровень громкости для всех видео
+		volume.value = 0.5;
+		changeProgress(volume, 0.5);
 	}
 
 	// updateProgress indicates how far through the video
 	// the current playback is by updating the progress bar
 
 	function updateProgress() {
-		const progressValue = Math.floor(
-			(video.currentTime * 100) / video.duration
-		);
-
-		//const progressValue = Math.floor(video.currentTime);
-		progressBar.value = progressValue;
-		changeProgress(progressBar, progressValue);
-		// changeProgress(
-		// 	progressBar,
-		// 	Math.floor((progressValue * 100) / progressBar.max)
-		// );
+		seek.value = Math.floor(video.currentTime);
+		progressBar.value = Math.floor(video.currentTime);
 	}
 
 	// skipAhead jumps to a different point in the video when the progress bar
 	// is clicked
 	function skipAhead(event) {
 		// это будет в горячих клавишах, прописать на сколько увеличивать или уменьшать!!
-		// const skipTo = event.target.dataset.seek
-		// 	? event.target.dataset.seek
-		// 	: event.target.value;
-		const skipTo = Math.floor((video.duration * event.target.value) / 100);
+		const skipTo = event.target.dataset.seek
+			? event.target.dataset.seek
+			: event.target.value;
 		video.currentTime = skipTo;
-		progressBar.value = event.target.value;
-		//progressBar.value = skipTo;
+		progressBar.value = skipTo;
+		seek.value = skipTo;
 	}
 
 	// updateVolume updates the video's volume
@@ -115,8 +110,8 @@ const mainVideo = (container) => {
 		}
 
 		video.volume = volume.value; // значение из input
+		changeProgress(volume, volume.value);
 	}
-
 	// updateVolumeIcon updates the volume icon so that it correctly reflects
 	// the volume of the video
 	function updateVolumeIcon() {
@@ -139,7 +134,7 @@ const mainVideo = (container) => {
 			changeProgress(volume, 0);
 		} else {
 			volume.value = volume.dataset.volume;
-			changeProgress(volume, volume.dataset.volume * 100);
+			changeProgress(volume, volume.dataset.volume);
 		}
 	}
 
@@ -150,7 +145,7 @@ const mainVideo = (container) => {
 		if (document.fullscreenElement) {
 			document.exitFullscreen();
 		} else {
-			videoContainer.requestFullscreen();
+			container.requestFullscreen();
 		}
 	}
 
@@ -158,6 +153,12 @@ const mainVideo = (container) => {
 	// and tooltip to reflect the current full screen state of the video
 	function updateFullscreenButton() {
 		fullscreenButton.classList.toggle("hide");
+	}
+
+	function showPoster() {
+		let src = video.currentSrc;
+		video.src = "";
+		video.src = src;
 	}
 
 	// keyboardShortcuts executes the relevant functions for
@@ -194,27 +195,29 @@ const mainVideo = (container) => {
 
 	video.addEventListener("play", updatePlayButton);
 	video.addEventListener("pause", updatePlayButton);
-
 	// init video
 	video.addEventListener("loadedmetadata", initializeVideo);
-
 	//update progressBar
 	video.addEventListener("timeupdate", updateProgress);
 	//update volume
 	video.addEventListener("volumechange", updateVolumeIcon);
-
 	video.addEventListener("click", togglePlay);
-
+	//ended video
+	video.addEventListener("ended", showPoster);
 	//skip video
-	progressBar.addEventListener("input", skipAhead);
+	seek.addEventListener("input", skipAhead);
 	//volume
 	volume.addEventListener("input", updateVolume);
 	volumeButton.addEventListener("click", toggleMute);
 	//fullscreen
 	fullscreenButton.addEventListener("click", toggleFullScreen);
-	videoContainer.addEventListener("fullscreenchange", updateFullscreenButton);
+	container.addEventListener("fullscreenchange", updateFullscreenButton);
 
 	//document.addEventListener("keyup", keyboardShortcuts);
 };
 
-mainVideo(videoContainer);
+//mainVideo(videoContainer);
+
+videoHTML5.forEach((v) => {
+	mainVideo(v);
+});

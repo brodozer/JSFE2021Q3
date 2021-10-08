@@ -181,13 +181,41 @@
 						background-image: url("../assets/svg/fs_exit.svg");
 					}
 				}
-				.progress {
+				.video-progress,
+				.volume {
+					margin: 0 50px;
+				}
+				.video-progress {
 					flex: 1 1 auto;
+					position: relative;
+					height: 8px;
+					.progress {
+						-webkit-appearance: none;
+						appearance: none;
+						width: 100%;
+						height: 100%;
+						pointer-events: none;
+						position: absolute;
+						top: 0;
+						&::-webkit-progress-bar {
+							background-color: #c4c4c4;
+						}
+						&::-webkit-progress-value {
+							width: 0;
+							background: $red;
+						}
+					}
+					.seek {
+						position: absolute;
+						top: 0;
+						width: 100%;
+						cursor: pointer;
+						background: transparent;
+						transition: all 0.4s ease;
+					}
 				}
 				.volume {
 					flex: 0 1 155px;
-				}
-				input[type="range"] {
 					background: linear-gradient(
 						to right,
 						#710707 0%,
@@ -195,12 +223,12 @@
 						#c4c4c4 0%,
 						#c4c4c4 100%
 					);
-					margin: 0 50px;
+				}
+				input[type="range"] {
 					border-radius: none;
 					height: 8px;
 					outline: none;
 					cursor: pointer;
-					//transition: background ease-in 450ms;
 					-webkit-appearance: none;
 					&::-webkit-slider-thumb {
 						width: 15px;
@@ -226,9 +254,15 @@
 						width: 26px;
 						height: 26px;
 					}
+					.video-progress {
+						height: 5px;
+					}
+					.video-progress,
+					.volume {
+						margin: 0 30px;
+					}
 					input[type="range"] {
 						height: 5px;
-						margin: 0 30px;
 						&::-webkit-slider-thumb {
 							width: 13px;
 							height: 13px;
@@ -244,12 +278,13 @@
 					.playpause {
 						margin-right: 35px;
 					}
-					.progress {
+					.video-progress {
 						position: absolute;
 						top: -4px;
 						left: 0;
 						margin: 0 !important;
 						width: 100%;
+						height: 4px;
 					}
 					.volume {
 						flex: 1 1 auto;
@@ -278,9 +313,9 @@
 						width: 18px;
 						height: 18px;
 					}
-					.volume {
-						margin: 0 30px;
-					}
+					// .volume {
+					// 	margin: 0 30px;
+					// }
 					input[type="range"]::-webkit-slider-thumb {
 						width: 10px;
 						height: 10px;

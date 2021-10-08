@@ -147,7 +147,7 @@ const youtubeSwiper = new Swiper(".youtube-swiper", {
 });
 
 const videoSwiper = new Swiper(".video-swiper", {
-	loop: false,
+	loop: true,
 	allowTouchMove: false,
 	autoHeight: true,
 	spaceBetween: 10,
@@ -159,33 +159,17 @@ youtubeSwiper.on("slideChange", function () {
 	let index = this.realIndex;
 	videoSwiper.slideTo(++index);
 	players.forEach((player) => {
-		// вынести в отдельную ф-ю stopYtplayer
 		if (player.getPlayerState() == YT.PlayerState.PLAYING) {
 			player.pauseVideo();
 		}
 	});
-});
-
-//const inputs = document.querySelectorAll('.video-controls input[type="range"]');
-const volumes = document.querySelectorAll(".video-controls .volume");
-
-const changeProgress = (el, val) => {
-	el.style.background = `linear-gradient(to right, #710707 0%, #710707 ${val}%, #c4c4c4 ${val}%, #c4c4c4 100%)`;
-};
-
-volumes.forEach((i) => {
-	i.addEventListener("input", () => {
-		changeProgress(i, i.value * 100);
+	videoPlayers.forEach((video) => {
+		if (!video.paused) {
+			video.pause();
+			video.currentTime = 1;
+		}
 	});
 });
-
-// установка уровня громкомти по дефолту
-volumes.forEach((v) => {
-	v.value = 0.5;
-	changeProgress(v, 0.5 * 100);
-});
-//volume.value = 50;
-//changeProgress(volume, 50);
 
 // tickets
 
