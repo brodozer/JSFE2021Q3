@@ -1461,6 +1461,7 @@ datalist {
 }
 
 .section-video .video-swiper .video-container video {
+  cursor: pointer;
   height: auto;
   top: 50%;
   -webkit-transform: translate3d(0, -50%, 0);
@@ -1496,6 +1497,13 @@ datalist {
   margin-top: -43px;
   -webkit-transform: translate3d(-50%, -50%, 0);
           transform: translate3d(-50%, -50%, 0);
+  opacity: 1;
+  -webkit-transition: opacity ease 0.3s;
+  transition: opacity ease 0.3s;
+}
+
+.section-video .video-swiper .video-container .play.hide {
+  opacity: 0;
 }
 
 .section-video .video-swiper .video-container .play:after {
@@ -1629,8 +1637,7 @@ datalist {
   border-radius: none;
   height: 8px;
   outline: none;
-  -webkit-transition: background ease-in 450ms;
-  transition: background ease-in 450ms;
+  cursor: pointer;
   -webkit-appearance: none;
 }
 

@@ -66,6 +66,7 @@
 				}
 			}
 			video {
+				cursor: pointer;
 				height: auto;
 				top: 50%;
 				transform: translate3d(0, -50%, 0);
@@ -89,6 +90,11 @@
 				left: 50%;
 				margin-top: -43px;
 				transform: translate3d(-50%, -50%, 0);
+				opacity: 1;
+				transition: opacity ease 0.3s;
+				&.hide {
+					opacity: 0;
+				}
 				&:after {
 					content: "";
 					position: absolute;
@@ -193,7 +199,8 @@
 					border-radius: none;
 					height: 8px;
 					outline: none;
-					transition: background ease-in 450ms;
+					cursor: pointer;
+					//transition: background ease-in 450ms;
 					-webkit-appearance: none;
 					&::-webkit-slider-thumb {
 						width: 15px;

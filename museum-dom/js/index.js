@@ -147,7 +147,7 @@ const youtubeSwiper = new Swiper(".youtube-swiper", {
 });
 
 const videoSwiper = new Swiper(".video-swiper", {
-	loop: true,
+	loop: false,
 	allowTouchMove: false,
 	autoHeight: true,
 	spaceBetween: 10,
@@ -166,22 +166,23 @@ youtubeSwiper.on("slideChange", function () {
 	});
 });
 
-const inputs = document.querySelectorAll('.video-controls input[type="range"]');
+//const inputs = document.querySelectorAll('.video-controls input[type="range"]');
 const volumes = document.querySelectorAll(".video-controls .volume");
 
 const changeProgress = (el, val) => {
 	el.style.background = `linear-gradient(to right, #710707 0%, #710707 ${val}%, #c4c4c4 ${val}%, #c4c4c4 100%)`;
 };
 
-inputs.forEach((i) => {
+volumes.forEach((i) => {
 	i.addEventListener("input", () => {
-		changeProgress(i, i.value);
+		changeProgress(i, i.value * 100);
 	});
 });
 
+// установка уровня громкомти по дефолту
 volumes.forEach((v) => {
-	v.value = 50;
-	changeProgress(v, 50);
+	v.value = 0.5;
+	changeProgress(v, 0.5 * 100);
 });
 //volume.value = 50;
 //changeProgress(volume, 50);
