@@ -18,7 +18,7 @@ function onYouTubeIframeAPIReady() {
 
 			players.push(
 				new YT.Player(iframe.id, {
-					host: "https://www.youtube.com",
+					//host: "https://www.youtube.com",
 					events: {
 						onStateChange: function (event) {
 							if (event.data == YT.PlayerState.PLAYING) {
