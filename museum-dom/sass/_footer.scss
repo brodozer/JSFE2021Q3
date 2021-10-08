@@ -1,0 +1,239 @@
+.footer {
+	padding-top: 75px;
+	position: relative;
+	@include lg {
+		padding-top: 52px;
+	}
+	@include md {
+		padding-top: 38px;
+	}
+	@include sm {
+		padding-top: 39px;
+	}
+	&:before {
+		content: "";
+		display: block;
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 123px;
+		height: 3px;
+		background-color: #666666;
+		@include lg {
+			bottom: 126px;
+		}
+		@include md {
+			height: 1px;
+			bottom: 102px;
+		}
+	}
+	.top,
+	.bottom {
+		display: flex;
+		justify-content: space-between;
+		font-weight: 200;
+		font-size: $fz_22;
+		letter-spacing: 2px;
+	}
+	.top {
+		margin-bottom: 24px;
+		@include lg {
+			margin-bottom: 26px;
+		}
+		@include md {
+			flex-wrap: wrap;
+		}
+		.header-logo {
+			padding: 10px 45px 0 0;
+			@include md {
+				padding: 10px 38px 0 0;
+			}
+			@include sm {
+				padding: 0;
+				img {
+					width: 127px;
+				}
+			}
+		}
+		.d-flex {
+			flex: 0 1 1100px;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			@include md {
+				flex: 0 1 50%;
+				margin: 0 auto;
+			}
+			@include sm {
+				flex-basis: 100%;
+			}
+			.footer-nav {
+				flex: 0 1 380px;
+				display: block;
+				padding-top: 13px;
+				line-height: 26px;
+				@include md {
+					padding-top: 17px;
+					margin-bottom: 27px;
+				}
+				@include sm {
+					padding-top: 30px;
+					margin-bottom: 12px;
+				}
+				.nav-list {
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-between;
+					li {
+						width: 50%;
+						margin-bottom: 25px;
+						@include md {
+							font-size: 18px;
+							margin-bottom: 20px;
+						}
+						@include sm {
+							width: 33.333%;
+							margin-bottom: 24px;
+							font-size: 16px;
+						}
+						&:nth-child(2n) a {
+							padding-left: 67px;
+							@include lg {
+								padding-left: 18px;
+							}
+							@include md {
+								padding-left: 73px;
+							}
+							@include sm {
+								padding-left: 50px;
+							}
+							@include xs {
+								padding-left: 20px;
+							}
+						}
+					}
+					@include sm {
+						li:nth-child(2) {
+							order: 4;
+							a {
+								padding-left: 33px;
+								@include xs {
+									padding-left: 10px;
+								}
+							}
+						}
+						li:nth-child(3) {
+							order: 3;
+						}
+						li:nth-child(4) {
+							order: 2;
+						}
+						li:nth-child(5) {
+							order: 1;
+							a {
+								padding-left: 33px;
+								@include xs {
+									padding-left: 10px;
+								}
+							}
+						}
+						li:nth-child(6) {
+							order: 5;
+						}
+					}
+					a:hover {
+						color: $gold;
+					}
+					a:active {
+						&:active {
+							color: #7e6c51;
+						}
+					}
+				}
+			}
+			.social {
+				display: flex;
+				align-items: flex-end;
+				@include sm {
+					width: 100%;
+					justify-content: center;
+				}
+				.social-list {
+					margin-bottom: 30px;
+					@include lg {
+						margin-bottom: 23px;
+					}
+					@include md {
+						margin-bottom: 0;
+					}
+					@include sm {
+						li {
+							margin-left: 5px;
+						}
+					}
+				}
+			}
+		}
+	}
+	.bottom {
+		padding: 50px 0;
+		@include lg {
+			padding: 51px 0;
+		}
+		@include md {
+			padding: 55px 0 37px 0;
+		}
+		@include sm {
+			padding: 58px 0 41px 0;
+			font-size: 16px;
+		}
+		.pl {
+			position: relative;
+			left: 9px;
+			@include sm {
+				display: none;
+			}
+		}
+	}
+}
+
+.social-list {
+	display: flex;
+	li {
+		margin-left: 25px;
+		&:first-child {
+			margin-left: 0;
+		}
+		a {
+			display: block;
+			width: 48px;
+			height: 48px;
+			background-color: transparent;
+			border: 1px solid #666666;
+			border-radius: 50%;
+			transition: border ease 0.3s;
+			background: {
+				position: center;
+				repeat: no-repeat;
+			}
+			&:hover {
+				border: 1px solid $gold;
+			}
+			&.youtube {
+				background-image: url("../assets/svg/yt.svg");
+				margin-left: 0;
+			}
+			&.insta {
+				background-image: url("../assets/svg/insta.svg");
+			}
+			&.fb {
+				background-image: url("../assets/svg/fb.svg");
+			}
+			&.tw {
+				background-image: url("../assets/svg/tw.svg");
+			}
+			&.pin {
+				background-image: url("../assets/svg/pt.svg");
+			}
+		}
+	}
+}

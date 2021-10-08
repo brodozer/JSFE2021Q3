@@ -419,6 +419,16 @@ iframe {
 	}
 }
 
+.datalist {
+	height: 200px;
+	overflow: auto;
+}
+
+datalist {
+	max-height: 500px !important;
+	overflow-y: auto;
+}
+
 @import "header";
 @import "main_welcome";
 @import "main_visiting";
