@@ -1,43 +1,5 @@
 "use strict";
 
-//video может быть сюда перенести слайдеры для видео?
-
-const tag = document.createElement("script");
-tag.src = "https://www.youtube.com/iframe_api";
-const firstScriptTag = document.getElementsByTagName("script")[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-let players = [];
-
-function onYouTubeIframeAPIReady() {
-	document.querySelectorAll("iframe").forEach((iframe, i) => {
-		if (iframe.src.indexOf("https://www.youtube.com/") == 0) {
-			if (!iframe.hasAttribute("id")) {
-				iframe.setAttribute("id", "ytplayer_" + i);
-			}
-
-			players.push(
-				new YT.Player(iframe.id, {
-					//host: "https://www.youtube.com",
-					events: {
-						onStateChange: function (event) {
-							if (event.data == YT.PlayerState.PLAYING) {
-								players.forEach((player) => {
-									if (player.id != event.target.id) {
-										player.pauseVideo();
-									}
-								});
-							}
-						},
-					},
-				})
-			);
-		}
-	});
-}
-
-console.log("players ", players);
-
 const changeProgress = (el, val) => {
 	el.style.background = `linear-gradient(to right, #710707 0%, #710707 ${
 		val * 100
@@ -50,6 +12,7 @@ const videoHTML5 = document.querySelectorAll(".video-container");
 
 const mainVideo = (container) => {
 	const video = container.querySelector("video");
+	const poster = container.querySelector(".poster");
 	const playbackAnimation = container.querySelector(".play");
 	const playButton = container.querySelector(".playpause");
 	const progressBar = container.querySelector(".progress");
@@ -58,8 +21,16 @@ const mainVideo = (container) => {
 	const volume = container.querySelector(".volume"); // input type range
 	const fullscreenButton = container.querySelector(".fs");
 
+	// function startPlay() {
+	// 	poster.classList.add("d-none");
+	// 	togglePlay();
+	// }
+
 	function togglePlay() {
 		if (video.paused || video.ended) {
+			if (!poster.classList.contains("d-none")) {
+				poster.classList.add("d-none");
+			}
 			video.play();
 		} else {
 			video.pause();
@@ -156,9 +127,8 @@ const mainVideo = (container) => {
 	}
 
 	function showPoster() {
-		let src = video.currentSrc;
-		video.src = "";
-		video.src = src;
+		poster.classList.remove("d-none");
+		video.currentTime = 0;
 	}
 
 	// keyboardShortcuts executes the relevant functions for
@@ -192,6 +162,7 @@ const mainVideo = (container) => {
 	// Add eventlisteners here
 	playButton.addEventListener("click", togglePlay);
 	playbackAnimation.addEventListener("click", togglePlay);
+	poster.addEventListener("click", togglePlay);
 
 	video.addEventListener("play", updatePlayButton);
 	video.addEventListener("pause", updatePlayButton);

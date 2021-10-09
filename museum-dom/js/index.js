@@ -154,21 +154,43 @@ const videoSwiper = new Swiper(".video-swiper", {
 	slidesPerView: 1,
 });
 
+const stopAllYouTubeVideos = () => {
+	const iframes = document.querySelectorAll("iframe");
+	iframes.forEach((frame) => {
+		frame.contentWindow.postMessage(
+			//"func":"pauseVideo"
+			'{"event":"command","func":"stopVideo","args":""}',
+			"*"
+		);
+	});
+};
+
+const stopPlayVideos = () => {
+	//video.load() делает реинит видео!
+	const videos = document.querySelectorAll("video");
+	videos.forEach((video) => {
+		if (!video.paused) {
+			video
+				.closest(".video-container")
+				.querySelector(".poster")
+				.classList.remove("d-none");
+			video.pause();
+			video.currentTime = 0;
+		}
+	});
+};
+
+// videoSwiper.on("slideChange", function () {
+// 	stopPlayVideos();
+// });
+
 // change main video
 youtubeSwiper.on("slideChange", function () {
 	let index = this.realIndex;
 	videoSwiper.slideTo(++index);
-	players.forEach((player) => {
-		if (player.getPlayerState() == YT.PlayerState.PLAYING) {
-			player.pauseVideo();
-		}
-	});
-	videoPlayers.forEach((video) => {
-		if (!video.paused) {
-			video.pause();
-			video.currentTime = 1;
-		}
-	});
+
+	stopAllYouTubeVideos();
+	stopPlayVideos();
 });
 
 // tickets

@@ -1460,30 +1460,13 @@ datalist {
   }
 }
 
-.section-video .video-swiper .video-container video {
-  cursor: pointer;
-  height: auto;
+.section-video .video-swiper .video-container video,
+.section-video .video-swiper .video-container img {
   top: 50%;
   -webkit-transform: translate3d(0, -50%, 0);
           transform: translate3d(0, -50%, 0);
-}
-
-@media (max-width: 1139.98px) {
-  .section-video .video-swiper .video-container video {
-    top: 44%;
-  }
-}
-
-@media (max-width: 959.98px) {
-  .section-video .video-swiper .video-container video {
-    top: 42%;
-  }
-}
-
-@media (max-width: 539.98px) {
-  .section-video .video-swiper .video-container video {
-    top: 39%;
-  }
+  cursor: pointer;
+  height: auto;
 }
 
 .section-video .video-swiper .video-container .play {

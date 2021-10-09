@@ -65,20 +65,12 @@
 					padding-bottom: 59%;
 				}
 			}
-			video {
-				cursor: pointer;
-				height: auto;
+			video,
+			img {
 				top: 50%;
 				transform: translate3d(0, -50%, 0);
-				@include lg {
-					top: 44%;
-				}
-				@include md {
-					top: 42%;
-				}
-				@include sm {
-					top: 39%;
-				}
+				cursor: pointer;
+				height: auto;
 			}
 			.play {
 				position: absolute;
