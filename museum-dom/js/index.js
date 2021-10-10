@@ -154,19 +154,41 @@ const videoSwiper = new Swiper(".video-swiper", {
 	slidesPerView: 1,
 });
 
-// change main video
+// можно исползовать без api!!!
+const stopAllYouTubeVideos = () => {
+	const iframes = document.querySelectorAll("iframe");
+	iframes.forEach((frame) => {
+		frame.contentWindow.postMessage(
+			//"func":"pauseVideo"
+			'{"event":"command","func":"stopVideo","args":""}',
+			"*"
+		);
+	});
+};
+
+const stopPlayVideos = () => {
+	//video.load() делает реинит видео!
+	const videos = document.querySelectorAll("video");
+	videos.forEach((video) => {
+		if (!video.paused) {
+			video
+				.closest(".video-container")
+				.querySelector(".poster")
+				.classList.remove("d-none");
+			video.pause();
+			video.currentTime = 0;
+		}
+	});
+};
+
+//change main video
 youtubeSwiper.on("slideChange", function () {
 	let index = this.realIndex;
 	videoSwiper.slideTo(++index);
+	stopPlayVideos();
 	players.forEach((player) => {
 		if (player.getPlayerState() == YT.PlayerState.PLAYING) {
 			player.pauseVideo();
-		}
-	});
-	videoPlayers.forEach((video) => {
-		if (!video.paused) {
-			video.pause();
-			video.currentTime = 1;
 		}
 	});
 });
@@ -431,29 +453,29 @@ booking.addEventListener("click", function (e) {
 
 // riple effect
 
-// const buttons = document.querySelectorAll(".ripple");
+const buttons = document.querySelectorAll(".ripple");
 
-// buttons.forEach((button) => {
-// 	button.addEventListener("click", function (e) {
-// 		const x = e.clientX;
-// 		const y = e.clientY;
+buttons.forEach((button) => {
+	button.addEventListener("click", function (e) {
+		const x = e.clientX;
+		const y = e.clientY;
 
-// 		const buttonTop = e.target.offsetTop;
-// 		const buttonLeft = e.target.offsetLeft;
+		const buttonTop = e.target.offsetTop;
+		const buttonLeft = e.target.offsetLeft;
 
-// 		const xInside = x - buttonLeft;
-// 		const yInside = y - buttonTop;
+		const xInside = x - buttonLeft;
+		const yInside = y - buttonTop;
 
-// 		const circle = document.createElement("span");
-// 		circle.classList.add("circle");
-// 		circle.style.top = yInside + "px";
-// 		circle.style.left = xInside + "px";
+		const circle = document.createElement("span");
+		circle.classList.add("circle");
+		circle.style.top = yInside + "px";
+		circle.style.left = xInside + "px";
 
-// 		this.appendChild(circle);
+		this.appendChild(circle);
 
-// 		setTimeout(() => circle.remove(), 500);
-// 	});
-// });
+		setTimeout(() => circle.remove(), 500);
+	});
+});
 
 //MAPBOX
 
@@ -637,11 +659,11 @@ const dateTime = () => {
 	let months = date.getMonth() + 1;
 
 	let days = date.getDate();
-	let hours = date.getHours();
+	// let hours = date.getHours();
 
-	if (hours > 18) {
-		days = date.getDate() + 1;
-	}
+	// if (hours > 18) {
+	// 	days = date.getDate() + 1;
+	// }
 
 	months = pad(months);
 	days = pad(days);

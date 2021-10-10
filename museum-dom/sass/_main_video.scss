@@ -65,20 +65,24 @@
 					padding-bottom: 59%;
 				}
 			}
-			video {
-				cursor: pointer;
-				height: auto;
+			video,
+			img {
 				top: 50%;
 				transform: translate3d(0, -50%, 0);
-				@include lg {
-					top: 44%;
-				}
-				@include md {
-					top: 42%;
-				}
-				@include sm {
-					top: 39%;
-				}
+				cursor: pointer;
+				height: auto;
+			}
+			.playback {
+				position: absolute;
+				left: 50%;
+				transform: translate3d(-50%, 0, 0);
+				top: 20px;
+				padding: 10px;
+				border-radius: 3px;
+				background-color: rgba(0, 0, 0, 0.6);
+				color: #fff;
+				font-size: 22px;
+				opacity: 0;
 			}
 			.play {
 				position: absolute;
