@@ -72,6 +72,18 @@
 				cursor: pointer;
 				height: auto;
 			}
+			.playback {
+				position: absolute;
+				left: 50%;
+				transform: translate3d(-50%, 0, 0);
+				top: 20px;
+				padding: 10px;
+				border-radius: 3px;
+				background-color: rgba(0, 0, 0, 0.6);
+				color: #fff;
+				font-size: 22px;
+				opacity: 0;
+			}
 			.play {
 				position: absolute;
 				width: 220px;
