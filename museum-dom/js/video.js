@@ -73,28 +73,7 @@ function onYouTubeIframeAPIReady() {
 		});
 		players.push(player);
 	}
-	console.log(players);
-}
-
-class Ui {
-	constructor(el) {
-		this.win = $(window);
-		this.onResize = this.onResize.bind(this);
-		this.init();
-	}
-
-	init() {
-		console.log(this.win);
-		this.addListeners();
-	}
-
-	addListeners() {
-		this.win.addEventListener("resize", this.onResize);
-	}
-
-	onResize() {
-		console.log("test");
-	}
+	console.log("players", players);
 }
 
 const videoPlayers = document.querySelectorAll("video");
@@ -130,7 +109,6 @@ class Video {
 		this.init();
 	}
 	togglePlay() {
-		console.log("this_", this);
 		if (this.video.paused || this.video.ended) {
 			if (!this.poster.classList.contains("d-none")) {
 				this.poster.classList.add("d-none");
@@ -270,7 +248,7 @@ class Video {
 	}
 
 	init() {
-		console.log("init!!!!");
+		console.log("init video!!!!");
 		const recurs = () => {
 			if (this.video.duration !== NaN && Math.round(this.video.duration) > 0) {
 				this.initializeVideo();
@@ -462,11 +440,6 @@ const mainVideo = (container) => {
 	//document.addEventListener("keyup", keyboardShortcuts); //если использовать одно видео, если есть input нужно их исключить!!!
 };
 
-// валидация номера телефона (2)
-// возможность одновременного воспроизведения только одного видео (2) есть ошибки в консоле!!!
-// галерея изображений (8)
-// итого 140
-
 function geSlideDataIndex(swipe) {
 	var activeIndex = swipe.activeIndex;
 	var slidesLen = swipe.slides.length;
@@ -497,11 +470,10 @@ function getSlideActive(swipe) {
 }
 
 function keyboardShortcuts(event) {
-	console.log("this ", this);
-	console.log("target ", event.target);
 	if (
 		this !== event.target &&
-		(/textarea|select|input/i.test(event.target.nodeName) ||
+		((/textarea|select|input/i.test(event.target.nodeName) &&
+			event.target.type !== "range") ||
 			event.target.type === "text")
 	) {
 		return;
@@ -522,7 +494,6 @@ function keyboardShortcuts(event) {
 				video[0].playBack(-0.25);
 				break;
 			case "m":
-				console.log("mute");
 				video[0].toggleMute();
 				break;
 			case "f":
@@ -538,8 +509,6 @@ videoHTML5.forEach((v, i) => {
 	v.setAttribute("id", "video_" + i);
 	bigVideo.push(new Video(v));
 });
-
-console.log("bigVideo");
 
 //document.addEventListener("keyup", keyboardShortcuts);
 document.addEventListener("keydown", keyboardShortcuts);

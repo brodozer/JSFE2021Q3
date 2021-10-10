@@ -1,5 +1,19 @@
 "use strict";
 
+console.log(`
+	Score: 140 / 150
+	[+] Слайдер в секции Welcome (24)
+	[+] Слайдер в секции Video (20)
+	[+] Кастомный видеоплеер (36)
+	[+] Слайдер сравнения изображений в секции Explore (10)
+	[-] Анимация при прокрутке изображений в секции Galery (0/8)
+	[+] Калькулятор продажи билетов в секции Tiskets (10)
+	[+] Калькулятор продажи билетов в форме продажи билетов (14)
+	[±] Валидация формы 14/16
+			- валидация номера телефона (0/2)
+	[+] Интерактивная карта в секции Contacts (12)
+`);
+
 // byrger menu
 
 const menu = () => {
@@ -325,8 +339,8 @@ const ticketPrice = () => {
 
 const total = () => {
 	let price = {
-		temporary: 20,
-		permanent: 25,
+		temporary: 25,
+		permanent: 20,
 		combined: 40,
 	};
 	let priceTicket = "";
@@ -405,10 +419,10 @@ if (localStorage.tickets) {
 	total();
 } else {
 	tickets = {
-		senior: 1,
-		basic: 1,
-		ticket_type: "Temporary exhibition",
-		ticket_price: 20,
+		senior: 0,
+		basic: 0,
+		ticket_type: "Permanent exhibition",
+		ticket_price: 25,
 	};
 	localStorage.tickets = JSON.stringify(tickets);
 }
@@ -615,7 +629,6 @@ const validation = (form, config) => {
 		if (value.length < iConf.min || value.length > iConf.max) {
 			showMsg(formGroup, iConf.msg);
 		} else {
-			console.log(value);
 			if (iConf.reg.test(value)) {
 				hideMsg(formGroup);
 			} else {
