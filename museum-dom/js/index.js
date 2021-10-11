@@ -587,12 +587,11 @@ const config = {
 		msgReg: "Email введен не корректно",
 	},
 	phone: {
-		min: 4,
+		min: 0,
 		max: 10,
-		//reg: /^\d[\d\s-]{4,10}\d$/,
-		//reg: /[0-9]/gm,
-		reg: /^[0-9]{3}[-\s]?[0-9]{3}[-\s]?[0-9]{2}[-\s]?[0-9]{2}$/im,
-		msg: "Телефон должен содержать от 4 до 10 символов",
+		reg: /^\d{0,}$/,
+		//reg: /^[0-9]{3}[-\s]?[0-9]{3}[-\s]?[0-9]{2}[-\s]?[0-9]{2}$/im, // ukraine
+		msg: "Телефон должен содержать не больше 10 цифр",
 		msgReg:
 			"Номер содержит только цифры с разделением или без на пробелы или дефиз",
 	},
@@ -623,7 +622,8 @@ const validation = (form, config) => {
 		let formGroup = i.closest(".form-group");
 		// убирать пробелы и дефизы перед проверкой длинны?
 		if (i.name === "phone") {
-			value = value.replace(/[-\s]/g, "");
+			//value = value.replace(/[-\s]/g, "");
+			console.log("value ", value);
 		}
 
 		if (value.length < iConf.min || value.length > iConf.max) {
