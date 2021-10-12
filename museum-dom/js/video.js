@@ -479,7 +479,18 @@ function keyboardShortcuts(event) {
 		return;
 	}
 	const { key } = event;
-	if (key === " " || key === "<" || key === ">" || key === "m" || key === "f") {
+	console.log("key ", key);
+	if (
+		key === " " ||
+		key === "<" ||
+		key === ">" ||
+		key === "m" ||
+		key === "f" ||
+		key === "Б" ||
+		key === "Ю" ||
+		key === "ь" ||
+		key === "а"
+	) {
 		event.preventDefault();
 		const video_id = getSlideActive(videoSwiper);
 		const video = bigVideo.filter((e) => e.id === video_id);
@@ -488,15 +499,19 @@ function keyboardShortcuts(event) {
 				video[0].togglePlay();
 				break;
 			case ">":
+			case "Ю":
 				video[0].playBack(0.25);
 				break;
 			case "<":
+			case "Б":
 				video[0].playBack(-0.25);
 				break;
 			case "m":
+			case "ь":
 				video[0].toggleMute();
 				break;
 			case "f":
+			case "а":
 				video[0].toggleFullScreen();
 				break;
 		}
