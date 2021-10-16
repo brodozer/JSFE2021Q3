@@ -10,15 +10,25 @@
     </head>
     <body>
         <header class="header">
-            <div class="player">
+            <div class="player" id="player">
+                <audio src=""></audio>
+                <div class="track-name"></div>
                 <div class="player-controls">
                     <button class="play-prev player-icon"></button>
                     <button class="play player-icon"></button>
                     <button class="play-next player-icon"></button>
+                    <span class="cur-time"></span>
+                    <div class="progress-bar">
+                        <progress min="0" step="1" class="progress"></progress>
+                        <input type="range" class="seek" step="1" />
+                    </div>
+                    <span class="duration"></span>
+                    <button class="mute player-icon"></button>
+                    <input type="range" class="volume" min="0" max="1" step="0.01" />
                 </div>
                 <ul class="play-list"></ul>
             </div>
-            <div class="weather">
+            <div class="weather" id="weather">
                 <input type="text" class="city" />
                 <i class="weather-icon owf"></i>
                 <div class="weather-error"></div>
@@ -35,20 +45,108 @@
                 <button class="slide-prev slider-icon"></button>
                 <button class="slide-next slider-icon"></button>
             </div>
-            <time class="time"></time>
-            <date class="date"></date>
-            <div class="greeting-container">
+            <time class="time" id="time"></time>
+            <date class="date" id="date"></date>
+            <div class="greeting-container" id="greeting">
                 <span class="greeting"></span>
-                <input type="text" class="name" />
+                <input type="text" class="name" placeholder="" />
             </div>
         </main>
         <footer class="footer">
-            <button class="change-quote"></button>
-            <div>
+            <div class="settings">
+                <button class="settings-icon"></button>
+            </div>
+            <div class="quote-container" id="quote">
+                <button class="change-quote"></button>
                 <div class="quote"></div>
                 <div class="author"></div>
             </div>
+            <div class="footer-links">
+                <a href="">rsSchool</a>
+                <a href="https://github.com/brodozer">brodozer</a>
+                <span>&nbsp2021</span>
+            </div>
         </footer>
+        <div class="menu">
+            <h3 data-ckey="h3">Settings</h3>
+            <h4 data-ckey="h4_1">Show</h4>
+            <ul data-lkey="show_list" class="settings-list options-list show-list">
+                <li class="slide-toggle has-toggle" data-skey="show.time" data-id="time">
+                    <span class="setting-name">Time</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+                <li class="slide-toggle has-toggle" data-skey="show.date" data-id="date">
+                    <span class="setting-name">Date</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+                <li class="slide-toggle has-toggle" data-skey="show.greeting" data-id="greeting">
+                    <span class="setting-name">Greeting</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+                <li class="slide-toggle has-toggle" data-skey="show.quote" data-id="quote">
+                    <span class="setting-name">Quote</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+                <li class="slide-toggle has-toggle" data-skey="show.weather" data-id="weather">
+                    <span class="setting-name">Weather</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+                <li class="slide-toggle has-toggle" data-skey="show.player" data-id="player">
+                    <span class="setting-name">Player</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+            </ul>
+            <h4 data-ckey="h4_2">Language</h4>
+            <ul data-lkey="lang_list" class="settings-list options-list lang-list">
+                <li class="radio-toggle" data-key="language" id="en">
+                    <span class="setting-name">English</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+                <li class="radio-toggle" data-key="language" id="ru">
+                    <span class="setting-name">Russian</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+            </ul>
+            <h4 data-ckey="h4_3">Photos</h4>
+            <ul class="settings-list options-list sourse-list">
+                <li class="radio-toggle" data-key="sourse_img" id="github">
+                    <span class="setting-name">GitHub</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+                <li class="radio-toggle" data-key="sourse_img" id="unsplash">
+                    <span class="setting-name">Unsplash</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+                <li class="radio-toggle" data-key="sourse_img" id="flicr">
+                    <span class="setting-name">Flicr</span>
+                    <span class="toggle-slider">
+                        <svg class="toggle-switch" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                    </span>
+                </li>
+                <!-- <li><input type="text" placeholder="enter your tags" /></li>  добавить отдельно ? внизу списка, выводить только если api -->
+            </ul>
+        </div>
         <script src="js/index.js"></script>
+        <script src="js/audio.js"></script>
     </body>
 </html>
