@@ -54,8 +54,7 @@ let opt = {
     city: false,
     language: 'ru',
     source_img: 'github',
-    tags_img: 'nature',
-    url_img: false,
+    tags_img: false,
     show: {
         time: true,
         date: true,
@@ -249,9 +248,6 @@ const showWeatherError = (msg) => {
 };
 
 const setBg = (src) => {
-    if (opt.url_img !== src) {
-        opt.url_img = src;
-    }
     const img = new Image();
     img.src = src;
     img.onload = () => {
@@ -260,16 +256,24 @@ const setBg = (src) => {
 };
 
 const getLinkToGitHub = () => {
-    if (randomNum < 10) {
-        randomNum = String(randomNum).padStart(2, 0);
+    let numImg = randomNum;
+    if (numImg < 10) {
+        numImg = String(randomNum).padStart(2, 0);
     }
-    const src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${randomNum}.jpg`;
+    console.log(randomNum);
+    console.log(numImg);
+    const src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${numImg}.jpg`;
     console.log(src);
     setBg(src);
 };
 
 const getLinkToUnsplash = () => {
-    const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${opt.tags_img}&client_id=D-_tpaRbofPn1ERX9-E04Cyae7pDAFoNAgYIKk_URuw`;
+    let tags = opt.tags_img;
+    if (!tags) {
+        tags = timeOfDay;
+    }
+    console.log('tags ', tags);
+    const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${tags}&client_id=D-_tpaRbofPn1ERX9-E04Cyae7pDAFoNAgYIKk_URuw`;
     getData(
         url,
         function (data) {
@@ -284,8 +288,13 @@ const getLinkToUnsplash = () => {
 let flickrImgs = [];
 
 const getLinkToFlickr = () => {
+    let tags = opt.tags_img;
+    if (!tags) {
+        tags = timeOfDay;
+    }
+    console.log('tags ', tags);
     if (flickrImgs.length == 0) {
-        const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=f063269120ed7bae71ee949ba30d6d60&tags=${opt.tags_img}&extras=url_l&format=json&nojsoncallback=1`;
+        const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=f063269120ed7bae71ee949ba30d6d60&tags=${tags}&extras=url_l&format=json&nojsoncallback=1`;
         getData(url, function (data) {
             if (data.stat === 'ok') {
                 flickrImgs = data.photos.photo;
@@ -299,7 +308,7 @@ const getLinkToFlickr = () => {
     }
 };
 
-const soursePicture = (source) => {
+const sourcePicture = (source) => {
     if (source === 'github') {
         getLinkToGitHub();
         tags.disabled = true;
@@ -317,18 +326,18 @@ const getTags = () => {
     if (value.length > 0) {
         opt.tags_img = value;
         flickrImgs = [];
-        soursePicture(opt.source_img);
+        sourcePicture(opt.source_img);
     }
 };
 
 const getSlideNext = () => {
     randomNum = randomNum + 1 > 20 ? 1 : randomNum + 1;
-    soursePicture(opt.source_img);
+    sourcePicture(opt.source_img);
 };
 
 const getSlidePrev = () => {
     randomNum = randomNum - 1 == 0 ? 20 : randomNum - 1;
-    soursePicture(opt.source_img);
+    sourcePicture(opt.source_img);
 };
 
 const getWeather = () => {
@@ -524,7 +533,7 @@ const setLanguage = (e) => {
 
 const getPicture = (e) => {
     if (setActiveRadio(e)) {
-        soursePicture(opt.source_img);
+        sourcePicture(opt.source_img);
     }
 };
 
@@ -554,11 +563,7 @@ const init = () => {
     setCity();
     getWeather();
     getQuotes();
-    if (opt.url_img) {
-        setBg(opt.url_img);
-    } else {
-        soursePicture(opt.source_img);
-    }
+    sourcePicture(opt.source_img);
 };
 
 // listeners
