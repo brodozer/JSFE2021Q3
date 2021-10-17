@@ -54,6 +54,7 @@ let opt = {
     city: false,
     language: 'ru',
     source_img: 'github',
+    tags_img: 'nature',
     show: {
         time: true,
         date: true,
@@ -107,6 +108,8 @@ const translation = {
             h4_3: 'Photos',
             show_list: ['Time', 'Date', 'Greeting', 'Quotes', 'Weather', 'Audio'],
             lang_list: ['English', 'Russian'],
+            label: 'Tags',
+            p: 'Tags supported only Unsplash or Flickr. A comma-delimited list of tags. Photos with one or more of the tags listed will be returned. You can exclude results that match a term by prepending it with a - character',
         },
         ru: {
             h3: 'Настройки',
@@ -115,6 +118,8 @@ const translation = {
             h4_3: 'Изображения',
             show_list: ['Время', 'Дата', 'Приветствие', 'Цитата дня', 'Прогноз погоды', 'Аудиоплеер'],
             lang_list: ['Английский', 'Русский'],
+            label: 'Теги',
+            p: 'Теги доступны только для Unsplash или Flickr. Список тегов, разделенных запятыми. Получить фотографии с одним или несколькими из перечисленных тегов. Вы можете исключить результаты, соответствующие тегу, поставив перед ним символ -',
         },
     },
 };
@@ -145,10 +150,12 @@ const updateQuote = body.querySelector('.change-quote');
 // lists
 const showList = body.querySelector('.show-list');
 const langList = body.querySelector('.lang-list');
-const sourceList = body.querySelector('.sourse-list');
+const sourceList = body.querySelector('.source-list');
 // settings
 const menu = body.querySelector('.menu');
 const settings = body.querySelector('.settings-icon');
+const tags = body.querySelector('.tags');
+
 const regEx = /^[a-zA-Z\s]+$|^[а-яА-Я\s]+$/iu;
 
 let timeOfDay = false; // время суток
@@ -201,31 +208,8 @@ const setName = () => {
     }
 };
 
-const setBg = (timeOfDay, bgNum) => {
-    if (bgNum < 10) {
-        bgNum = String(bgNum).padStart(2, 0);
-    }
-    const img = new Image();
-    // добавить возможность указать разный  url в зависимости от настройки приложения для других вариантов загрузки картинки
-
-    const src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${bgNum}.jpg`;
-    img.src = src;
-    img.onload = () => {
-        body.style.backgroundImage = `url(${src})`;
-    };
-};
-
-const getSlideNext = () => {
-    randomNum = randomNum + 1 > 20 ? 1 : randomNum + 1;
-    setBg(timeOfDay, randomNum);
-};
-
-const getSlidePrev = () => {
-    randomNum = randomNum - 1 == 0 ? 20 : randomNum - 1;
-    setBg(timeOfDay, randomNum);
-};
-
 const viewWeather = (data) => {
+    opt.city = city.value; // на ините перезаписываю значение из инпута_)
     weatherIcon.className = 'weather-icon owf';
     weatherIcon.classList.add(`owf-${data.weather[0].id}`);
     weatherError.textContent = '';
@@ -239,14 +223,17 @@ async function getData(url, cb, cbe) {
     try {
         const res = await fetch(url);
         const data = await res.json();
-        if (cb) {
-            cb(data);
+        console.log(res);
+        if (res.ok) {
+            if (cb) {
+                cb(data);
+            }
+        } else {
+            if (cbe) {
+                cbe(data); // тут ошибка errors[0]
+            }
         }
     } catch (err) {
-        if (cbe) {
-            cbe();
-        }
-        res.status;
         throw new Error(err);
     }
 }
@@ -260,20 +247,94 @@ const showWeatherError = (msg) => {
     humidity.textContent = '';
 };
 
-let tags = 'nature';
+const setBg = (src) => {
+    const img = new Image();
+    img.src = src;
+    img.onload = () => {
+        body.style.backgroundImage = `url(${src})`;
+    };
+};
 
-const getLinkToImage = () => {
-    // unsplash
-    const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${tags}&client_id=D-_tpaRbofPn1ERX9-E04Cyae7pDAFoNAgYIKk_URuw`;
+const getLinkToGitHub = () => {
+    //github
+    if (randomNum < 10) {
+        randomNum = String(randomNum).padStart(2, 0);
+    }
+    const src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${randomNum}.jpg`;
+    console.log(src);
+    setBg(src);
+};
+
+// tags забирать из инпута. поле показывать когда для получения картинки стоит api
+//let tags = 'nature';
+
+const getLinkToUnsplash = () => {
+    const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${opt.tags_img}&client_id=D-_tpaRbofPn1ERX9-E04Cyae7pDAFoNAgYIKk_URuw`;
+    getData(
+        url,
+        function (data) {
+            console.log(data);
+            setBg(data.urls.regular);
+        },
+        function (data) {
+            console.log(data.errors[0]);
+            // выводить ошибку в консоль и делать alert unsplash - код ошибки
+        }
+    );
+};
+
+const getLinkToFlickr = () => {
+    // добавить обработку ошибок!!!
+    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=f063269120ed7bae71ee949ba30d6d60&tags=${opt.tags_img}&per_page=1&extras=url_l&format=json&nojsoncallback=1`;
     getData(url, function (data) {
-        console.log(data.urls.regular);
+        console.log(data);
+        if (data.stat === 'ok') {
+            console.log('url ', data.photos.photo[0].url_l);
+            setBg(data.photos.photo[0].url_l);
+        } else {
+            console.log(data.message);
+        }
     });
 };
 
+const soursePicture = (source) => {
+    if (source === 'github') {
+        getLinkToGitHub();
+        tags.disabled = true;
+    } else if (source === 'unsplash') {
+        getLinkToUnsplash();
+        tags.disabled = false;
+    } else {
+        getLinkToFlickr();
+        tags.disabled = false;
+    }
+};
+
+const getTags = () => {
+    const value = tags.value;
+    if (value.length > 0) {
+        opt.tags_img = value;
+        soursePicture(opt.source_img);
+    }
+};
+
+const getSlideNext = () => {
+    randomNum = randomNum + 1 > 20 ? 1 : randomNum + 1;
+    soursePicture(opt.source_img);
+};
+
+const getSlidePrev = () => {
+    randomNum = randomNum - 1 == 0 ? 20 : randomNum - 1;
+    soursePicture(opt.source_img);
+};
+
 const getWeather = () => {
+    console.log(city.value);
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=${opt.language}&appid=a7456a1378b5bf993ba3b65764589120&units=metric`;
-    getData(url, viewWeather, function () {
-        showWeatherError(translation.weather[opt.language].errors.found);
+    getData(url, viewWeather, function (data) {
+        console.log(data.message);
+        //showWeatherError(translation.weather[opt.language].errors.found);
+        showWeatherError(data.message); // всегда на английском???
     });
 };
 
@@ -437,22 +498,33 @@ const showWidget = (e) => {
 
 // повесить событие change на инпут для тегов и каждый раз запускать setBg
 
-const setActiveRadio = (e, cb) => {
+const setActiveRadio = (e) => {
+    // вызывать при смене языка и источника картинок
     let target = e.target.closest('.radio-toggle');
     if (!target.classList.contains('on')) {
         target.closest('.settings-list').querySelector('.on').classList.remove('on');
         target.classList.add('on');
         opt[target.dataset.key] = target.id;
-        cb(); // убрать callback
+        return true;
+    } else {
+        return false;
     }
 };
 
-const setLanguage = () => {
-    render_content(translation.menu[opt.language]);
-    getWeather();
-    getQuotes();
-    setName();
-    setCity();
+const setLanguage = (e) => {
+    if (setActiveRadio(e)) {
+        render_content(translation.menu[opt.language]);
+        getWeather();
+        getQuotes();
+        setName();
+        setCity();
+    }
+};
+
+const getPicture = (e) => {
+    if (setActiveRadio(e)) {
+        soursePicture(opt.source_img);
+    }
 };
 
 const hideMenu = (e) => {
@@ -479,10 +551,9 @@ const init = () => {
     showTime();
     setName();
     setCity();
-    setBg(timeOfDay, randomNum);
     getWeather();
     getQuotes();
-    getLinkToImage();
+    soursePicture(opt.source_img);
 };
 
 // listeners
@@ -493,15 +564,10 @@ slideNext.addEventListener('click', getSlideNext);
 slidePrev.addEventListener('click', getSlidePrev);
 updateQuote.addEventListener('click', showQuotes);
 settings.addEventListener('click', toggleMenu);
-
 showList.addEventListener('click', showWidget);
-
-langList.addEventListener('click', (e) => {
-    setActiveRadio(e, setLanguage);
-});
-sourceList.addEventListener('click', (e) => {
-    setActiveRadio(e, setBg);
-});
+langList.addEventListener('click', setLanguage);
+sourceList.addEventListener('click', getPicture);
+tags.addEventListener('change', getTags);
 
 name.addEventListener('change', () => {
     opt.name = name.value;
@@ -514,7 +580,7 @@ city.addEventListener('change', () => {
         showWeatherError(translation.weather[opt.language].errors.invalid);
     } else {
         getWeather();
-        opt.city = value;
+        //opt.city = value;
     }
 });
 city.addEventListener('keydown', (event) => {
@@ -533,3 +599,8 @@ city.addEventListener('keydown', (event) => {
 
 // на ините забирать placeholder для name ... если en - enter your Name - ru - введите ваше Имя
 // при смене языка в настройках делать rebind и перезаписывать placeholder, если поле имя false
+
+// добавить описания для тегов
+
+//A comma-delimited list of tags. Photos with one or more of the tags listed will be returned. You can exclude results that match a term by prepending it with a - character.
+//max 20
