@@ -55,6 +55,7 @@ let opt = {
     language: 'ru',
     source_img: 'github',
     tags_img: 'nature',
+    url_img: false,
     show: {
         time: true,
         date: true,
@@ -119,7 +120,7 @@ const translation = {
             show_list: ['Время', 'Дата', 'Приветствие', 'Цитата дня', 'Прогноз погоды', 'Аудиоплеер'],
             lang_list: ['Английский', 'Русский'],
             label: 'Теги',
-            p: 'Теги доступны только для Unsplash или Flickr. Список тегов, разделенных запятыми. Получить фотографии с одним или несколькими из перечисленных тегов. Вы можете исключить результаты, соответствующие тегу, поставив перед ним символ -',
+            p: 'Теги доступны только для Unsplash или Flickr. Список тегов, разделенных запятыми, позволяют получить фотографии с одним или несколькими из перечисленных тегов. Вы можете исключить результаты, соответствующие тегу, поставив перед ним символ -',
         },
     },
 };
@@ -209,7 +210,9 @@ const setName = () => {
 };
 
 const viewWeather = (data) => {
-    opt.city = city.value; // на ините перезаписываю значение из инпута_)
+    if (opt.city !== city.value) {
+        opt.city = city.value;
+    }
     weatherIcon.className = 'weather-icon owf';
     weatherIcon.classList.add(`owf-${data.weather[0].id}`);
     weatherError.textContent = '';
@@ -223,14 +226,12 @@ async function getData(url, cb, cbe) {
     try {
         const res = await fetch(url);
         const data = await res.json();
-        console.log(res);
+        console.log(data);
         if (res.ok) {
-            if (cb) {
-                cb(data);
-            }
+            cb(data);
         } else {
             if (cbe) {
-                cbe(data); // тут ошибка errors[0]
+                cbe(data);
             }
         }
     } catch (err) {
@@ -248,6 +249,9 @@ const showWeatherError = (msg) => {
 };
 
 const setBg = (src) => {
+    if (opt.url_img !== src) {
+        opt.url_img = src;
+    }
     const img = new Image();
     img.src = src;
     img.onload = () => {
@@ -256,7 +260,6 @@ const setBg = (src) => {
 };
 
 const getLinkToGitHub = () => {
-    //github
     if (randomNum < 10) {
         randomNum = String(randomNum).padStart(2, 0);
     }
@@ -265,36 +268,35 @@ const getLinkToGitHub = () => {
     setBg(src);
 };
 
-// tags забирать из инпута. поле показывать когда для получения картинки стоит api
-//let tags = 'nature';
-
 const getLinkToUnsplash = () => {
     const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${opt.tags_img}&client_id=D-_tpaRbofPn1ERX9-E04Cyae7pDAFoNAgYIKk_URuw`;
     getData(
         url,
         function (data) {
-            console.log(data);
             setBg(data.urls.regular);
         },
         function (data) {
-            console.log(data.errors[0]);
-            // выводить ошибку в консоль и делать alert unsplash - код ошибки
+            console.log('unsplash ', data.errors[0]);
         }
     );
 };
 
+let flickrImgs = [];
+
 const getLinkToFlickr = () => {
-    // добавить обработку ошибок!!!
-    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=f063269120ed7bae71ee949ba30d6d60&tags=${opt.tags_img}&per_page=1&extras=url_l&format=json&nojsoncallback=1`;
-    getData(url, function (data) {
-        console.log(data);
-        if (data.stat === 'ok') {
-            console.log('url ', data.photos.photo[0].url_l);
-            setBg(data.photos.photo[0].url_l);
-        } else {
-            console.log(data.message);
-        }
-    });
+    if (flickrImgs.length == 0) {
+        const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=f063269120ed7bae71ee949ba30d6d60&tags=${opt.tags_img}&extras=url_l&format=json&nojsoncallback=1`;
+        getData(url, function (data) {
+            if (data.stat === 'ok') {
+                flickrImgs = data.photos.photo;
+                setBg(flickrImgs[getRandomNum(flickrImgs.length)].url_l);
+            } else {
+                console.log('flickr ', data.message);
+            }
+        });
+    } else {
+        setBg(flickrImgs[getRandomNum(flickrImgs.length)].url_l);
+    }
 };
 
 const soursePicture = (source) => {
@@ -314,6 +316,7 @@ const getTags = () => {
     const value = tags.value;
     if (value.length > 0) {
         opt.tags_img = value;
+        flickrImgs = [];
         soursePicture(opt.source_img);
     }
 };
@@ -329,12 +332,11 @@ const getSlidePrev = () => {
 };
 
 const getWeather = () => {
-    console.log(city.value);
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=${opt.language}&appid=a7456a1378b5bf993ba3b65764589120&units=metric`;
     getData(url, viewWeather, function (data) {
-        console.log(data.message);
+        console.log('openweather ', data.message);
         //showWeatherError(translation.weather[opt.language].errors.found);
-        showWeatherError(data.message); // всегда на английском???
+        showWeatherError(data.message); // всегда на английском
     });
 };
 
@@ -364,7 +366,6 @@ const setCity = () => {
 };
 
 const get_content_from_key = function (key, content_object) {
-    // получение ключей из верстки, чтобы найти значение в объекте
     const o_key = key;
     let content;
     key = key.split('.');
@@ -553,7 +554,11 @@ const init = () => {
     setCity();
     getWeather();
     getQuotes();
-    soursePicture(opt.source_img);
+    if (opt.url_img) {
+        setBg(opt.url_img);
+    } else {
+        soursePicture(opt.source_img);
+    }
 };
 
 // listeners
