@@ -1,44 +1,19 @@
 'use strict';
 
-const playlist = [
-    {
-        title: 'Aqua Caelestis',
-        src: 'assets/sounds/Aqua Caelestis.mp3',
-        duration: '00:40',
-    },
-    {
-        title: 'River Flows In You',
-        src: 'assets/sounds/River Flows In You.mp3',
-        duration: '01:37',
-    },
-    {
-        title: 'Ennio Morricone',
-        src: 'assets/sounds/Ennio Morricone.mp3',
-        duration: '01:37',
-    },
-    {
-        title: 'Summer Wind',
-        src: 'assets/sounds/Summer Wind.mp3',
-        duration: '01:51',
-    },
-];
-
 const audioPlayer = () => {
-    const audio = document.querySelector('audio');
-    const playButton = document.querySelector('.play');
-    const progressBar = document.querySelector('.progress');
-    const seek = document.querySelector('.seek');
-    const volumeButton = document.querySelector('.mute');
-    const volume = document.querySelector('.volume');
-    const duration = document.querySelector('.duration');
-    const cur_time = document.querySelector('.cur-time');
-    const trackName = document.querySelector('.track-name');
-    const playNext = document.querySelector('.play-next');
-    const playPrev = document.querySelector('.play-prev');
-    const playListContainer = document.querySelector('.play-list');
+    const playButton = body.querySelector('.play');
+    const progressBar = body.querySelector('.progress');
+    const seek = body.querySelector('.seek');
+    const volumeButton = body.querySelector('.mute');
+    const volume = body.querySelector('.volume');
+    const duration = body.querySelector('.duration');
+    const cur_time = body.querySelector('.cur-time');
+    const trackName = body.querySelector('.track-name');
+    const playNext = body.querySelector('.play-next');
+    const playPrev = body.querySelector('.play-prev');
+    const playListContainer = body.querySelector('.play-list');
 
     let songIndex = 0;
-    let playing = false; // можно без ключа!!!
 
     function togglePlay() {
         if (!playing) {
@@ -51,7 +26,6 @@ const audioPlayer = () => {
     }
 
     function updatePlayButton() {
-        console.log('playing ', playing);
         playListContainer.querySelectorAll('.track-btn').forEach((btn) => {
             btn.classList.remove('pause');
         });

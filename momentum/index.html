@@ -31,13 +31,13 @@
             <div class="weather" id="weather">
                 <input type="text" class="city" />
                 <i class="weather-icon owf"></i>
-                <div class="weather-error"></div>
+                <div class="weather-error" data-wkey="error"></div>
                 <div class="description-container">
-                    <span class="temperature"></span>
-                    <span class="weather-description"></span>
+                    <span class="temperature" data-wkey="temperature"></span>
+                    <span class="weather-description" data-wkey="description"></span>
                 </div>
-                <div class="wind"></div>
-                <div class="humidity"></div>
+                <div class="wind" data-wkey="wind"></div>
+                <div class="humidity" data-wkey="humidity"></div>
             </div>
         </header>
         <main class="main">
@@ -62,9 +62,9 @@
                 <div class="author"></div>
             </div>
             <div class="footer-links">
-                <a href="">rsSchool</a>
-                <a href="https://github.com/brodozer">brodozer</a>
-                <span>&nbsp2021</span>
+                <a href="https://rs.school/js/" target="_blanc" class="rs-school"></a>
+                <a href="https://github.com/brodozer" target="_blanc">brodozer</a>
+                <span>2021</span>
             </div>
         </footer>
         <div class="menu">
@@ -151,6 +151,7 @@
             <p data-ckey="p" class="tags-descriptions"></p>
         </div>
         <script src="js/index.js"></script>
+        <script src="js/playlist.js"></script>
         <script src="js/audio.js"></script>
     </body>
 </html>

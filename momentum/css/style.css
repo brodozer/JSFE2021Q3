@@ -389,6 +389,7 @@ input[type='range'].volume::-webkit-slider-runnable-track {
 .footer-links {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     padding: 0 15px;
 }
 
@@ -398,6 +399,22 @@ input[type='range'].volume::-webkit-slider-runnable-track {
     cursor: pointer;
     text-decoration: none;
     margin-bottom: 5px;
+}
+
+.rs-school {
+    display: inline-block;
+    border-radius: 2px;
+    height: 30px;
+    background-color: rgba(255, 255, 0, 0.5);
+    background-image: url('../assets/svg/rs_school.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transition: background-color 0.3s ease;
+}
+
+.rs-school:hover {
+    background-color: rgba(255, 255, 0, 1);
 }
 
 .menu {
@@ -544,6 +561,7 @@ input[type='range'].volume::-webkit-slider-runnable-track {
 
 .tags:disabled {
     border-bottom: 1px solid grey;
+    color: grey;
 }
 
 .tags-descriptions {

@@ -1,53 +1,18 @@
 'use strict';
 
-// const momentum = {
-//     opt: {
-//         name: 'введите ваше Имя',
-//         city: 'Минск',
-//         language: 'ru',
-//         source_img: 'gitHub',
-//         show_hide: {
-//             time: true,
-//             date: true,
-//             greeting: true,
-//             quote: true,
-//             whether: true,
-//             player: true,
-//         },
-//     },
-//     time: document.querySelector('.time'),
-//     dateToday: document.querySelector('.date'),
-//     showDate: function (date) {
-//         const _t = this;
-//         console.log('language ', _t.opt);
-//         const options = { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZone: 'UTC' };
-//         const currentDate = date.toLocaleDateString(`${_t.opt.language}-${_t.opt.language.charAt(0).toUpperCase() + _t.opt.language.slice(1)}`, options);
-//         _t.dateToday.textContent = currentDate;
-//     },
-
-//     showTime: function () {
-//         const _t = this;
-//         const date = new Date();
-//         const currentTime = date.toLocaleTimeString();
-//         console.log('currentTime ', currentTime);
-//         console.log('time ', _t.time);
-//         _t.time.textContent = currentTime;
-//         _t.showDate(date);
-//         setInterval(_t.showTime, 1000);
-//     },
-//     init: function () {
-//         const _t = this;
-//         _t.showTime();
-//     },
-// };
-
-// momentum.init();
-
-// добавить ф-ю которая будет на ините забирать из localstorage настройки приложения
-// на смену языка делать ребинд приложения!!!
-// переписать в объект?
-
-// source_img - gitHub, unsplash, flickr
+console.log(`
+    Score 150/150
+[+] Часы и календарь (15)
+[+] Приветствие (10)
+[+] Смена фонового изображения (20)
+[+] Виджет погоды (15)
+[+] Виджет цитата дня (10)
+[+] Аудиоплеер (15)
+[+] Продвинутый аудиоплеер (реализуется без использования библиотек) (20)
+[+] Перевод приложения на два языка (en/ru) (15)
+[+] Получение фонового изображения от API (10)
+[+] Настройки приложения (20)
+`);
 
 let opt = {
     name: false,
@@ -97,7 +62,7 @@ const translation = {
         ru: '[введите ваше Имя]',
     },
     greeting: {
-        en: ['Good night', 'Good morning', 'Good day', 'Good evening'],
+        en: ['Good night', 'Good morning', 'Good afternoon', 'Good evening'],
         ru: ['Доброй ночи', 'Доброе утро', 'Добрый день', 'Добрый вечер'],
     },
     menu: {
@@ -109,7 +74,7 @@ const translation = {
             show_list: ['Time', 'Date', 'Greeting', 'Quotes', 'Weather', 'Audio'],
             lang_list: ['English', 'Russian'],
             label: 'Tags',
-            p: 'Tags supported only Unsplash or Flickr. A comma-delimited list of tags. Photos with one or more of the tags listed will be returned. You can exclude results that match a term by prepending it with a - character',
+            p: 'Tags supported only Unsplash or Flickr. A comma-delimited list of tags. Photos with one or more of the tags listed will be returned',
         },
         ru: {
             h3: 'Настройки',
@@ -119,13 +84,9 @@ const translation = {
             show_list: ['Время', 'Дата', 'Приветствие', 'Цитата дня', 'Прогноз погоды', 'Аудиоплеер'],
             lang_list: ['Английский', 'Русский'],
             label: 'Теги',
-            p: 'Теги доступны только для Unsplash или Flickr. Список тегов, разделенных запятыми, позволяют получить фотографии с одним или несколькими из перечисленных тегов. Вы можете исключить результаты, соответствующие тегу, поставив перед ним символ -',
+            p: 'Теги доступны только для Unsplash или Flickr. Список тегов, разделенных запятыми, позволяют получить фотографии с одним или несколькими из перечисленных тегов',
         },
     },
-};
-
-const getRandomNum = (num) => {
-    return Math.floor(Math.random() * num);
 };
 
 const body = document.body;
@@ -138,11 +99,6 @@ const slidePrev = body.querySelector('.slide-prev');
 const slideNext = body.querySelector('.slide-next');
 // weather
 const weatherIcon = body.querySelector('.weather-icon');
-const temperature = body.querySelector('.temperature');
-const weatherDescription = body.querySelector('.weather-description');
-const wind = body.querySelector('.wind');
-const humidity = body.querySelector('.humidity');
-const weatherError = body.querySelector('.weather-error');
 // quote
 const quote = body.querySelector('.quote');
 const author = body.querySelector('.author');
@@ -155,16 +111,19 @@ const sourceList = body.querySelector('.source-list');
 const menu = body.querySelector('.menu');
 const settings = body.querySelector('.settings-icon');
 const tags = body.querySelector('.tags');
+//audio
+const audio = document.querySelector('audio');
+let playing = false; // можно без ключа!!! (audio.paused вернет true или false)
 
 const regEx = /^[a-zA-Z\s]+$|^[а-яА-Я\s]+$/iu;
 
 let timeOfDay = false; // время суток
-let randomNum = getRandomNum(20) + 1; // номер слайда для bg
 
-const writeLocalStorage = (key, value) => {
-    opt[key] = value;
-    localStorage.momentum = JSON.stringify(opt);
+const getRandomNum = (num) => {
+    return Math.floor(Math.random() * num);
 };
+
+let randomNum = getRandomNum(20) + 1; // номер слайда для bg
 
 const setLocalStorage = () => {
     localStorage.momentum = JSON.stringify(opt);
@@ -178,8 +137,8 @@ const getLocalStorage = () => {
 
 const showDate = (date) => {
     const options = { month: 'long', weekday: 'long', day: 'numeric' };
-    const currentDate = date.toLocaleDateString(`${opt.language}-${opt.language.charAt(0).toUpperCase() + opt.language.slice(1)}`, options);
-    dateToday.textContent = currentDate;
+    const currentDate = date.toLocaleDateString(`${opt.language}-${opt.language.toUpperCase()}`, options);
+    dateToday.textContent = currentDate.charAt(0).toUpperCase() + currentDate.slice(1);
 };
 
 const showGreeting = (date) => {
@@ -200,7 +159,6 @@ const showTime = () => {
 };
 
 const setName = () => {
-    // будем запускать каждый раз после смены языка
     if (opt.name) {
         name.value = opt.name;
     } else {
@@ -208,24 +166,54 @@ const setName = () => {
     }
 };
 
-const viewWeather = (data) => {
+const renderContent = (selector, obj) => {
+    document.querySelectorAll(selector).forEach((el) => {
+        let key = el.getAttribute(selector.slice(1, -1));
+        let content = get_content_from_key(key, obj);
+
+        if (content) {
+            if (el.textContent != content) {
+                el.textContent = content;
+            }
+        }
+    });
+};
+
+const setWeather = (data) => {
     if (opt.city !== city.value) {
         opt.city = city.value;
     }
+    const weather = {
+        class: `weather-icon owf owf-${data.weather[0].id}`,
+        error: ' ',
+        temperature: `${Math.ceil(data.main.temp)}°C`,
+        description: data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1),
+        wind: `${translation.weather[opt.language].wind} ${Math.ceil(data.wind.speed)} ${translation.weather[opt.language].metrics}`,
+        humidity: `${translation.weather[opt.language].humidity} ${data.main.humidity} %`,
+    };
+    console.log('wether ', weather);
+
+    renderContent('[data-wkey]', weather);
+    weatherIcon.className = weather.class;
+};
+
+const renderWeatherError = (msg) => {
+    document.querySelectorAll('[data-wkey]').forEach((el) => {
+        if (el.textContent.length > 0) {
+            el.textContent = '';
+        }
+        if (el.classList.contains('weather-error')) {
+            el.textContent = msg;
+        }
+    });
     weatherIcon.className = 'weather-icon owf';
-    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
-    weatherError.textContent = '';
-    temperature.textContent = `${Math.ceil(data.main.temp)}°C`;
-    weatherDescription.textContent = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
-    wind.textContent = `${translation.weather[opt.language].wind} ${Math.ceil(data.wind.speed)} ${translation.weather[opt.language].metrics}`;
-    humidity.textContent = `${translation.weather[opt.language].humidity} ${data.main.humidity} %`;
 };
 
 async function getData(url, cb, cbe) {
     try {
         const res = await fetch(url);
         const data = await res.json();
-        console.log(data);
+        console.log(url, data);
         if (res.ok) {
             cb(data);
         } else {
@@ -238,21 +226,18 @@ async function getData(url, cb, cbe) {
     }
 }
 
-const showWeatherError = (msg) => {
-    weatherError.textContent = msg;
-    weatherIcon.className = 'weather-icon owf';
-    temperature.textContent = '';
-    weatherDescription.textContent = '';
-    wind.textContent = '';
-    humidity.textContent = '';
-};
-
 const setBg = (src) => {
     const img = new Image();
-    img.src = src;
     img.onload = () => {
         body.style.backgroundImage = `url(${src})`;
     };
+    img.onerror = () => {
+        if (!body.style.backgroundImage) {
+            body.style.backgroundImage = 'url("../assets/img/bg.jpg")';
+        }
+        console.log('img not found 404');
+    };
+    img.src = src;
 };
 
 const getLinkToGitHub = () => {
@@ -260,10 +245,8 @@ const getLinkToGitHub = () => {
     if (numImg < 10) {
         numImg = String(randomNum).padStart(2, 0);
     }
-    console.log(randomNum);
-    console.log(numImg);
-    const src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${numImg}.jpg`;
-    console.log(src);
+    const src = `https://raw.githubusercontent.com/brodozer/stage1-tasks/assets/images/${timeOfDay}/${numImg}.jpg`;
+    console.log('gitHub ', src);
     setBg(src);
 };
 
@@ -280,7 +263,7 @@ const getLinkToUnsplash = () => {
             setBg(data.urls.regular);
         },
         function (data) {
-            console.log('unsplash ', data.errors[0]);
+            console.log('unsplash API ', data.errors[0]);
         }
     );
 };
@@ -300,7 +283,7 @@ const getLinkToFlickr = () => {
                 flickrImgs = data.photos.photo;
                 setBg(flickrImgs[getRandomNum(flickrImgs.length)].url_l);
             } else {
-                console.log('flickr ', data.message);
+                console.log('flickr API', data.message);
             }
         });
     } else {
@@ -321,8 +304,14 @@ const sourcePicture = (source) => {
     }
 };
 
+const setTags = () => {
+    if (opt.tags_img) {
+        tags.value = opt.tags_img;
+    }
+};
+
 const getTags = () => {
-    const value = tags.value;
+    const value = tags.value.trim();
     if (value.length > 0) {
         opt.tags_img = value;
         flickrImgs = [];
@@ -342,10 +331,10 @@ const getSlidePrev = () => {
 
 const getWeather = () => {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=${opt.language}&appid=a7456a1378b5bf993ba3b65764589120&units=metric`;
-    getData(url, viewWeather, function (data) {
-        console.log('openweather ', data.message);
-        //showWeatherError(translation.weather[opt.language].errors.found);
-        showWeatherError(data.message); // всегда на английском
+    getData(url, setWeather, function (data) {
+        console.log('openweather API', data.message);
+        renderWeatherError(translation.weather[opt.language].errors.found);
+        //renderWeatherError(data.message); // всегда на английском
     });
 };
 
@@ -392,7 +381,6 @@ const get_content_from_key = function (key, content_object) {
 };
 
 const settings_menu = (opt) => {
-    // вызывать только на ините
     document.querySelectorAll('[data-skey]').forEach(function (el) {
         let key = el.getAttribute('data-skey'); //show.time
         let content = get_content_from_key(key, opt);
@@ -402,23 +390,14 @@ const settings_menu = (opt) => {
             document.getElementById(el.dataset.id).classList.add('show');
         }
     });
+    // language and picture settings
     document.getElementById(opt.language).classList.add('on');
     document.getElementById(opt.source_img).classList.add('on');
 };
 
-const render_content = function (translation) {
-    // передавать этот объект translation.menu[opt.language]
-    // вызывать на ините
-    document.querySelectorAll('[data-ckey]').forEach(function (el) {
-        let key = el.getAttribute('data-ckey');
-        let content = get_content_from_key(key, translation);
+const renderMenu = function (translation) {
+    renderContent('[data-ckey]', translation);
 
-        if (content) {
-            if (el.textContent != content) {
-                el.textContent = content;
-            }
-        }
-    });
     document.querySelectorAll('[data-lkey]').forEach(function (list) {
         let key = list.getAttribute('data-lkey');
         let settingName = list.querySelectorAll('.setting-name');
@@ -431,8 +410,6 @@ const render_content = function (translation) {
     });
 };
 
-// обработать кнопки в меню
-
 const showWidget = (e) => {
     let target = e.target.closest('.slide-toggle');
     target.classList.toggle('on');
@@ -443,6 +420,12 @@ const showWidget = (e) => {
         opt.show[id] = true;
     }
     document.getElementById(id).classList.toggle('show');
+    if (id === 'player') {
+        if (!audio.paused) {
+            audio.pause();
+            playing = false;
+        }
+    }
     // если нужно скрыть блок полностью!!! display: none; opacity: 0
     // if (target.classList.contains('has-toggle')) {
     //     target.classList.remove('has-toggle');
@@ -500,16 +483,9 @@ const showWidget = (e) => {
     // };
 };
 
-// найти родителей переключения языка фоновой картинки и виджетов
-// накинуть атрибут в котором указать имя ф-и,
-// или закинуть ее в cb вторым параметром
-
 // some_function.bind(this, event, arg2, arg,3) передача нескольких аргументов в обработчик событий
 
-// повесить событие change на инпут для тегов и каждый раз запускать setBg
-
 const setActiveRadio = (e) => {
-    // вызывать при смене языка и источника картинок
     let target = e.target.closest('.radio-toggle');
     if (!target.classList.contains('on')) {
         target.closest('.settings-list').querySelector('.on').classList.remove('on');
@@ -521,9 +497,9 @@ const setActiveRadio = (e) => {
     }
 };
 
-const setLanguage = (e) => {
+const menuLanguage = (e) => {
     if (setActiveRadio(e)) {
-        render_content(translation.menu[opt.language]);
+        renderMenu(translation.menu[opt.language]);
         getWeather();
         getQuotes();
         setName();
@@ -531,7 +507,7 @@ const setLanguage = (e) => {
     }
 };
 
-const getPicture = (e) => {
+const menuPicture = (e) => {
     if (setActiveRadio(e)) {
         sourcePicture(opt.source_img);
     }
@@ -556,11 +532,12 @@ const toggleMenu = (e) => {
 
 const init = () => {
     getLocalStorage();
-    render_content(translation.menu[opt.language]);
+    renderMenu(translation.menu[opt.language]);
     settings_menu(opt);
     showTime();
     setName();
     setCity();
+    setTags();
     getWeather();
     getQuotes();
     sourcePicture(opt.source_img);
@@ -575,8 +552,8 @@ slidePrev.addEventListener('click', getSlidePrev);
 updateQuote.addEventListener('click', showQuotes);
 settings.addEventListener('click', toggleMenu);
 showList.addEventListener('click', showWidget);
-langList.addEventListener('click', setLanguage);
-sourceList.addEventListener('click', getPicture);
+langList.addEventListener('click', menuLanguage);
+sourceList.addEventListener('click', menuPicture);
 tags.addEventListener('change', getTags);
 
 name.addEventListener('change', () => {
@@ -585,9 +562,9 @@ name.addEventListener('change', () => {
 city.addEventListener('change', () => {
     let value = city.value;
     if (value.length == 0) {
-        showWeatherError(translation.weather[opt.language].errors.empty);
+        renderWeatherError(translation.weather[opt.language].errors.empty);
     } else if (!regEx.test(value)) {
-        showWeatherError(translation.weather[opt.language].errors.invalid);
+        renderWeatherError(translation.weather[opt.language].errors.invalid);
     } else {
         getWeather();
         //opt.city = value;
@@ -604,13 +581,3 @@ city.addEventListener('keydown', (event) => {
 //         menu.classList.remove('show');
 //     }
 // });
-
-// кнопку настроек достать из div
-
-// на ините забирать placeholder для name ... если en - enter your Name - ru - введите ваше Имя
-// при смене языка в настройках делать rebind и перезаписывать placeholder, если поле имя false
-
-// добавить описания для тегов
-
-//A comma-delimited list of tags. Photos with one or more of the tags listed will be returned. You can exclude results that match a term by prepending it with a - character.
-//max 20
