@@ -280,7 +280,7 @@ const getLinkToFlickr = () => {
         const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=f063269120ed7bae71ee949ba30d6d60&tags=${tags}&extras=url_l&format=json&nojsoncallback=1`;
         getData(url, function (data) {
             if (data.stat === 'ok') {
-                flickrImgs = data.photos.photo;
+                flickrImgs = data.photos.photo.filter((obj) => obj.hasOwnProperty('url_l'));
                 setBg(flickrImgs[getRandomNum(flickrImgs.length)].url_l);
             } else {
                 console.log('flickr API', data.message);
@@ -501,7 +501,7 @@ const menuLanguage = (e) => {
     if (setActiveRadio(e)) {
         renderMenu(translation.menu[opt.language]);
         getWeather();
-        getQuotes();
+        showQuotes();
         setName();
         setCity();
     }
