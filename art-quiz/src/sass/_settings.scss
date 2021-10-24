@@ -1,0 +1,89 @@
+.settings {
+	.settings-wrapper {
+		margin: 25px 0;
+		.settings-card {
+			height: 204px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+			align-items: center;
+			background-color: #fff;
+			margin-bottom: 20px;
+			.range {
+				display: flex;
+				align-items: center;
+				.mute {
+					width: 20px;
+					height: 20px;
+					background-image: url("../assets/images/svg/mute.svg");
+					background-repeat: no-repeat;
+					background-size: contain;
+					background-position: center;
+				}
+				.volume {
+					-webkit-appearance: none;
+					appearance: none;
+					width: 180px;
+					height: 4px;
+					background: #e5e5e5;
+					outline: none;
+					border-radius: 2px;
+					&::-webkit-slider-thumb {
+						-webkit-appearance: none;
+						appearance: none;
+						width: 15px;
+						height: 15px;
+						border-radius: 50%;
+						border: 2px solid #fff;
+						background: $main_color;
+						cursor: pointer;
+					}
+				}
+			}
+			.checkbox-label {
+				display: block;
+				width: 25px;
+				height: 25px;
+				margin: 0 auto 10px;
+				border: 1px solid $main_color;
+				position: relative;
+				cursor: pointer;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				.timer {
+					position: absolute;
+					opacity: 0;
+					cursor: pointer;
+					height: 0;
+					width: 0;
+					&:checked ~ .checkmark {
+						background-image: url("../assets/images/svg/checkmark.svg");
+					}
+				}
+				.checkmark {
+					position: absolute;
+					top: 0;
+					left: 0;
+					height: 100%;
+					width: 100%;
+					background-position: center;
+					background-repeat: no-repeat;
+					background-size: contain;
+				}
+			}
+			.settings-title {
+				font-weight: 700;
+				font-size: 36px;
+			}
+		}
+	}
+	.settings-btn-group {
+		justify-content: space-between;
+		.btn {
+			padding: 0;
+			justify-content: center;
+		}
+	}
+}

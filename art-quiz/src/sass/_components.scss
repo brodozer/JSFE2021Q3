@@ -1,0 +1,92 @@
+* {
+	font-family: "Montserrat", sans-serif;
+	text-transform: uppercase;
+	color: $main_color;
+}
+
+body {
+	height: 100vh;
+	background-image: url("../assets/images/background.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.container {
+	padding: 0 15px;
+	margin: 0 auto;
+	@include md {
+		max-width: $cw_md;
+	}
+	@include lg {
+		max-width: $cw_lg;
+	}
+}
+
+.d-none {
+	display: none !important;
+}
+
+.d-flex {
+	display: flex;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+.pseudo {
+	position: relative;
+	&:after {
+		content: "";
+		display: block;
+		position: absolute;
+	}
+}
+
+.responsive {
+	position: relative;
+	overflow: hidden;
+	height: 0;
+	padding-bottom: 57%;
+	img {
+		position: absolute;
+		width: 100%;
+		left: 50%;
+		top: 50%;
+		transform: translate3d(-50%, -50%, 0);
+	}
+}
+
+.object-fit {
+	overflow: hidden;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+}
+
+.btn-group {
+	display: flex;
+}
+
+.btn {
+	width: 150px;
+	height: 50px;
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	padding-right: 7px;
+	background-color: $main_color;
+	color: #fff;
+	font-size: 18px;
+	background-size: 45px;
+	background-repeat: no-repeat;
+	background-position: 3px center;
+	&-settings {
+		background-image: url("../assets/images/svg/settings.svg");
+	}
+}

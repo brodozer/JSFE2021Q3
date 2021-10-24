@@ -1,0 +1,65 @@
+.home {
+	max-width: 500px;
+	margin: 0 auto;
+	@include lg {
+		max-width: 100%;
+	}
+	.quiz-type {
+		margin: 20px 0;
+		@include sm {
+			margin: 55px 0;
+		}
+		@include lg {
+			display: flex;
+			justify-content: space-between;
+			margin: 100px 0;
+		}
+	}
+	.card {
+		margin-bottom: 15px;
+		@include lg {
+			margin: 0;
+		}
+		.card-image {
+			//box-shadow: -10px 10px 10px 0px #969696;
+			padding-bottom: 64%;
+			@include lg {
+				padding-bottom: 100%;
+				margin-bottom: 15px;
+				width: 415px;
+			}
+		}
+		.card-title {
+			position: absolute;
+			z-index: 2;
+			bottom: -2px;
+			left: 0;
+			width: 100%;
+			padding-right: 5px;
+			font-size: 36px;
+			font-weight: 700;
+			text-align: right;
+			@include lg {
+				position: static;
+			}
+			span {
+				font-weight: 400;
+			}
+		}
+		&:after {
+			width: 100%;
+			height: 40px;
+			background-color: rgba(255, 255, 255, 0.75);
+			bottom: 7px;
+			@include sm {
+				height: 60px;
+			}
+			@include lg {
+				display: none;
+			}
+		}
+	}
+	.btn-group {
+		justify-content: center;
+	}
+}

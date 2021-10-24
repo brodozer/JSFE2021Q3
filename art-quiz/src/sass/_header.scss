@@ -1,3 +1,42 @@
-h1 {
-	color: #00ff;
+.header {
+	padding-top: 15px;
+	@include sm {
+		padding-top: 60px;
+	}
+	.header-logo {
+		img {
+			width: 100px;
+			margin: 0 auto;
+			@include sm {
+				width: 150px;
+			}
+			@include lg {
+				width: 220px;
+			}
+		}
+	}
+	.header-title {
+		margin-top: 15px;
+		text-align: left;
+		font-weight: 400;
+		font-size: 24px;
+		@include md {
+			text-align: center;
+		}
+	}
+	&.toggle {
+		.header-top {
+			display: flex;
+			.header-logo,
+			.header-title {
+				width: 50%;
+			}
+			.header-logo img {
+				margin: 0;
+			}
+			.header-title {
+				align-self: flex-end;
+			}
+		}
+	}
 }

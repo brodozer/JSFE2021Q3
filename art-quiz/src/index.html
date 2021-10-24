@@ -10,9 +10,105 @@
 			type="image/x-icon"
 		/>
 		<link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
 		<title>Art-Quiz</title>
 	</head>
 	<body>
-		<h1>art-quiz</h1>
+		<header>
+			<div class="header toggle">
+				<div class="container">
+					<div class="header-top">
+						<div class="header-logo">
+							<img src="assets/images/svg/logo.png" alt="logo" />
+						</div>
+						<!-- title инжектить динамично, в зависимости, от того, где находится пользователь -->
+						<div class="header-title">settings</div>
+					</div>
+					<div class="btn-group header-btn-group d-none">
+						<button class="btn btn-home">home</button>
+						<!-- в кнопках менять класс и название и перекидывать обработчик (кнопка будет одна) -->
+						<button class="btn btn-score">score</button>
+						<button class="btn btn-categories">category</button>
+					</div>
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="container">
+				<div class="home d-none">
+					<div class="quiz-type">
+						<div class="card pseudo">
+							<div class="card-image responsive">
+								<img src="assets/images/home/artists-quiz.jpg" />
+							</div>
+							<div class="card-title">Artists <span>quiz</span></div>
+						</div>
+						<div class="card pseudo">
+							<div class="card-image responsive">
+								<img src="assets/images/home/pictures-quiz.jpg" />
+							</div>
+							<div class="card-title">Pictures <span>quiz</span></div>
+						</div>
+					</div>
+					<div class="btn-group">
+						<button class="btn btn-settings">settings</button>
+					</div>
+				</div>
+				<div class="settings">
+					<div class="settings-wrapper">
+						<div class="settings-card">
+							<img
+								class="volume-icon"
+								src="assets/images/svg/volume.svg"
+								alt="volume"
+							/>
+							<div class="range">
+								<button class="mute"></button>
+								<input class="volume" type="range" />
+							</div>
+							<div class="settings-title">Volume</div>
+						</div>
+						<div class="settings-card">
+							<img
+								class="time-icon"
+								src="assets/images/svg/timer.svg"
+								alt="time"
+							/>
+							<div class="checkbox-container">
+								<label class="checkbox-label">
+									<input class="timer" type="checkbox" checked />
+									<span class="checkmark"></span>
+								</label>
+								<span class="checkbox-title">on/off</span>
+							</div>
+							<div class="settings-title">Time game</div>
+						</div>
+					</div>
+					<div class="btn-group settings-btn-group">
+						<button class="btn btn-save">save</button>
+						<button class="btn btn-default">default</button>
+					</div>
+				</div>
+				<div class="content d-none">
+					<div class="categoties"></div>
+					<div class="score">
+						<div class="score-content"></div>
+						<div class="btn-group score-pagination">
+							<button class="btn-left"></button>
+							<span class="pages">1/20</span>
+							<button class="btn-right"></button>
+						</div>
+					</div>
+				</div>
+				<button class="btn-scroll d-none"></button>
+			</div>
+		</main>
+		<div class="quiz"></div>
+		<div class="modals"></div>
 	</body>
 </html>
