@@ -20,7 +20,7 @@
 	</head>
 	<body>
 		<header>
-			<div class="header toggle">
+			<div class="header">
 				<div class="container">
 					<div class="header-top">
 						<div class="header-logo">
@@ -29,11 +29,11 @@
 						<!-- title инжектить динамично, в зависимости, от того, где находится пользователь -->
 						<div class="header-title">settings</div>
 					</div>
-					<div class="btn-group header-btn-group d-none">
+					<div class="btn-group header-btn-group">
 						<button class="btn btn-home">home</button>
 						<!-- в кнопках менять класс и название и перекидывать обработчик (кнопка будет одна) -->
 						<button class="btn btn-score">score</button>
-						<button class="btn btn-categories">category</button>
+						<button class="btn btn-categories d-none">category</button>
 					</div>
 				</div>
 			</div>
@@ -59,7 +59,7 @@
 						<button class="btn btn-settings">settings</button>
 					</div>
 				</div>
-				<div class="settings">
+				<div class="settings d-none">
 					<div class="settings-wrapper">
 						<div class="settings-card">
 							<img
@@ -94,9 +94,112 @@
 						<button class="btn btn-default">default</button>
 					</div>
 				</div>
-				<div class="content d-none">
-					<div class="categoties"></div>
-					<div class="score">
+				<div class="content">
+					<div class="categories">
+						<div class="card play" id="round_0">
+							<div class="card-title">
+								<div class="number">1</div>
+								<div class="score">9/10</div>
+							</div>
+							<div class="card-img">
+								<img class="color" src="assets/images/categories/category-01-color.jpg" alt="1-color">
+								<img class="grey" src="assets/images/categories/category-01-grayscale.jpg" alt="1-greyscale">
+							</div>
+						</div>
+						<div class="card" id="round_1">
+							<div class="card-title">
+								<div class="number">2</div>
+								<div class="score">9/10</div>
+							</div>
+							<div class="card-img">
+								<img class="color" src="assets/images/categories/category-02-color.jpg" alt="2-color">
+								<img class="grey" src="assets/images/categories/category-02-grayscale.jpg" alt="2-greyscale">
+							</div>
+							<!-- кнопки появляются только после прохождения всех раундов или после каждого раунда? -->
+							<button class="btn btn-play">play again</button>
+						</div>
+						<div class="card" id="round_2">
+							<div class="card-title">
+								<div class="number">3</div>
+								<div class="score"></div>
+							</div>
+							<div class="card-img">
+								<img class="color" src="assets/images/categories/category-03-color.jpg" alt="3-color">
+								<img class="grey" src="assets/images/categories/category-03-grayscale.jpg" alt="3-greyscale">
+							</div>
+						</div>
+						<div class="card" id="round_3">
+							<div class="card-title">
+								<div class="number">4</div>
+								<div class="score">9/10</div>
+							</div>
+							<div class="card-img">
+								<img class="color" src="assets/images/categories/category-04-color.jpg" alt="4-color">
+								<img class="grey" src="assets/images/categories/category-04-grayscale.jpg" alt="4-greyscale">
+							</div>
+						</div>
+						<div class="card play" id="round_4">
+							<div class="card-title">
+								<div class="number">5</div>
+								<div class="score">9/10</div>
+							</div>
+							<div class="card-img">
+								<img class="color" src="assets/images/categories/category-05-color.jpg" alt="5-color">
+								<img class="grey" src="assets/images/categories/category-05-grayscale.jpg" alt="5-greyscale">
+							</div>
+						</div>
+						<div class="card play" id="round_5">
+							<div class="card-title">
+								<div class="number">6</div>
+								<div class="score">9/10</div>
+							</div>
+							<div class="card-img">
+								<img class="color" src="assets/images/categories/category-06-color.jpg" alt="6-color">
+								<img class="grey" src="assets/images/categories/category-06-grayscale.jpg" alt="6-greyscale">
+							</div>
+						</div>
+						<div class="card play" id="round_6">
+							<div class="card-title">
+								<div class="number">7</div>
+								<div class="score">9/10</div>
+							</div>
+							<div class="card-img">
+								<img class="color" src="assets/images/categories/category-07-color.jpg" alt="7-color">
+								<img class="grey" src="assets/images/categories/category-07-grayscale.jpg" alt="7-greyscale">
+							</div>
+						</div>
+						<div class="card play" id="round_7">
+							<div class="card-title">
+								<div class="number">8</div>
+								<div class="score">9/10</div>
+							</div>
+							<div class="card-img">
+								<img class="color" src="assets/images/categories/category-08-color.jpg" alt="8-color">
+								<img class="grey" src="assets/images/categories/category-08-grayscale.jpg" alt="8-greyscale">
+							</div>
+						</div>
+						<div class="card play" id="round_8">
+							<div class="card-title">
+								<div class="number">9</div>
+								<div class="score">9/10</div>
+							</div>
+							<div class="card-img">
+								<img class="color" src="assets/images/categories/category-09-color.jpg" alt="9-color">
+								<img class="grey" src="assets/images/categories/category-09-grayscale.jpg" alt="9-greyscale">
+							</div>
+						</div>
+						<div class="card play" id="round_9">
+							<div class="card-title">
+								<div class="number">10</div>
+								<div class="score">9/10</div>
+							</div>
+							<div class="card-img">
+								<img class="color" src="assets/images/categories/category-10-color.jpg" alt="10-color">
+								<img class="grey" src="assets/images/categories/category-10-grayscale.jpg" alt="10-greyscale">
+							</div>
+						</div>
+					</div>
+					<div class="score d-none">
 						<div class="score-content"></div>
 						<div class="btn-group score-pagination">
 							<button class="btn-left"></button>
@@ -105,7 +208,9 @@
 						</div>
 					</div>
 				</div>
-				<button class="btn-scroll d-none"></button>
+				<!-- кнопка будет только в score! перенести -->
+				<button class="btn-scroll d-none"></button> 
+				</div>
 			</div>
 		</main>
 		<div class="quiz"></div>

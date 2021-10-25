@@ -1,12 +1,24 @@
 .header {
+	@include sm {
+		.container {
+			position: relative;
+		}
+	}
 	padding-top: 15px;
 	@include sm {
 		padding-top: 60px;
 	}
+	.header-top {
+		display: flex;
+		justify-content: center;
+		@include sm {
+			flex-direction: column;
+			align-items: center;
+		}
+	}
 	.header-logo {
 		img {
 			width: 100px;
-			margin: 0 auto;
 			@include sm {
 				width: 150px;
 			}
@@ -16,27 +28,26 @@
 		}
 	}
 	.header-title {
-		margin-top: 15px;
+		margin: 0 auto;
 		text-align: left;
 		font-weight: 400;
 		font-size: 24px;
-		@include md {
-			text-align: center;
+		align-self: flex-end;
+		@include sm {
+			margin: 0;
+			padding-top: 15px;
+			align-self: center;
 		}
 	}
-	&.toggle {
-		.header-top {
-			display: flex;
-			.header-logo,
-			.header-title {
-				width: 50%;
-			}
-			.header-logo img {
-				margin: 0;
-			}
-			.header-title {
-				align-self: flex-end;
-			}
+	.header-btn-group {
+		margin: 15px 0;
+		justify-content: space-around;
+		@include sm {
+			position: absolute;
+			bottom: -11px;
+			margin: 0;
+			width: calc(100% - 30px);
+			justify-content: space-between;
 		}
 	}
 }

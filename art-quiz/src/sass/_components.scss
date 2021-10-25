@@ -85,8 +85,41 @@ img {
 	font-size: 18px;
 	background-size: 45px;
 	background-repeat: no-repeat;
-	background-position: 3px center;
+	background-position: 7px center;
 	&-settings {
 		background-image: url("../assets/images/svg/settings.svg");
 	}
+	&-home {
+		background-image: url("../assets/images/svg/home.svg");
+	}
+	&-categories {
+		background-image: url("../assets/images/svg/categories.svg");
+		background-size: 29px 24px;
+	}
+	&-score {
+		background-image: url("../assets/images/svg/score.svg");
+	}
+	&-play {
+		background-image: url("../assets/images/svg/play.svg");
+		background-size: 31px 35px;
+	}
+}
+
+.content {
+	@include sm {
+		padding-top: 30px;
+	}
+}
+
+.btn-scroll {
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	left: 50%;
+	bottom: 40px;
+	transform: translateX(-50%);
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-image: url(../assets/images/svg/scroll.png);
 }
