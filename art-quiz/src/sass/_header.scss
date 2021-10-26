@@ -41,13 +41,12 @@
 	}
 	.header-btn-group {
 		margin: 15px 0;
-		justify-content: space-around;
+		justify-content: space-between;
 		@include sm {
 			position: absolute;
 			bottom: -11px;
 			margin: 0;
 			width: calc(100% - 30px);
-			justify-content: space-between;
 		}
 	}
 }

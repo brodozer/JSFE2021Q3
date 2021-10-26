@@ -1,0 +1,130 @@
+.quiz {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	position: absolute;
+	top: 0;
+	left: 0;
+	flex-direction: column;
+	background-image: url("../assets/images/background.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	.quiz-head {
+		padding: 15px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		.logo {
+			width: 100px;
+			img {
+				width: 100%;
+			}
+		}
+		.timer {
+			display: flex;
+			align-items: center;
+			height: 50px;
+			font-size: 30px;
+			padding-left: 50px;
+			background-image: url("../assets/images/svg/timer.svg");
+			background-repeat: no-repeat;
+			background-position: left bottom;
+			background-size: contain;
+			cursor: pointer;
+			transition: all 0.3s;
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.5);
+			}
+		}
+		.btn-home {
+			width: 50px;
+			padding: 0;
+			background-position: center;
+		}
+		.question {
+			padding-top: 15px;
+			text-align: center;
+			font-size: 24px;
+			width: 100%;
+		}
+	}
+	.img-container {
+		position: relative;
+		flex: 1 1 auto;
+		display: flex;
+		align-items: flex-end;
+		img {
+			width: 100%;
+		}
+		.progress {
+			display: flex;
+			justify-content: space-between;
+			position: absolute;
+			height: 8px;
+			width: 155px;
+			bottom: 15px;
+			left: 50%;
+			transform: translateX(-50%);
+			span {
+				display: block;
+				width: 8px;
+				height: 100%;
+				border-radius: 50%;
+				background-color: #c4c4c4;
+				&.on {
+					background-color: #006635;
+				}
+			}
+		}
+	}
+	.answer {
+		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+		&:after,
+		&:before {
+			content: "";
+			display: block;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate3d(-50%, -50%, 0);
+			background-color: $main_color;
+		}
+		&:after {
+			width: 90%;
+			height: 2px;
+		}
+		&:before {
+			height: 75%;
+			width: 2px;
+		}
+		label {
+			width: 50%;
+			height: 60px;
+			line-height: 60px;
+			background-color: #fff;
+			font-size: 24px;
+			cursor: pointer;
+			&:nth-child(1n) {
+				padding-left: 12px;
+				text-align: left;
+			}
+			&:nth-child(2n) {
+				padding-right: 12px;
+				text-align: right;
+			}
+			&:hover {
+				background-color: rgba(102, 0, 51, 0.5);
+			}
+			&:active {
+				background-color: rgba(0, 102, 53, 0.5);
+			}
+			input {
+				display: none;
+			}
+		}
+	}
+}

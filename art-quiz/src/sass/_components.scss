@@ -105,11 +105,37 @@ img {
 	}
 }
 
-.content {
+.content-wrap {
 	@include sm {
 		padding-top: 30px;
 	}
+	.content {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2px;
+		@include sm {
+			gap: 5px;
+		}
+		@include lg {
+			gap: 20px;
+		}
+		.card {
+			position: relative;
+			background-color: #fff;
+			flex: 0 1 calc((100% / 3) - 2px);
+			padding-bottom: 2px;
+			@include sm {
+				padding-bottom: 6px;
+				flex-basis: calc((100% / 4) - 4px);
+			}
+			@include lg {
+				flex-basis: calc((100% / 5) - 20px);
+			}
+		}
+	}
 }
+
+// кнопка для обнолвения списка картин для таблетки и телефона
 
 .btn-scroll {
 	width: 25px;
@@ -121,5 +147,5 @@ img {
 	background-position: center;
 	background-size: contain;
 	background-repeat: no-repeat;
-	background-image: url(../assets/images/svg/scroll.png);
+	//background-image: url(../assets/images/svg/arrow.png);
 }
