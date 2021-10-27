@@ -1,21 +1,37 @@
 .quiz {
 	height: 100vh;
 	width: 100%;
-	display: flex;
 	position: absolute;
 	top: 0;
 	left: 0;
-	flex-direction: column;
 	background-image: url("../assets/images/background.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
+	.quiz-container {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		@include md {
+			max-width: 768px;
+			margin: 0 auto;
+		}
+		@include lg {
+			max-width: 1000px;
+		}
+	}
 	.quiz-head {
 		padding: 15px;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: center;
+		@include md {
+			padding: 40px 60px;
+		}
+		@include lg {
+			padding: 20px 0;
+		}
 		.logo {
 			width: 100px;
 			img {
@@ -38,7 +54,7 @@
 				background-color: rgba(255, 255, 255, 0.5);
 			}
 		}
-		.btn-home {
+		.btn-categories {
 			width: 50px;
 			padding: 0;
 			background-position: center;
@@ -48,31 +64,50 @@
 			text-align: center;
 			font-size: 24px;
 			width: 100%;
+			@include sm {
+				font-size: 30px;
+				font-weight: 700;
+			}
 		}
 	}
-	.img-container {
+	.quiz-content {
 		position: relative;
 		flex: 1 1 auto;
-		display: flex;
-		align-items: flex-end;
-		img {
-			width: 100%;
+		.img-container {
+			height: 100%;
+			.img {
+				// прописать в style элемента
+				background-image: url(../assets/images/quiz_full.jpeg);
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center;
+				transition: all 0.3s;
+			}
 		}
 		.progress {
+			position: absolute;
+			bottom: 0;
+			width: 150px;
 			display: flex;
 			justify-content: space-between;
-			position: absolute;
-			height: 8px;
-			width: 155px;
-			bottom: 15px;
+			padding: 15px 0;
 			left: 50%;
 			transform: translateX(-50%);
+			@include sm {
+				width: 330px;
+				padding: 26px 0;
+			}
 			span {
 				display: block;
 				width: 8px;
-				height: 100%;
+				height: 8px;
 				border-radius: 50%;
 				background-color: #c4c4c4;
+				transition: all 0.3s;
+				@include sm {
+					width: 15px;
+					height: 15px;
+				}
 				&.on {
 					background-color: #006635;
 				}
@@ -83,6 +118,10 @@
 		position: relative;
 		display: flex;
 		flex-wrap: wrap;
+		@include lg {
+			width: 530px;
+			margin: 40px auto 55px;
+		}
 		&:after,
 		&:before {
 			content: "";
@@ -104,27 +143,81 @@
 		label {
 			width: 50%;
 			height: 60px;
-			line-height: 60px;
-			background-color: #fff;
-			font-size: 24px;
 			cursor: pointer;
-			&:nth-child(1n) {
-				padding-left: 12px;
-				text-align: left;
+			span {
+				display: block;
+				line-height: 60px;
+				background-color: #fff;
+				font-size: 24px;
+				@include sm {
+					line-height: 80px;
+				}
 			}
-			&:nth-child(2n) {
-				padding-right: 12px;
-				text-align: right;
+			@include sm {
+				height: 80px;
 			}
-			&:hover {
+			&:hover span {
 				background-color: rgba(102, 0, 51, 0.5);
-			}
-			&:active {
-				background-color: rgba(0, 102, 53, 0.5);
+				color: #fff;
 			}
 			input {
 				display: none;
+				&:checked ~ span {
+					background-color: rgba(0, 102, 53, 0.5);
+					color: #fff;
+				}
 			}
+		}
+	}
+	&.quiz-artists {
+		.img {
+			width: 100%;
+			height: 100%;
+		}
+		.answer label {
+			&:nth-child(odd) span {
+				padding-left: 12px;
+				text-align: left;
+				@include sm {
+					padding-left: 20%;
+				}
+				@include lg {
+					padding-left: 20px;
+				}
+			}
+			&:nth-child(even) span {
+				padding-right: 12px;
+				text-align: right;
+				@include sm {
+					padding-right: 20%;
+				}
+				@include lg {
+					padding-right: 20px;
+				}
+			}
+		}
+	}
+	&.quiz-pictures {
+		.img-container {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			.img {
+				width: 100%;
+				height: calc((100% / 4) - 4px);
+				@include sm {
+					flex: 1 1 calc((100% / 2) - 4px);
+					height: calc((100% / 2) - 3px);
+				}
+			}
+			@include sm {
+				flex-direction: row;
+				flex-wrap: wrap;
+				gap: 5px;
+			}
+		}
+		span {
+			text-align: center;
 		}
 	}
 }

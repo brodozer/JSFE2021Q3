@@ -1,52 +1,31 @@
 .header {
-	@include sm {
-		.container {
-			position: relative;
-		}
-	}
 	padding-top: 15px;
 	@include sm {
 		padding-top: 60px;
 	}
-	.header-top {
-		display: flex;
-		justify-content: center;
-		@include sm {
-			flex-direction: column;
-			align-items: center;
-		}
-	}
-	.header-logo {
-		img {
-			width: 100px;
+	.container {
+		position: relative;
+		.header-logo {
+			display: flex;
+			justify-content: flex-start;
 			@include sm {
-				width: 150px;
+				justify-content: center;
 			}
-			@include lg {
-				width: 220px;
+			img {
+				width: 100px;
+				@include sm {
+					width: 150px;
+				}
+				@include lg {
+					width: 220px;
+				}
 			}
 		}
-	}
-	.header-title {
-		margin: 0 auto;
-		text-align: left;
-		font-weight: 400;
-		font-size: 24px;
-		align-self: flex-end;
-		@include sm {
-			margin: 0;
-			padding-top: 15px;
-			align-self: center;
-		}
-	}
-	.header-btn-group {
-		margin: 15px 0;
-		justify-content: space-between;
-		@include sm {
+		.btn {
 			position: absolute;
-			bottom: -11px;
-			margin: 0;
-			width: calc(100% - 30px);
+			top: 0;
+			right: 0;
+			margin-right: 15px;
 		}
 	}
 }

@@ -22,18 +22,10 @@
 		<header>
 			<div class="header">
 				<div class="container">
-					<div class="header-top">
-						<div class="header-logo">
-							<img src="assets/images/svg/logo.png" alt="logo" />
-						</div>
-						<!-- title инжектить динамично, в зависимости, от того, где находится пользователь -->
-						<div class="header-title">settings</div>
-					</div>
-					<div class="btn-group header-btn-group">
-						<button class="btn btn-home">home</button>
-						<!-- в кнопках менять класс и название и перекидывать обработчик (кнопка будет одна) -->
-						<button class="btn btn-score">score</button>
-						<button class="btn btn-categories d-none">category</button>
+					<button class="btn btn-home">home</button>
+					<button class="btn btn-categories d-none">category</button>
+					<div class="header-logo">
+						<img src="assets/images/svg/logo.png" alt="logo" />
 					</div>
 				</div>
 			</div>
@@ -60,6 +52,7 @@
 					</div>
 				</div>
 				<div class="settings d-none">
+					<div class="title">settings</div>
 					<div class="settings-wrapper">
 						<div class="settings-card">
 							<img
@@ -95,7 +88,8 @@
 					</div>
 				</div>
 				<div class="content-wrap">
-					<div class="categories content d-none">
+					<div class="title">categories</div>
+					<div class="categories content">
 						<div class="card play" id="round_0">
 							<div class="card-title">
 								<div class="number">1</div>
@@ -280,10 +274,11 @@
 						</div>
 					</div>
 					<div class="score d-none">
+						<div class="title">result</div>
 						<div class="score-content content">
 							<div class="card">
 								<!-- title = index + 1 или текущий раунд-->
-								<div class="title correct">10 category</div>
+								<div class="card-title correct">10 category</div>
 								<div class="img">
 									<!-- alt score-index -->
 									<img
@@ -300,7 +295,7 @@
 							</div>
 							<div class="card">
 								<!-- title = index + 1 или текущий раунд-->
-								<div class="title wrong">2 category</div>
+								<div class="card-title wrong">2 category</div>
 								<div class="img">
 									<!-- alt score-index -->
 									<img
@@ -311,7 +306,7 @@
 							</div>
 							<div class="card">
 								<!-- title = index + 1 или текущий раунд-->
-								<div class="title">2 category</div>
+								<div class="card-title">2 category</div>
 								<div class="img">
 									<!-- alt score-index -->
 									<img
@@ -322,49 +317,72 @@
 								</div>
 							</div>
 						</div>
-						<div class="btn-group score-pagination">
-							<button class="btn-left"></button>
-							<span class="pages">1/20</span>
-							<button class="btn-right"></button>
-						</div>
 					</div>
 				</div>
 			</div>
 		</main>
-		<div class="quiz">
-			<div class="quiz-head">
-				<div class="logo">
-					<img src="assets/images/svg/logo.png" alt="logo" />
+		<div class="quiz quiz-pictures d-none">
+			<div class="quiz-container">
+				<div class="quiz-head">
+					<div class="logo">
+						<img src="assets/images/svg/logo.png" alt="logo" />
+					</div>
+					<div class="timer">3:59</div>
+					<button class="btn btn-categories"></button>
+					<div class="question">Who is the author of this picture ?</div>
 				</div>
-				<div class="timer">3:59</div>
-				<button class="btn btn-home"></button>
-				<div class="question">Who is the author of this picture ?</div>
-			</div>
-			<div class="img-container">
-				<img src="assets/images/categories/category-01-color.jpg" alt="" />
-				<div class="progress">
-					<span class="on"></span><span class="on"></span
-					><span class="on"></span><span></span><span></span><span></span
-					><span></span><span></span><span></span><span></span>
+				<div class="quiz-content">
+					<!-- <div class="img-container">
+						<div class="img"></div>
+					</div> -->
+					<div class="img-container">
+						<div class="img"></div>
+						<div class="img"></div>
+						<div class="img"></div>
+						<div class="img"></div>
+					</div>
+					<div class="progress">
+						<span class="on"></span><span class="on"></span
+						><span class="on"></span><span></span><span></span><span></span
+						><span></span><span></span><span></span><span></span>
+					</div>
 				</div>
-			</div>
-			<div class="answer">
-				<label
-					>Van Gogh
-					<input type="radio" name="answer" value="Van Gogh" />
-				</label>
-				<label
-					>J. Vermeer
-					<input type="radio" name="answer" value="J. Vermeer" />
-				</label>
-				<label
-					>P. Rubens
-					<input type="radio" name="answer" value="P. Rubens" />
-				</label>
-				<label
-					>V. Serov
-					<input type="radio" name="answer" value="V. Serov" />
-				</label>
+				<!-- <div class="answer">
+					<label>
+						<input type="radio" name="answer" value="Van Gogh" />
+						<span>Van Gogh</span>
+					</label>
+					<label>
+						<input type="radio" name="answer" value="J. Vermeer" />
+						<span>J. Vermeer</span>
+					</label>
+					<label>
+						<input type="radio" name="answer" value="P. Rubens" />
+						<span>P. Rubens</span>
+					</label>
+					<label>
+						<input type="radio" name="answer" value="V. Serov" />
+						<span>V. Serov</span>
+					</label>
+				</div> -->
+				<div class="answer">
+					<label>
+						<input type="radio" name="answer" value="name pictire 1" />
+						<span>A</span>
+					</label>
+					<label>
+						<input type="radio" name="answer" value="name pictire 2" />
+						<span>B</span>
+					</label>
+					<label>
+						<input type="radio" name="answer" value="name pictire 3" />
+						<span>C</span>
+					</label>
+					<label>
+						<input type="radio" name="answer" value="name pictire 4" />
+						<span>D</span>
+					</label>
+				</div>
 			</div>
 		</div>
 		<div class="modals"></div>
