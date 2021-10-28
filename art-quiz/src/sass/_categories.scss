@@ -1,9 +1,4 @@
 .categories {
-	max-height: 483px; // задать значение в %
-	overflow: auto;
-	@include sm {
-		max-height: 600px;
-	}
 	.card {
 		.card-title {
 			display: flex;
@@ -18,6 +13,9 @@
 				font-weight: 700;
 				line-height: 27px;
 				color: #555555;
+				&.color {
+					color: $main_color;
+				}
 				@include sm {
 					font-size: 72px;
 					line-height: 50px;
@@ -31,21 +29,7 @@
 				}
 			}
 		}
-		.color {
-			display: none;
-		}
-		&.play {
-			.number {
-				color: $main_color;
-			}
-			.grey {
-				display: none;
-			}
-			.color {
-				display: block;
-			}
-		}
-		.btn-play {
+		.btn-result {
 			position: absolute;
 			bottom: 6px;
 			width: 100%;

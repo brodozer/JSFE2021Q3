@@ -1,0 +1,38 @@
+.result {
+	.card {
+		padding-top: 45px;
+		background-repeat: no-repeat;
+		background-position: center 10px;
+		background-size: 25px;
+		img {
+			width: 100%;
+		}
+		.descriptions {
+			position: absolute;
+			width: 100%;
+			bottom: 2px;
+			padding: 6px;
+			background: rgba(255, 255, 255, 0.75);
+			p {
+				font-size: 13px;
+				font-weight: 400;
+				text-align: center;
+				@include sm {
+					font-size: 14px;
+					&:first-child {
+						margin-bottom: 15px;
+					}
+				}
+			}
+		}
+		&.correct {
+			background-image: url("../assets/images/svg/correct.svg");
+		}
+		&.wrong {
+			background-image: url("../assets/images/svg/wrong.svg");
+			.img {
+				filter: grayscale(1);
+			}
+		}
+	}
+}

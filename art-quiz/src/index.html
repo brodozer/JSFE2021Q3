@@ -9,7 +9,7 @@
 			href="assets/images/favicon.ico"
 			type="image/x-icon"
 		/>
-		<link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="assets/images/favicon.png" type="image/x-icon" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -53,7 +53,7 @@
 				</div>
 				<div class="settings d-none">
 					<div class="title">settings</div>
-					<div class="settings-wrapper">
+					<div class="card-wrap">
 						<div class="settings-card">
 							<img
 								class="volume-icon"
@@ -87,198 +87,40 @@
 						<button class="btn btn-default">default</button>
 					</div>
 				</div>
-				<div class="content-wrap">
-					<div class="title">categories</div>
-					<div class="categories content">
-						<div class="card play" id="round_0">
-							<div class="card-title">
-								<div class="number">1</div>
-								<div class="score">9/10</div>
+				<div class="content-container d-none">
+					<div class="categories d-none">
+						<div class="title">categories</div>
+						<div class="content">
+							<div class="card" id="round_0">
+								<div class="card-title">
+									<div class="number color">1</div>
+									<div class="score">9/10</div>
+								</div>
+								<div class="card-img">
+									<img
+										src="assets/images/categories/category-01-color.jpg"
+										alt="1-color"
+									/>
+								</div>
+								<button class="btn btn-result">result</button>
 							</div>
-							<div class="card-img">
-								<img
-									class="color"
-									src="assets/images/categories/category-01-color.jpg"
-									alt="1-color"
-								/>
-								<img
-									class="grey"
-									src="assets/images/categories/category-01-grayscale.jpg"
-									alt="1-greyscale"
-								/>
-							</div>
-						</div>
-						<div class="card" id="round_1">
-							<div class="card-title">
-								<div class="number">2</div>
-								<div class="score">9/10</div>
-							</div>
-							<div class="card-img">
-								<img
-									class="color"
-									src="assets/images/categories/category-02-color.jpg"
-									alt="2-color"
-								/>
-								<img
-									class="grey"
-									src="assets/images/categories/category-02-grayscale.jpg"
-									alt="2-greyscale"
-								/>
-							</div>
-							<!-- кнопки появляются только после прохождения всех раундов или после каждого раунда? -->
-							<button class="btn btn-play">play again</button>
-						</div>
-						<div class="card" id="round_2">
-							<div class="card-title">
-								<div class="number">3</div>
-								<div class="score"></div>
-							</div>
-							<div class="card-img">
-								<img
-									class="color"
-									src="assets/images/categories/category-03-color.jpg"
-									alt="3-color"
-								/>
-								<img
-									class="grey"
-									src="assets/images/categories/category-03-grayscale.jpg"
-									alt="3-greyscale"
-								/>
-							</div>
-						</div>
-						<div class="card" id="round_3">
-							<div class="card-title">
-								<div class="number">4</div>
-								<div class="score">9/10</div>
-							</div>
-							<div class="card-img">
-								<img
-									class="color"
-									src="assets/images/categories/category-04-color.jpg"
-									alt="4-color"
-								/>
-								<img
-									class="grey"
-									src="assets/images/categories/category-04-grayscale.jpg"
-									alt="4-greyscale"
-								/>
-							</div>
-						</div>
-						<div class="card play" id="round_4">
-							<div class="card-title">
-								<div class="number">5</div>
-								<div class="score">9/10</div>
-							</div>
-							<div class="card-img">
-								<img
-									class="color"
-									src="assets/images/categories/category-05-color.jpg"
-									alt="5-color"
-								/>
-								<img
-									class="grey"
-									src="assets/images/categories/category-05-grayscale.jpg"
-									alt="5-greyscale"
-								/>
-							</div>
-						</div>
-						<div class="card play" id="round_5">
-							<div class="card-title">
-								<div class="number">6</div>
-								<div class="score">9/10</div>
-							</div>
-							<div class="card-img">
-								<img
-									class="color"
-									src="assets/images/categories/category-06-color.jpg"
-									alt="6-color"
-								/>
-								<img
-									class="grey"
-									src="assets/images/categories/category-06-grayscale.jpg"
-									alt="6-greyscale"
-								/>
-							</div>
-						</div>
-						<div class="card play" id="round_6">
-							<div class="card-title">
-								<div class="number">7</div>
-								<div class="score">9/10</div>
-							</div>
-							<div class="card-img">
-								<img
-									class="color"
-									src="assets/images/categories/category-07-color.jpg"
-									alt="7-color"
-								/>
-								<img
-									class="grey"
-									src="assets/images/categories/category-07-grayscale.jpg"
-									alt="7-greyscale"
-								/>
-							</div>
-						</div>
-						<div class="card play" id="round_7">
-							<div class="card-title">
-								<div class="number">8</div>
-								<div class="score">9/10</div>
-							</div>
-							<div class="card-img">
-								<img
-									class="color"
-									src="assets/images/categories/category-08-color.jpg"
-									alt="8-color"
-								/>
-								<img
-									class="grey"
-									src="assets/images/categories/category-08-grayscale.jpg"
-									alt="8-greyscale"
-								/>
-							</div>
-						</div>
-						<div class="card play" id="round_8">
-							<div class="card-title">
-								<div class="number">9</div>
-								<div class="score">9/10</div>
-							</div>
-							<div class="card-img">
-								<img
-									class="color"
-									src="assets/images/categories/category-09-color.jpg"
-									alt="9-color"
-								/>
-								<img
-									class="grey"
-									src="assets/images/categories/category-09-grayscale.jpg"
-									alt="9-greyscale"
-								/>
-							</div>
-						</div>
-						<div class="card play" id="round_9">
-							<div class="card-title">
-								<div class="number">10</div>
-								<div class="score">9/10</div>
-							</div>
-							<div class="card-img">
-								<img
-									class="color"
-									src="assets/images/categories/category-10-color.jpg"
-									alt="10-color"
-								/>
-								<img
-									class="grey"
-									src="assets/images/categories/category-10-grayscale.jpg"
-									alt="10-greyscale"
-								/>
+							<div class="card" id="round_1">
+								<div class="card-title">
+									<div class="number">2</div>
+								</div>
+								<div class="card-img">
+									<img
+										src="assets/images/categories/category-02-grayscale.jpg"
+										alt="2-greyscale"
+									/>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="score d-none">
-						<div class="title">result</div>
-						<div class="score-content content">
-							<div class="card">
-								<!-- title = index + 1 или текущий раунд-->
-								<div class="card-title correct">10 category</div>
+					<div class="result d-none">
+						<div class="title">result 1...10 round</div>
+						<div class="content">
+							<div class="card correct">
 								<div class="img">
 									<!-- alt score-index -->
 									<img
@@ -293,24 +135,10 @@
 									<p>1665</p>
 								</div>
 							</div>
-							<div class="card">
-								<!-- title = index + 1 или текущий раунд-->
-								<div class="card-title wrong">2 category</div>
+							<div class="card wrong">
 								<div class="img">
 									<!-- alt score-index -->
 									<img
-										src="assets/images/categories/category-01-color.jpg"
-										alt=""
-									/>
-								</div>
-							</div>
-							<div class="card">
-								<!-- title = index + 1 или текущий раунд-->
-								<div class="card-title">2 category</div>
-								<div class="img">
-									<!-- alt score-index -->
-									<img
-										class="gray"
 										src="assets/images/categories/category-01-color.jpg"
 										alt=""
 									/>
@@ -321,7 +149,7 @@
 				</div>
 			</div>
 		</main>
-		<div class="quiz quiz-pictures d-none">
+		<div class="quiz quiz-pictures">
 			<div class="quiz-container">
 				<div class="quiz-head">
 					<div class="logo">
@@ -385,6 +213,41 @@
 				</div>
 			</div>
 		</div>
-		<div class="modals"></div>
+		<div class="modals-container">
+			<!-- менять класс wrong/correct -->
+			<div class="next-question wrong modal d-none">
+				<!-- менять бекграунд или инжектить картинку-->
+				<div class="img"></div>
+				<div class="descriptions">
+					<!-- в цикле собирать описание и инжектить на страницу -->
+					<p>Girl with a Pearl Earring</p>
+					<p>Johannes Vermeer</p>
+					<p>1665</p>
+				</div>
+				<button class="btn btn-center btn-next-question">next</button>
+			</div>
+			<div class="next-quiz modal d-none">
+				<div class="modal-title">congratulations!</div>
+				<div class="score">9/10</div>
+				<div class="img">
+					<img src="assets/images/svg/star.svg" alt="" />
+				</div>
+				<div class="btn-group">
+					<button class="btn btn-home">home</button>
+					<button class="btn btn-center btn-next-quiz">next quiz</button>
+				</div>
+			</div>
+			<div class="game-over modal d-none">
+				<div class="modal-title">game<br />over</div>
+				<div class="img">
+					<img src="assets/images/svg/cup.png" alt="" />
+				</div>
+				<p>play again ?</p>
+				<div class="btn-group">
+					<button class="btn btn-center btn-yes">yes</button>
+					<button class="btn btn-center btn-no">no</button>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

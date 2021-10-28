@@ -1,0 +1,126 @@
+.modals-container {
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.8);
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.3s;
+	.modal {
+		width: 582px;
+		max-width: 100%;
+		transform: translateY(150%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: #fff;
+		transition: all 0.4s;
+	}
+	.next-question {
+		padding: 74px 15px 45px;
+		background-repeat: no-repeat;
+		background-position: center 25px;
+		background-size: 25px;
+		.img {
+			height: 0;
+			padding-bottom: 75%;
+			width: 400px;
+			max-width: 100%;
+			margin-bottom: 20px;
+			background-image: url(../assets/images/quiz_full.jpeg);
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		.descriptions {
+			margin-bottom: 25px;
+			p {
+				text-align: center;
+				font-size: 18px;
+				&:first-child {
+					margin-bottom: 25px;
+				}
+			}
+		}
+		&.correct {
+			background-image: url("../assets/images/svg/correct.svg");
+		}
+		&.wrong {
+			background-image: url("../assets/images/svg/wrong.svg");
+		}
+	}
+	.next-quiz {
+		padding: 55px 0 45px;
+		.modal-title {
+			font-weight: 700;
+			font-size: 24px;
+			margin-bottom: 40px;
+			@include sm {
+				font-size: 36px;
+				margin-bottom: 65px;
+			}
+		}
+		.score {
+			font-weight: 700;
+			font-size: 76px;
+			@include sm {
+				font-size: 96px;
+			}
+		}
+		img {
+			margin: 25px 0 75px;
+			@include sm {
+				margin: 50px 0 117px;
+			}
+		}
+		.btn-group {
+			width: 100%;
+			justify-content: space-around;
+		}
+	}
+	.game-over {
+		padding: 35px;
+		font-weight: 700;
+		text-align: center;
+		@include sm {
+			padding: 50px 0 45px;
+		}
+		.modal-title {
+			font-size: 65px;
+			@include sm {
+				font-size: 96px;
+			}
+		}
+		.img {
+			margin: 25px 0;
+			width: 100px;
+			@include sm {
+				margin: 50px 0 43px;
+				width: 150px;
+			}
+		}
+		p {
+			font-size: 36px;
+			margin-bottom: 40px;
+		}
+		.btn-group {
+			width: 245px;
+			justify-content: space-between;
+			.btn {
+				width: 100px;
+			}
+		}
+	}
+	&.toggle {
+		visibility: visible;
+		opacity: 1;
+		.modal {
+			transform: translateY(0);
+		}
+	}
+}
