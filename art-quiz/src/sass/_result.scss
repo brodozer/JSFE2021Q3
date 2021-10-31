@@ -1,18 +1,32 @@
+@keyframes hide {
+	from {
+		bottom: -100%;
+	}
+	to {
+		bottom: 0;
+	}
+}
+
 .result {
 	.card {
 		padding-top: 45px;
 		background-repeat: no-repeat;
 		background-position: center 10px;
 		background-size: 25px;
+		overflow: hidden;
 		img {
 			width: 100%;
 		}
 		.descriptions {
 			position: absolute;
 			width: 100%;
-			bottom: 2px;
+			bottom: -100%;
 			padding: 6px;
 			background: rgba(255, 255, 255, 0.75);
+			animation-name: hide;
+			animation-duration: 0.5s;
+			animation-fill-mode: forwards;
+			animation-play-state: paused;
 			p {
 				font-size: 13px;
 				font-weight: 400;

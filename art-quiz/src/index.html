@@ -22,7 +22,7 @@
 		<header>
 			<div class="header">
 				<div class="container">
-					<button class="btn btn-home">home</button>
+					<button class="btn btn-home d-none">home</button>
 					<button class="btn btn-categories d-none">category</button>
 					<div class="header-logo">
 						<img src="assets/images/svg/logo.png" alt="logo" />
@@ -32,15 +32,15 @@
 		</header>
 		<main>
 			<div class="container">
-				<div class="home d-none">
+				<div class="home">
 					<div class="quiz-type">
-						<div class="card pseudo">
+						<div class="card pseudo" id="artists">
 							<div class="card-image responsive">
 								<img src="assets/images/home/artists-quiz.jpg" />
 							</div>
 							<div class="card-title">Artists <span>quiz</span></div>
 						</div>
-						<div class="card pseudo">
+						<div class="card pseudo" id="pictures">
 							<div class="card-image responsive">
 								<img src="assets/images/home/pictures-quiz.jpg" />
 							</div>
@@ -120,11 +120,10 @@
 					<div class="result d-none">
 						<div class="title">result 1...10 round</div>
 						<div class="content">
-							<div class="card correct">
+							<div class="card correct" data-id="0">
 								<div class="img">
 									<!-- alt score-index -->
 									<img
-										class="color"
 										src="assets/images/categories/category-01-color.jpg"
 										alt=""
 									/>
@@ -149,13 +148,13 @@
 				</div>
 			</div>
 		</main>
-		<div class="quiz quiz-pictures">
+		<div class="quiz quiz-pictures d-none">
 			<div class="quiz-container">
 				<div class="quiz-head">
 					<div class="logo">
 						<img src="assets/images/svg/logo.png" alt="logo" />
 					</div>
-					<div class="timer">3:59</div>
+					<div class="quiz-timer">3:59</div>
 					<button class="btn btn-categories"></button>
 					<div class="question">Who is the author of this picture ?</div>
 				</div>
