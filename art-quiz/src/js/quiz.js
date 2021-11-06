@@ -1,13 +1,15 @@
 "use strict";
+
 import LoadImage from "./loadImage";
 
 class Quiz {
 	constructor(quiz, type, opt, questions, id) {
-		this.loadImage = new LoadImage(); // объект для загрузки картинок
+		//this.loadImage = new LoadImage(); // объект с методом для загрузки картинок
 		//quiz
 		this.quiz = quiz; // ижект темплейта в зависимости от типа квиза
 		this.answers = this.quiz.querySelector(".answers");
 		this.progress = this.quiz.querySelector(".progress");
+		this.progressBullets = false;
 		this.question = this.quiz.querySelector(".question");
 		this.imgContainer = this.quiz.querySelector(".img-container");
 		//modals
@@ -20,7 +22,7 @@ class Quiz {
 		this.modalNextQuestion = this.modals.querySelector(".next-question");
 		this.modalGameOver = this.modals.querySelector(".game-over");
 
-		this.statisticsAnswer = [];
+		this.statisticAnswers = [];
 		this.imgs = false;
 		this.type = type; // тип квиза авторы/картины (нужно для класса контейнера и темплейта html!)
 		this.opt = opt; // опции для записи статистики прохождения раунда квиза
@@ -29,7 +31,7 @@ class Quiz {
 		this.round = this.questions[this.id]; // текущий раунд квиза (10 вопросов)
 		this.answeredAmount = 0;
 		this.nextQuestion = this.nextQuestion.bind(this);
-		this.renderResult = this.renderResult.bind(this);
+		this.checkAnswer = this.checkAnswer.bind(this);
 		this.init();
 	}
 
@@ -46,10 +48,11 @@ class Quiz {
 		this.progress.innerHTML =
 			'<span class="on"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>';
 		// навесить обработчики - кнопка next, next round, close, categories
+		this.progressBullets = this.progress.querySelectorAll("span");
 		this.renderQuestion(this.round[this.answeredAmount]);
 
 		// listetner вынести в отдельный метод?
-		this.answers.addEventListener("click", this.renderResult);
+		this.answers.addEventListener("click", this.checkAnswer);
 		this.btnNextQuestion.addEventListener("click", this.nextQuestion);
 		// показать модалку
 	}
@@ -58,9 +61,9 @@ class Quiz {
 		this.answeredAmount++;
 		if (this.answeredAmount < this.round.length) {
 			this.renderQuestion(this.round[this.answeredAmount]); // рендер вопроса
-			this.progress[this.answeredAmount].classList.add("on");
+			this.progressBullets[this.answeredAmount].classList.add("on");
 		} else {
-			console.log("next quiz --->");
+			console.log("next round --->");
 			this.nextRound();
 			// показать модалку с переходом на следующий раунд
 		}
@@ -71,23 +74,54 @@ class Quiz {
 	nextRound() {
 		// если пользователь дошел до последнего вопроса
 		// повесить на нажатие кнопки в модалке
-		// обнулять счетчик вопроса
 		this.id++;
-		// перезаписывать раунд!!!
+		this.round = this.questions[this.id];
 		this.answeredAmount = 0;
-		let correctAnswers = this.calculateCorrectAnswer(this.statisticsAnswer); // кол-во правильных ответов
+		this.progressBullets.forEach((bullet, i) => {
+			if (i !== 0) {
+				bullet.classList.remove("on");
+			}
+		});
+		let correctAnswers = this.calculateCorrectAnswer(this.statisticAnswers); // кол-во правильных ответов
 		// записать статистику в опции
 		// обновить карточку в категориях
-		// добавить id++
 		// сборка и инжект вопроса
 		// убрать модалку
 	}
-	renderResult() {
-		// запускать checkAnswer
-		// собрать и показывать модалку с рузультатами
+	renderResult(isCorrect) {
+		let question = this.round[this.answeredAmount];
+		let descriptions = `
+			<p>${question.name}</p>
+			<p>${question.author}</p>
+			<p>${question.year}</p>
+		`;
+		let className = isCorrect ? "correct" : "wrong";
+		this.modalNextQuestion.querySelector(
+			".img"
+		).style.backgroundImage = `url("https://raw.githubusercontent.com/brodozer/image-data/master/full/${question.imageNum}full.jpg")`;
+		this.modalNextQuestion.querySelector(".descriptions").innerHTML =
+			descriptions;
+		this.modalNextQuestion.className = `next-question ${className} modal active`;
+		this.modals.classList.add("toggle");
+		//собрать модалку
 	}
-	checkAnswer() {
-		let correctAnswer = "";
+	checkAnswer(event) {
+		event.preventDefault();
+		let correctAnswer =
+			this.type === "artists"
+				? this.round[this.answeredAmount].author
+				: this.round[this.answeredAmount].name;
+		let currentAnswer = event.target
+			.closest("label")
+			.querySelector("input").value;
+		let isCorrect = false;
+		if (correctAnswer === currentAnswer) {
+			isCorrect = true;
+		}
+		console.log("correct answer ", correctAnswer);
+		console.log("current answer ", currentAnswer);
+		this.statisticAnswers.push(isCorrect);
+		this.renderResult(isCorrect);
 		// проверить ответ
 		// показать модалку с результатом
 		// записать ответ в результаты (содать временный массив)
@@ -106,14 +140,11 @@ class Quiz {
 	async renderQuestion(question) {
 		console.log("question ", question);
 		let answers = this.shuffleAnswers(question.answers);
-		console.log("question ", question.imageNum);
+		let imgs = [];
 		let html = "";
 		if (this.type === "artists") {
-			console.log("num img ", question.imageNum);
 			let url = `https://raw.githubusercontent.com/brodozer/image-data/master/full/${question.imageNum}full.jpg`;
-			let img = await this.loadImage.load(url); // try catch для обработки ошибок
-			console.log("img quiz ", img);
-			this.imgs[0].style.backgroundImage = `url("${img.src}")`;
+			imgs.push(LoadImage.load(url));
 			answers.forEach((answer) => {
 				html += `
 					<label>
@@ -125,7 +156,6 @@ class Quiz {
 		} else {
 			this.question.textContent = `Какую из этих картин написал ${question.author} ?`;
 			let answerOptions = ["A", "B", "C", "D"];
-			let imgs = [];
 			answers.forEach((answer, i) => {
 				html += `
 					<label>
@@ -134,28 +164,30 @@ class Quiz {
 					</label>
 				`;
 				imgs.push(
-					this.loadImage.load(
+					LoadImage.load(
 						`https://raw.githubusercontent.com/brodozer/image-data/master/full/${answer.imageNum}full.jpg`
 					)
 				);
 			});
-			const statusesPromise = await Promise.allSettled(imgs);
-			statusesPromise.forEach((item, i) => {
-				if (item.status === "fulfilled") {
-					console.log("img quiz ", item.value);
-					this.imgs[i].style.backgroundImage = `url("${item.value.src}")`; // item.value === image
-				} else {
-					console.log(item.reason.message);
-					//throw item.reason;
-				}
-			});
 		}
 		console.log("quiz answers ", html);
+		const statusesPromise = await Promise.allSettled(imgs);
+		statusesPromise.forEach((item, i) => {
+			if (item.status === "fulfilled") {
+				console.log("img quiz ", item.value);
+				this.imgs[i].style.backgroundImage = `url("${item.value.src}")`; // item.value === image
+			} else {
+				console.log(item.reason.message);
+				//throw item.reason;
+			}
+		});
 		this.answers.innerHTML = html;
 		if (this.answeredAmount == 0) {
 			this.quiz.className = `quiz quiz-${this.type}`;
+			// body установить overflow: hidden!
 		} else {
 			// убрать модалку
+			this.modals.classList.remove("toggle");
 		}
 	}
 	calculateCorrectAnswer() {

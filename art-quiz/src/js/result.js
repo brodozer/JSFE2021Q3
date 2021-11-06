@@ -1,4 +1,5 @@
 "use strict";
+import LoadImage from "./loadImage";
 
 class Result {
 	constructor(result, round, round_id, container) {
@@ -12,23 +13,12 @@ class Result {
 		this.renderResult();
 	}
 
-	loadImage(url) {
-		return new Promise((resolve, reject) => {
-			let image = new Image();
-
-			image.onload = () => resolve(image);
-			const msg = `Could not load image at ${url}`;
-			image.onerror = () => reject(new Error(msg));
-			image.src = url;
-		});
-	}
-
 	async renderResult() {
 		let cards = "";
 		console.log(this.round);
 		this.round.forEach((el, i) => {
 			cards += `
-				<div class="card ${this.result.get(i) ? "correct" : "wrong"}" data-id="${i}">
+				<div class="card ${this.result[i] ? "correct" : "wrong"}" data-id="${i}">
 					<div class="img">
 						<img src="https://raw.githubusercontent.com/brodozer/image-data/master/img/${
 							el.imageNum
@@ -37,7 +27,7 @@ class Result {
 				</div>
 			`;
 			this.urls.push(
-				this.loadImage(
+				LoadImage.load(
 					`https://raw.githubusercontent.com/brodozer/image-data/master/img/${el.imageNum}.jpg`
 				)
 			);
@@ -51,17 +41,21 @@ class Result {
 			</div>
 		`;
 
-		await Promise.all(this.urls)
-			.then((imgs) =>
-				imgs.forEach((img, i) => {
-					console.log("loadImg, ", img.src);
-					// создавать карточку
-					// инжектить img
-					// инжектить карточку
-					// вешать обработчик на карточку
-				})
-			)
-			.catch((err) => alert(err));
+		const statusesPromise = await Promise.allSettled(this.urls);
+
+		statusesPromise.forEach((p, i) => {
+			if (p.status === "fulfilled") {
+				console.log("loadImg, ", p.value.src);
+				// создавать карточку
+				// инжектить img
+				// инжектить карточку
+				// вешать обработчик на карточку
+			} else {
+				console.log(item.reason.message);
+				//throw item.reason;
+			}
+		});
+
 		console.log("promise done");
 		//this.container.innerHTML = html;
 		this.container.querySelector(".categories").classList.add("d-none");

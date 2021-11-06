@@ -8,6 +8,11 @@
 }
 
 .result {
+	.content {
+		@include lg {
+			grid-template-columns: repeat(5, 1fr);
+		}
+	}
 	.card {
 		padding-top: 45px;
 		background-repeat: no-repeat;

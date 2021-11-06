@@ -61,30 +61,31 @@ class Settings {
 			this.opt = {
 				volume: 50,
 				timer: false,
-				artists: {
-					round_1: {
-						score: "5",
-						result: new Map([
-							[0, true],
-							[1, true],
-							[2, false],
-							[3, true],
-							[4, true],
-							[5, true],
-							[6, true],
-							[7, true],
-							[8, true],
-							[9, false],
-						]),
-						// result [true, false, ... true]
+				artists: [
+					{
+						id: 3,
+						score: 5,
+						result: [
+							true,
+							false,
+							true,
+							true,
+							true,
+							true,
+							true,
+							false,
+							true,
+							true,
+						],
 					},
-				},
-				pictures: {
-					round_5: {
-						score: "7",
-						result: new Map(),
+				],
+				pictures: [
+					{
+						id: 5,
+						score: 7,
+						result: [],
 					},
-				},
+				],
 			};
 		}
 		console.log(this.opt);
@@ -115,7 +116,7 @@ class Settings {
 		let round = [];
 		cloneData.forEach((item) => {
 			if (round.length == 10) {
-				if (this.questions.artists.length < 10) {
+				if (this.questions.artists.length < 12) {
 					this.questions.artists.push(round);
 				} else {
 					this.questions.pictures.push(round);
@@ -123,7 +124,7 @@ class Settings {
 
 				round = [];
 			}
-			if (this.questions.artists.length < 10) {
+			if (this.questions.artists.length < 12) {
 				round.push(this.typeAuthor(cloneData, item));
 			} else {
 				round.push(this.typePicture(cloneData, item));
@@ -229,13 +230,14 @@ class Settings {
 		this.type = event.target.closest(".card").id;
 		let cards = "";
 
-		for (let i = 0; i < 10; i++) {
-			if (this.opt[this.type].hasOwnProperty(`round_${i}`)) {
+		for (let i = 0; i < 12; i++) {
+			let res = this.opt[this.type].find((res) => res.id == i);
+			if (res) {
 				cards += `
-					<div class="card" id="round_${i}">
+					<div class="card" id="${i}">
 						<div class="card-title">
 							<div class="number color">${i + 1}</div>
-							<div class="score">${this.opt[this.type]["round_" + i].score}/10</div>
+							<div class="score">${res.score}/10</div>
 						</div>
 						<div class="card-img">
 							<img
@@ -247,7 +249,7 @@ class Settings {
 				`;
 			} else {
 				cards += `
-					<div class="card" id="round_${i}">
+					<div class="card" id="${i}">
 						<div class="card-title">
 							<div class="number">${i + 1}</div>
 						</div>
@@ -275,17 +277,17 @@ class Settings {
 			.addEventListener("click", (event) => {
 				if (event.target.closest(".card")) {
 					let cardId = event.target.closest(".card").id;
-					let id = cardId[cardId.length - 1];
-					let round = this.questions[this.type][id];
+					let round = this.questions[this.type][cardId];
 					console.log("round ", round);
-					console.log("id ", id);
+					console.log("card id ", cardId);
 					if (event.target.tagName === "BUTTON") {
 						this.btnHome.classList.add("d-none");
 						this.btnCategories.classList.remove("d-none");
+
 						let result = new Result(
-							this.opt[this.type][cardId],
-							this.questions[this.type][id],
-							id,
+							this.opt[this.type].find((res) => res.id == cardId),
+							this.questions[this.type][cardId],
+							cardId,
 							this.contentContainer
 						);
 						console.log("result ", result);
@@ -295,7 +297,7 @@ class Settings {
 							this.type,
 							this.opt,
 							this.questions[this.type],
-							id
+							cardId
 						);
 						console.log("quiz ", quiz);
 						console.log("new quiz");

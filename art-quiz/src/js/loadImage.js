@@ -1,7 +1,7 @@
 "use strict";
 
 class LoadImage {
-	load(url) {
+	static load(url) {
 		return new Promise((resolve, reject) => {
 			let image = new Image();
 
