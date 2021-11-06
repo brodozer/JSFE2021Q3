@@ -156,23 +156,11 @@
 					</div>
 					<div class="quiz-timer">3:59</div>
 					<button class="btn btn-categories"></button>
-					<div class="question">Who is the author of this picture ?</div>
+					<div class="question"></div>
 				</div>
 				<div class="quiz-content">
-					<!-- <div class="img-container">
-						<div class="img"></div>
-					</div> -->
-					<div class="img-container">
-						<div class="img"></div>
-						<div class="img"></div>
-						<div class="img"></div>
-						<div class="img"></div>
-					</div>
-					<div class="progress">
-						<span class="on"></span><span class="on"></span
-						><span class="on"></span><span></span><span></span><span></span
-						><span></span><span></span><span></span><span></span>
-					</div>
+					<div class="img-container"></div>
+					<div class="progress"></div>
 				</div>
 				<!-- <div class="answer">
 					<label>
@@ -192,7 +180,7 @@
 						<span>V. Serov</span>
 					</label>
 				</div> -->
-				<div class="answer">
+				<div class="answers">
 					<label>
 						<input type="radio" name="answer" value="name pictire 1" />
 						<span>A</span>
@@ -214,7 +202,7 @@
 		</div>
 		<div class="modals-container">
 			<!-- менять класс wrong/correct -->
-			<div class="next-question wrong modal d-none">
+			<div class="next-question wrong modal">
 				<!-- менять бекграунд или инжектить картинку-->
 				<div class="img"></div>
 				<div class="descriptions">
@@ -225,7 +213,7 @@
 				</div>
 				<button class="btn btn-center btn-next-question">next</button>
 			</div>
-			<div class="next-quiz modal d-none">
+			<div class="next-round modal">
 				<div class="modal-title">congratulations!</div>
 				<div class="score">9/10</div>
 				<div class="img">
@@ -233,10 +221,10 @@
 				</div>
 				<div class="btn-group">
 					<button class="btn btn-home">home</button>
-					<button class="btn btn-center btn-next-quiz">next quiz</button>
+					<button class="btn btn-center btn-next-round">next quiz</button>
 				</div>
 			</div>
-			<div class="game-over modal d-none">
+			<div class="game-over modal">
 				<div class="modal-title">game<br />over</div>
 				<div class="img">
 					<img src="assets/images/svg/cup.png" alt="" />

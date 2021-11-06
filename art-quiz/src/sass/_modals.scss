@@ -13,6 +13,7 @@
 	opacity: 0;
 	transition: all 0.3s;
 	.modal {
+		position: absolute;
 		width: 582px;
 		max-width: 100%;
 		transform: translateY(150%);
@@ -54,7 +55,7 @@
 			background-image: url("../assets/images/svg/wrong.svg");
 		}
 	}
-	.next-quiz {
+	.next-round {
 		padding: 55px 0 45px;
 		.modal-title {
 			font-weight: 700;
@@ -119,7 +120,7 @@
 	&.toggle {
 		visibility: visible;
 		opacity: 1;
-		.modal {
+		.modal.active {
 			transform: translateY(0);
 		}
 	}

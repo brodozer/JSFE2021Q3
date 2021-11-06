@@ -10,6 +10,7 @@
 //https://raw.githubusercontent.com/brodozer/image-data/master/img/0.jpg
 
 import Result from "./result";
+import Quiz from "./quiz";
 
 class Settings {
 	constructor() {
@@ -20,6 +21,7 @@ class Settings {
 		this.btnSave = document.querySelector(".btn-save");
 		this.btnDefault = document.querySelector(".btn-default");
 		this.btnHome = document.querySelector(".btn-home");
+		this.btnCategories = document.querySelector(".btn-categories");
 		this.volume = document.querySelector(".volume");
 		this.timer = document.querySelector(".timer");
 		//pages
@@ -41,6 +43,7 @@ class Settings {
 		this.resetSetings = this.resetSetings.bind(this);
 		this.renderCategories = this.renderCategories.bind(this);
 		this.displayHome = this.displayHome.bind(this);
+		this.displayCategories = this.displayCategories.bind(this);
 		this.fadeOut = this.fadeOut.bind(this);
 		this.fadeIn = this.fadeIn.bind(this);
 		//init
@@ -73,6 +76,7 @@ class Settings {
 							[8, true],
 							[9, false],
 						]),
+						// result [true, false, ... true]
 					},
 				},
 				pictures: {
@@ -151,10 +155,9 @@ class Settings {
 		];
 		let author = item.author;
 		for (let i = 0; i < 3; i++) {
-			data = data.filter(
-				(e) => e.name !== answers[i].name && e.author !== author
-			); // можно фильтровать только по названию картины
+			data = data.filter((e) => e.author !== author); // можно фильтровать только по названию картины (нужно фильтровать по имени автора, чтобы 4 картины были от разного автора)
 			let randomNum = this.getRandomNum(data.length);
+			author = data[randomNum].author;
 			answers.push({
 				name: data[randomNum].name,
 				imageNum: data[randomNum].imageNum,
@@ -164,13 +167,19 @@ class Settings {
 		return item;
 	}
 
-	toggleVisible(hide, visible) {
-		//hide.style.opacity = '0';
+	toggleVisible(hide, show) {
+		// не работает!!!
+		hide.style.opacity = "0";
 
-		//hide.addEventListener('transitionend', function() {this.remove()});
-
-		hide.classList.add("d-none");
-		visible.classList.remove("d-none");
+		hide.addEventListener(
+			"transitionend",
+			function () {
+				hide.classList.add("d-none");
+				show.classList.remove("d-none");
+				hide.style.opacity = "1";
+			},
+			{ once: true }
+		);
 	}
 
 	addListeners() {
@@ -183,6 +192,16 @@ class Settings {
 		this.artists.addEventListener("click", this.renderCategories);
 		this.pictures.addEventListener("click", this.renderCategories);
 		this.btnHome.addEventListener("click", this.displayHome);
+		this.btnCategories.addEventListener("click", this.displayCategories);
+	}
+
+	displayCategories() {
+		this.btnCategories.classList.add("d-none");
+		this.btnHome.classList.remove("d-none");
+		this.contentContainer.querySelector(".result").remove();
+		this.contentContainer
+			.querySelector(".categories")
+			.classList.remove("d-none");
 	}
 
 	saveSettings() {
@@ -261,6 +280,8 @@ class Settings {
 					console.log("round ", round);
 					console.log("id ", id);
 					if (event.target.tagName === "BUTTON") {
+						this.btnHome.classList.add("d-none");
+						this.btnCategories.classList.remove("d-none");
 						let result = new Result(
 							this.opt[this.type][cardId],
 							this.questions[this.type][id],
@@ -269,7 +290,14 @@ class Settings {
 						);
 						console.log("result ", result);
 					} else {
-						//new Quiz();
+						const quiz = new Quiz(
+							this.quiz,
+							this.type,
+							this.opt,
+							this.questions[this.type],
+							id
+						);
+						console.log("quiz ", quiz);
 						console.log("new quiz");
 					}
 				}

@@ -1,4 +1,4 @@
-@keyframes hide {
+@keyframes info {
 	from {
 		bottom: -100%;
 	}
@@ -23,7 +23,7 @@
 			bottom: -100%;
 			padding: 6px;
 			background: rgba(255, 255, 255, 0.75);
-			animation-name: hide;
+			animation-name: info;
 			animation-duration: 0.5s;
 			animation-fill-mode: forwards;
 			animation-play-state: paused;
