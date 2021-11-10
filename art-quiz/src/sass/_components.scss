@@ -6,6 +6,7 @@
 
 body {
 	background-color: #90b1c5;
+	padding: 20px 0;
 }
 
 .title {
@@ -30,6 +31,10 @@ body {
 	@include lg {
 		max-width: $cw_lg;
 	}
+}
+
+.stop-scroll {
+	overflow: hidden;
 }
 
 .d-none {
@@ -133,6 +138,13 @@ img {
 	background-repeat: no-repeat;
 	background-position: 7px center;
 	cursor: pointer;
+	span {
+		color: inherit;
+		display: none;
+		@include sm {
+			display: block;
+		}
+	}
 	&-center {
 		justify-content: center;
 		padding: 0;

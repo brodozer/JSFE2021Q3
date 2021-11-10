@@ -1,95 +1,53 @@
 "use strict";
 
-// artists: {
-// 	round_1: {
-// 		score: 5,
-// 		result: new Map(),
-// 	}
-// },
+//import Result from "./result";
+//import Quiz from "./quiz";
 
-//https://raw.githubusercontent.com/brodozer/image-data/master/img/0.jpg
-
-import Result from "./result";
-import Quiz from "./quiz";
+import Animation from "./animation";
 
 class Settings {
-	constructor() {
+	constructor(body, result, quiz, opt) {
+		this.body = body;
 		this.artists = document.getElementById("artists");
 		this.pictures = document.getElementById("pictures");
 		//buttons
-		this.btnSettings = document.querySelector(".btn-settings");
-		this.btnSave = document.querySelector(".btn-save");
-		this.btnDefault = document.querySelector(".btn-default");
-		this.btnHome = document.querySelector(".btn-home");
-		this.btnCategories = document.querySelector(".btn-categories");
-		this.volume = document.querySelector(".volume");
-		this.timer = document.querySelector(".timer");
+		this.btnSettings = this.body.querySelector(".btn-settings");
+		this.btnSave = this.body.querySelector(".btn-save");
+		this.btnDefault = this.body.querySelector(".btn-default");
+		this.btnHome = this.body.querySelector(".btn-home-header");
+		this.btnCategories = this.body.querySelector(".btn-categories-header");
+		this.volume = this.body.querySelector(".volume");
+		this.timer = this.body.querySelector(".timer");
 		//pages
-		this.home = document.querySelector(".home");
-		this.settings = document.querySelector(".settings");
-		this.contentContainer = document.querySelector(".content-container");
-		this.categories = document.querySelector(".categories");
-		this.quiz = document.querySelector(".quiz");
+		this.home = this.body.querySelector(".home");
+		this.settings = this.body.querySelector(".settings");
+		this.categories = this.body.querySelector(".categories");
+		this.resultContainer = this.body.querySelector(".result");
+		this.quiz = this.body.querySelector(".quiz");
 		//type quiz
 		this.type = false;
+		this.categoriesImgs = {
+			artists: [],
+			pictures: [],
+		};
 		//data
 		this.data = {};
 		this.questions = {};
 		//settings
-		this.opt = {};
-
+		this.opt = opt;
+		this.result = result;
+		this.quiz = quiz;
 		//bind method
 		this.saveSettings = this.saveSettings.bind(this);
 		this.resetSetings = this.resetSetings.bind(this);
 		this.renderCategories = this.renderCategories.bind(this);
 		this.displayHome = this.displayHome.bind(this);
 		this.displayCategories = this.displayCategories.bind(this);
-		this.fadeOut = this.fadeOut.bind(this);
-		this.fadeIn = this.fadeIn.bind(this);
-		//init
 		this.init();
 	}
 	//установить настройки громкости и таймера
 	//загрузить данные с сервера
 	//сформировать вопросы - вывести в отдельный метод, чтобы можно было пересобрать заново из данных
-
-	getOpt() {
-		// проверить в локал стораж, если есть, то записать, если нет, дефолт
-		if (localStorage.opt) {
-			this.opt = JSON.parse(localStorage.opt);
-		} else {
-			this.opt = {
-				volume: 50,
-				timer: false,
-				artists: [
-					{
-						id: 3,
-						score: 5,
-						result: [
-							true,
-							false,
-							true,
-							true,
-							true,
-							true,
-							true,
-							false,
-							true,
-							true,
-						],
-					},
-				],
-				pictures: [
-					{
-						id: 5,
-						score: 7,
-						result: [],
-					},
-				],
-			};
-		}
-		console.log(this.opt);
-	}
 
 	async startQuiz() {
 		// получить данные, записать данные, собрать вопросы
@@ -156,7 +114,7 @@ class Settings {
 		];
 		let author = item.author;
 		for (let i = 0; i < 3; i++) {
-			data = data.filter((e) => e.author !== author); // можно фильтровать только по названию картины (нужно фильтровать по имени автора, чтобы 4 картины были от разного автора)
+			data = data.filter((e) => e.author !== author);
 			let randomNum = this.getRandomNum(data.length);
 			author = data[randomNum].author;
 			answers.push({
@@ -168,25 +126,9 @@ class Settings {
 		return item;
 	}
 
-	toggleVisible(hide, show) {
-		// не работает!!!
-		hide.style.opacity = "0";
-
-		hide.addEventListener(
-			"transitionend",
-			function () {
-				hide.classList.add("d-none");
-				show.classList.remove("d-none");
-				hide.style.opacity = "1";
-			},
-			{ once: true }
-		);
-	}
-
 	addListeners() {
 		this.btnSettings.addEventListener("click", () => {
-			this.fadeOut(this.home, this.settings, this.fadeIn);
-			//this.toggleVisible(this.home, this.settings);
+			Animation.fadeOut(this.home, this.settings);
 		});
 		this.btnSave.addEventListener("click", this.saveSettings);
 		this.btnDefault.addEventListener("click", this.resetSetings);
@@ -194,31 +136,59 @@ class Settings {
 		this.pictures.addEventListener("click", this.renderCategories);
 		this.btnHome.addEventListener("click", this.displayHome);
 		this.btnCategories.addEventListener("click", this.displayCategories);
+		this.categories
+			.querySelector(".content")
+			.addEventListener("click", (event) => {
+				event.stopImmediatePropagation();
+				if (event.target.closest(".card")) {
+					let cardId = event.target.closest(".card").id;
+					let round = this.questions[this.type][cardId];
+					console.log("round ", round);
+					console.log("card id ", cardId);
+					if (event.target.tagName === "BUTTON") {
+						this.btnCategories.classList.add("active");
+						this.btnHome.dataset.hide = "result";
+						this.result.renderResult(
+							this.opt[this.type].find((res) => res.id == cardId),
+							this.questions[this.type][cardId],
+							cardId
+						);
+					} else {
+						if (event.target.closest(".card").classList.contains("played")) {
+							this.getQuestions(this.data);
+						}
+						this.quiz.start(this.type, this.questions[this.type], cardId);
+					}
+				}
+			});
 	}
 
 	displayCategories() {
-		this.btnCategories.classList.add("d-none");
-		this.btnHome.classList.remove("d-none");
-		this.contentContainer.querySelector(".result").remove();
-		this.contentContainer
-			.querySelector(".categories")
-			.classList.remove("d-none");
+		this.btnCategories.classList.remove("active");
+		this.btnHome.dataset.hide = "categories";
+		Animation.fadeOut(this.resultContainer, this.categories);
+	}
+
+	displayHome(event) {
+		const hide = document.getElementById(
+			event.target.closest("button").dataset.hide
+		);
+		this.btnHome.classList.remove("active");
+		this.btnCategories.classList.remove("active");
+		Animation.fadeOut(hide, this.home);
 	}
 
 	saveSettings() {
 		this.opt.volume = this.volume.value;
 		this.opt.timer = this.timer.checked;
-		this.fadeOut(this.settings, this.home, this.fadeIn);
-		//this.fadeIn(this.home);
-		//this.toggleVisible(this.settings, this.home);
+		Animation.fadeOut(this.settings, this.home);
 	}
 
 	resetSetings() {
 		this.opt.volume = 50;
 		this.opt.timer = false;
 		this.setSettings();
-		this.fadeOut(this.settings, this.home, this.fadeIn);
-		//this.toggleVisible(this.settings, this.home);
+		Animation.fadeOut(this.settings, this.home);
 	}
 
 	setSettings() {
@@ -229,19 +199,28 @@ class Settings {
 	renderCategories(event) {
 		this.type = event.target.closest(".card").id;
 		let cards = "";
-
+		if (this.categoriesImgs[this.type].length == 0) {
+			const urls = []; // массив картинок категорий (первая картинка вопроса раунда) динамичные картинки категорий с гитхаба
+			this.questions[this.type].forEach((round) => {
+				urls.push(
+					`https://raw.githubusercontent.com/brodozer/image-data/master/img/${round[0].imageNum}.jpg`
+				);
+			});
+			this.categoriesImgs[this.type] = urls;
+			console.log("categeories imgs ", urls);
+		}
 		for (let i = 0; i < 12; i++) {
 			let res = this.opt[this.type].find((res) => res.id == i);
 			if (res) {
 				cards += `
-					<div class="card" id="${i}">
+					<div class="card played" id="${i}">
 						<div class="card-title">
 							<div class="number color">${i + 1}</div>
 							<div class="score">${res.score}/10</div>
 						</div>
 						<div class="card-img">
 							<img
-								src="assets/images/categories/category-${i + 1}-color.jpg"
+								src="assets/images/categories/${this.type}/${i}.jpg"
 							/>
 						</div>
 						<button class="btn btn-result">result</button>
@@ -255,7 +234,7 @@ class Settings {
 						</div>
 						<div class="card-img">
 							<img
-								src="assets/images/categories/category-${i + 1}-grayscale.jpg"
+								src="assets/images/categories/${this.type}/${i}.jpg"
 							/>
 						</div>
 					</div>
@@ -263,89 +242,16 @@ class Settings {
 			}
 		}
 
-		let html = `
-			<div class="categories">
-				<div class="title">categories</div>
-				<div class="content">${cards}</div>
-			</div>
-		`;
-		this.contentContainer.innerHTML = html;
-		this.btnHome.classList.remove("d-none");
-		this.fadeOut(this.home, this.contentContainer, this.fadeIn);
-		this.contentContainer
-			.querySelector(".categories")
-			.addEventListener("click", (event) => {
-				if (event.target.closest(".card")) {
-					let cardId = event.target.closest(".card").id;
-					let round = this.questions[this.type][cardId];
-					console.log("round ", round);
-					console.log("card id ", cardId);
-					if (event.target.tagName === "BUTTON") {
-						this.btnHome.classList.add("d-none");
-						this.btnCategories.classList.remove("d-none");
-
-						let result = new Result(
-							this.opt[this.type].find((res) => res.id == cardId),
-							this.questions[this.type][cardId],
-							cardId,
-							this.contentContainer
-						);
-						console.log("result ", result);
-					} else {
-						const quiz = new Quiz(
-							this.quiz,
-							this.type,
-							this.opt,
-							this.questions[this.type],
-							cardId
-						);
-						console.log("quiz ", quiz);
-						console.log("new quiz");
-					}
-				}
-			});
-		//this.toggleVisible(this.home, this.contentContainer);
-	}
-
-	fadeOut(hide, show, cb) {
-		let opacity = 1;
-		const timer = setInterval(function () {
-			if (opacity <= 0.1) {
-				clearInterval(timer);
-				hide.classList.add("d-none");
-				cb(show);
-			}
-			hide.style.opacity = parseFloat(opacity);
-			opacity -= opacity * 0.1;
-		}, 10);
-	}
-
-	fadeIn(el) {
-		let opacity = 0.01;
-		el.classList.remove("d-none");
-
-		const timer = setInterval(function () {
-			if (opacity >= 1) {
-				clearInterval(timer);
-			}
-
-			el.style.opacity = opacity;
-			opacity += opacity * 0.1;
-		}, 10);
-	}
-
-	displayHome() {
-		this.btnHome.classList.add("d-none");
-		this.fadeOut(this.contentContainer, this.home, this.fadeIn);
-		//this.toggleVisible(this.contentContainer, this.home);
+		this.categories.querySelector(".content").innerHTML = cards;
+		this.btnHome.classList.add("active");
+		this.btnHome.dataset.hide = "categories";
+		Animation.fadeOut(this.home, this.categories);
 	}
 
 	init() {
-		this.getOpt();
 		this.startQuiz();
 		this.addListeners();
 		this.setSettings();
-		// обработчики на кнопки и инпуты
 	}
 }
 

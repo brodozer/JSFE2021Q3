@@ -22,11 +22,23 @@
 		<header>
 			<div class="header">
 				<div class="container">
-					<button class="btn btn-home d-none">home</button>
-					<button class="btn btn-categories d-none">category</button>
+					<button
+						class="btn btn-home btn-home-header"
+						data-show="home"
+						data-hide="content-container"
+					>
+						<span>home</span>
+					</button>
 					<div class="header-logo">
 						<img src="assets/images/svg/logo.png" alt="logo" />
 					</div>
+					<button
+						class="btn btn-categories btn-categories-header"
+						data-show="categories"
+						data-hide="result"
+					>
+						<span>category</span>
+					</button>
 				</div>
 			</div>
 		</header>
@@ -87,117 +99,44 @@
 						<button class="btn btn-default">default</button>
 					</div>
 				</div>
-				<div class="content-container d-none">
-					<div class="categories d-none">
-						<div class="title">categories</div>
-						<div class="content">
-							<div class="card" id="round_0">
-								<div class="card-title">
-									<div class="number color">1</div>
-									<div class="score">9/10</div>
-								</div>
-								<div class="card-img">
-									<img
-										src="assets/images/categories/category-01-color.jpg"
-										alt="1-color"
-									/>
-								</div>
-								<button class="btn btn-result">result</button>
-							</div>
-							<div class="card" id="round_1">
-								<div class="card-title">
-									<div class="number">2</div>
-								</div>
-								<div class="card-img">
-									<img
-										src="assets/images/categories/category-02-grayscale.jpg"
-										alt="2-greyscale"
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="result d-none">
-						<div class="title">result 1...10 round</div>
-						<div class="content">
-							<div class="card correct" data-id="0">
-								<div class="img">
-									<!-- alt score-index -->
-									<img
-										src="assets/images/categories/category-01-color.jpg"
-										alt=""
-									/>
-								</div>
-								<div class="descriptions">
-									<p>Girl with a Pearl Earring</p>
-									<p>Johannes Vermeer</p>
-									<p>1665</p>
-								</div>
-							</div>
-							<div class="card wrong">
-								<div class="img">
-									<!-- alt score-index -->
-									<img
-										src="assets/images/categories/category-01-color.jpg"
-										alt=""
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div class="categories d-none" id="categories">
+					<div class="title">categories</div>
+					<div class="content"></div>
+				</div>
+				<div class="result d-none" id="result">
+					<div class="title"></div>
+					<div class="content"></div>
 				</div>
 			</div>
 		</main>
-		<div class="quiz quiz-pictures d-none">
+		<!-- <footer>developed by brodozer</footer> -->
+		<div class="quiz">
 			<div class="quiz-container">
 				<div class="quiz-head">
-					<div class="logo">
+					<!-- <div class="logo">
 						<img src="assets/images/svg/logo.png" alt="logo" />
-					</div>
+					</div> -->
+					<button
+						class="btn btn-home btn-home-quiz"
+						data-show="home"
+						data-hide="quiz"
+					></button>
 					<div class="quiz-timer">3:59</div>
-					<button class="btn btn-categories"></button>
+					<button
+						class="btn btn-categories btn-categories-quiz"
+						data-show="false"
+						data-hide="quiz"
+					></button>
 					<div class="question"></div>
 				</div>
 				<div class="quiz-content">
 					<div class="img-container"></div>
-					<div class="progress"></div>
+					<div class="progress">
+						<span></span><span></span><span></span><span></span><span></span
+						><span></span><span></span><span></span><span></span><span></span>
+					</div>
 				</div>
-				<!-- <div class="answer">
-					<label>
-						<input type="radio" name="answer" value="Van Gogh" />
-						<span>Van Gogh</span>
-					</label>
-					<label>
-						<input type="radio" name="answer" value="J. Vermeer" />
-						<span>J. Vermeer</span>
-					</label>
-					<label>
-						<input type="radio" name="answer" value="P. Rubens" />
-						<span>P. Rubens</span>
-					</label>
-					<label>
-						<input type="radio" name="answer" value="V. Serov" />
-						<span>V. Serov</span>
-					</label>
-				</div> -->
-				<div class="answers">
-					<label>
-						<input type="radio" name="answer" value="name pictire 1" />
-						<span>A</span>
-					</label>
-					<label>
-						<input type="radio" name="answer" value="name pictire 2" />
-						<span>B</span>
-					</label>
-					<label>
-						<input type="radio" name="answer" value="name pictire 3" />
-						<span>C</span>
-					</label>
-					<label>
-						<input type="radio" name="answer" value="name pictire 4" />
-						<span>D</span>
-					</label>
-				</div>
+				<div class="answers"></div>
 			</div>
 		</div>
 		<div class="modals-container">
@@ -205,23 +144,22 @@
 			<div class="next-question wrong modal">
 				<!-- менять бекграунд или инжектить картинку-->
 				<div class="img"></div>
-				<div class="descriptions">
-					<!-- в цикле собирать описание и инжектить на страницу -->
-					<p>Girl with a Pearl Earring</p>
-					<p>Johannes Vermeer</p>
-					<p>1665</p>
-				</div>
+				<div class="descriptions"></div>
 				<button class="btn btn-center btn-next-question">next</button>
 			</div>
 			<div class="next-round modal">
 				<div class="modal-title">congratulations!</div>
-				<div class="score">9/10</div>
+				<div class="score"></div>
 				<div class="img">
 					<img src="assets/images/svg/star.svg" alt="" />
 				</div>
 				<div class="btn-group">
-					<button class="btn btn-home">home</button>
-					<button class="btn btn-center btn-next-round">next quiz</button>
+					<button class="btn btn-continue">continue</button>
+					<button class="btn btn-center btn-next-round d-none">
+						next quiz
+					</button>
+					<button class="btn btn-replay-round d-none">replay</button>
+					<!-- кнопка, которая появляется тогда, когда следующий раунд уже был сыгран до этого -->
 				</div>
 			</div>
 			<div class="game-over modal">

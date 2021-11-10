@@ -8,6 +8,7 @@
 }
 
 .result {
+	opacity: 0;
 	.content {
 		@include lg {
 			grid-template-columns: repeat(5, 1fr);
@@ -49,7 +50,7 @@
 		}
 		&.wrong {
 			background-image: url("../assets/images/svg/wrong.svg");
-			.img {
+			img {
 				filter: grayscale(1);
 			}
 		}

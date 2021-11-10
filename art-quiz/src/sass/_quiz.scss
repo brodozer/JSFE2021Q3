@@ -1,9 +1,11 @@
 .quiz {
 	height: 100vh;
 	width: 100%;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
+	transform: translateX(100%);
+	transition: all 0.3s;
 	background-color: #90b1c5;
 	.quiz-container {
 		height: 100%;
@@ -18,7 +20,7 @@
 		}
 	}
 	.quiz-head {
-		padding: 15px;
+		padding: 20px 15px 15px;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
@@ -30,9 +32,12 @@
 			padding: 20px 0;
 		}
 		.logo {
-			width: 100px;
+			width: 60px;
 			img {
 				width: 100%;
+			}
+			@include sm {
+				width: 100px;
 			}
 		}
 		.quiz-timer {
@@ -51,7 +56,7 @@
 				background-color: rgba(255, 255, 255, 0.5);
 			}
 		}
-		.btn-categories {
+		.btn {
 			width: 50px;
 			padding: 0;
 			background-position: center;
@@ -78,7 +83,7 @@
 				background-repeat: no-repeat;
 				background-size: cover;
 				background-position: center;
-				transition: all 0.3s;
+				transition: all 0.3s linear;
 			}
 		}
 		.progress {
@@ -217,5 +222,8 @@
 		span {
 			text-align: center;
 		}
+	}
+	&.toggle {
+		transform: translateX(0);
 	}
 }

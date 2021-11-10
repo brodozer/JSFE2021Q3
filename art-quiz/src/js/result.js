@@ -1,55 +1,44 @@
 "use strict";
 import LoadImage from "./loadImage";
+import Animation from "./animation";
 
 class Result {
-	constructor(result, round, round_id, container) {
-		this.result = result.result;
-		this.score = result.score;
-		this.round = round;
-		this.round_id = round_id;
-		this.container = container;
-		this.urls = []; // перебрать round и собрать  url
+	constructor(body) {
+		this.body = body;
+		this.result = this.body.querySelector(".result");
+		this.categoties = this.body.querySelector(".categories");
+		this.title = this.result.querySelector(".result .title");
+		this.content = this.result.querySelector(".result .content");
+		this.round = [];
 		this.renderDescriptions = this.renderDescriptions.bind(this);
-		this.renderResult();
 	}
 
-	async renderResult() {
-		let cards = "";
-		console.log(this.round);
-		this.round.forEach((el, i) => {
-			cards += `
-				<div class="card ${this.result[i] ? "correct" : "wrong"}" data-id="${i}">
-					<div class="img">
-						<img src="https://raw.githubusercontent.com/brodozer/image-data/master/img/${
-							el.imageNum
-						}.jpg">
-					</div>
-				</div>
-			`;
-			this.urls.push(
+	async renderResult(result, round, round_id) {
+		this.round = round;
+		const urls = [];
+		this.content.innerHTML = "";
+		this.title.textContent = `result round ${Number(round_id) + 1} (${
+			result.score
+		}/10)`;
+		console.log(round);
+		round.forEach((el) => {
+			urls.push(
 				LoadImage.load(
 					`https://raw.githubusercontent.com/brodozer/image-data/master/img/${el.imageNum}.jpg`
 				)
 			);
 		});
-		let html = `
-			<div class="result">
-				<div class="title">result round ${Number(this.round_id) + 1} (${
-			this.score
-		}/10)</div>
-				<div class="content">${cards}</div>
-			</div>
-		`;
 
-		const statusesPromise = await Promise.allSettled(this.urls);
+		const statusesPromise = await Promise.allSettled(urls);
 
 		statusesPromise.forEach((p, i) => {
 			if (p.status === "fulfilled") {
 				console.log("loadImg, ", p.value.src);
-				// создавать карточку
-				// инжектить img
-				// инжектить карточку
-				// вешать обработчик на карточку
+				const card = document.createElement("div");
+				card.className = `card ${result.result[i] ? "correct" : "wrong"}`;
+				card.dataset.id = i;
+				card.append(p.value);
+				this.content.append(card);
 			} else {
 				console.log(item.reason.message);
 				//throw item.reason;
@@ -57,12 +46,10 @@ class Result {
 		});
 
 		console.log("promise done");
-		//this.container.innerHTML = html;
-		this.container.querySelector(".categories").classList.add("d-none");
-		this.container.insertAdjacentHTML("beforeend", html);
+		Animation.fadeOut(this.categoties, this.result);
 
 		// нужно скрыть категории, показать результаты
-
+		// ? добавить обработчик в конструктор на контент а в renderDescriptions обработку - если етсь описание, то новое не показывать!
 		document.querySelectorAll(".result .card").forEach((card) => {
 			card.addEventListener("click", this.renderDescriptions);
 		});
