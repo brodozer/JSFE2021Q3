@@ -11,7 +11,7 @@
 	background-color: rgba(0, 0, 0, 0.8);
 	visibility: hidden;
 	opacity: 0;
-	transition: all 0.3s;
+	transition: all 0.4s linear;
 	.modal {
 		position: absolute;
 		width: 582px;
@@ -77,6 +77,9 @@
 		.btn-group {
 			width: 100%;
 			justify-content: space-around;
+			.btn {
+				justify-content: center;
+			}
 		}
 	}
 	.game-over {

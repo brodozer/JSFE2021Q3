@@ -70,11 +70,11 @@ class Quiz {
 		this.id = Number(id);
 		this.rounds = rounds;
 		if (this.type === "artists") {
-			this.imgContainer.innerHTML = '<div class="img"></div>';
+			this.imgContainer.innerHTML = '<div class="img responsive"></div>';
 			this.question.textContent = "Кто автор этой картины ?";
 		} else {
 			this.imgContainer.innerHTML =
-				'<div class="img"></div><div class="img"></div><div class="img"></div><div class="img"></div>';
+				'<div class="img responsive"><div class="number">A</div></div><div class="img responsive"><div class="number">B</div></div><div class="img responsive"><div class="number">C</div></div><div class="img responsive"><div class="number">D</div></div>';
 		}
 		this.imgs = this.imgContainer.querySelectorAll(".img");
 		this.rebind();
@@ -93,7 +93,6 @@ class Quiz {
 		this.renderQuestion(this.round[0]); // ? рендерить последовательно или перескакивать через раунды, которые пользователь уже сыграл ранее
 	}
 	nextQuestion() {
-		// проверить, последний вопрос или нет
 		this.answeredAmount++;
 		let count = this.answeredAmount;
 		console.log("count ", count);
@@ -103,7 +102,6 @@ class Quiz {
 		} else {
 			console.log("end round --->");
 			this.endRound();
-			// показать модалку с переходом на следующий раунд
 		}
 	}
 	nextRound() {
@@ -192,13 +190,14 @@ class Quiz {
 			this.type === "artists"
 				? this.round[this.answeredAmount].author
 				: this.round[this.answeredAmount].name;
-		let currentAnswer = event.target
-			.closest("label")
-			.querySelector("input").value;
+		let answer = event.target.closest(".answer");
+		let currentAnswer = answer.dataset.answer;
 		let isCorrect = false;
 		if (correctAnswer === currentAnswer) {
 			isCorrect = true;
 		}
+		let className = isCorrect ? "correct" : "wrong";
+		answer.classList.add(className);
 		// todo менять класс кнопки (зеленая или красная)
 		// todo менять цвет пагинации (зеленая или красная)
 		// todo проигрывать звук правильного/неправильного ответа (если активировано в настройках)
@@ -228,24 +227,13 @@ class Quiz {
 				)
 			);
 			answers.forEach((answer) => {
-				//html += `<div class="answer" data-answer="${answer}">${answer}</div>`;
-				html += `
-					<label>
-						<input type="radio" name="answer" value="${answer}"/>
-						<span>${answer}</span>
-					</label>
-				`;
+				html += `<div class="answer" data-answer="${answer}">${answer}</div>`;
 			});
 		} else {
 			this.question.textContent = `Какую из этих картин написал ${question.author} ?`;
 			let answerOptions = ["A", "B", "C", "D"];
 			answers.forEach((answer, i) => {
-				html += `
-					<label>
-						<input type="radio" name="answer" value="${answer.name}"/>
-						<span>${answerOptions[i]}</span>
-					</label>
-				`;
+				html += `<div class="answer" data-answer="${answer}">${answerOptions[i]}</div>`;
 				urls.push(
 					LoadImage.load(
 						`https://raw.githubusercontent.com/brodozer/image-data/master/img/${answer.imageNum}.jpg`
@@ -258,8 +246,12 @@ class Quiz {
 		statusesPromise.forEach((item, i) => {
 			if (item.status === "fulfilled") {
 				console.log("img quiz ", item.value);
-				// ? добавлять картинку, а не менять бекграунд
-				this.imgs[i].style.backgroundImage = `url("${item.value.src}")`; // item.value === image
+				// ? картинки или бекграунд
+				if (this.answeredAmount > 0) {
+					this.imgs[i].lastChild.remove();
+				}
+				this.imgs[i].append(item.value);
+				//this.imgs[i].style.backgroundImage = `url("${item.value.src}")`; // item.value === image
 			} else {
 				console.log(item.reason.message);
 				//throw item.reason;
@@ -272,6 +264,7 @@ class Quiz {
 			this.body.classList.add("stop-scroll");
 		} else {
 			// убрать модалку c результатом ответа на вопрос
+			//
 			this.modals.classList.remove("toggle");
 		}
 	}

@@ -5,7 +5,7 @@
 	top: 0;
 	left: 0;
 	transform: translateX(100%);
-	transition: all 0.3s;
+	transition: all 0.4s linear;
 	background-color: #90b1c5;
 	.quiz-container {
 		height: 100%;
@@ -78,41 +78,32 @@
 		.img-container {
 			height: 100%;
 			.img {
-				// прописать в style элемента
-				//background-image: url(../assets/images/quiz_full.jpeg);
-				background-repeat: no-repeat;
-				background-size: cover;
-				background-position: center;
-				transition: all 0.3s linear;
+				padding-bottom: 0 !important;
 			}
 		}
-		.progress {
-			position: absolute;
-			bottom: 0;
-			width: 150px;
-			display: flex;
-			justify-content: space-between;
-			padding: 15px 0;
-			left: 50%;
-			transform: translateX(-50%);
+	}
+	.progress {
+		display: flex;
+		justify-content: center;
+		padding: 15px 0;
+		@include sm {
+			padding: 26px 0;
+		}
+		span {
+			display: block;
+			width: 8px;
+			height: 8px;
+			margin: 0 5px;
+			border-radius: 50%;
+			background-color: #c4c4c4;
+			transition: all 0.3s;
 			@include sm {
-				width: 330px;
-				padding: 26px 0;
+				margin: 0 10px;
+				width: 15px;
+				height: 15px;
 			}
-			span {
-				display: block;
-				width: 8px;
-				height: 8px;
-				border-radius: 50%;
-				background-color: #c4c4c4;
-				transition: all 0.3s;
-				@include sm {
-					width: 15px;
-					height: 15px;
-				}
-				&.on {
-					background-color: #006635;
-				}
+			&.on {
+				background-color: #006635;
 			}
 		}
 	}
@@ -122,7 +113,7 @@
 		flex-wrap: wrap;
 		@include lg {
 			width: 530px;
-			margin: 40px auto 55px;
+			margin: 0 auto 55px;
 		}
 		&:after,
 		&:before {
@@ -142,33 +133,30 @@
 			height: 75%;
 			width: 2px;
 		}
-		label {
+		.answer {
+			display: flex;
+			align-items: center;
 			width: 50%;
 			height: 60px;
 			cursor: pointer;
-			span {
-				display: block;
-				line-height: 60px;
-				background-color: #fff;
-				font-size: 14px;
-				@include sm {
-					font-size: 16px;
-					line-height: 80px;
-				}
-			}
+			font-size: 14px;
+			background-color: #fff;
+			transition: all 0.3s linear;
 			@include sm {
+				font-size: 16px;
 				height: 80px;
 			}
-			&:hover span {
+			&:hover {
 				background-color: rgba(102, 0, 51, 0.5);
 				color: #fff;
 			}
-			input {
-				display: none;
-				&:checked ~ span {
-					background-color: rgba(0, 102, 53, 0.5);
-					color: #fff;
-				}
+			&.correct {
+				background-color: rgba(0, 102, 53, 0.5);
+				color: #fff;
+			}
+			&.wrong {
+				background-color: #ff0000;
+				color: #fff;
 			}
 		}
 	}
@@ -177,24 +165,19 @@
 			width: 100%;
 			height: 100%;
 		}
-		.answers label {
-			&:nth-child(odd) span {
+		.answers .answer {
+			&:nth-child(odd) {
 				padding-left: 12px;
 				text-align: left;
 				@include sm {
-					padding-left: 20%;
-				}
-				@include lg {
 					padding-left: 20px;
 				}
 			}
-			&:nth-child(even) span {
+			&:nth-child(even) {
 				padding-right: 12px;
 				text-align: right;
+				justify-content: flex-end;
 				@include sm {
-					padding-right: 20%;
-				}
-				@include lg {
 					padding-right: 20px;
 				}
 			}
@@ -206,8 +189,24 @@
 			flex-direction: column;
 			justify-content: space-between;
 			.img {
+				//position: relative;
 				width: 100%;
 				height: calc((100% / 4) - 4px);
+				.number {
+					position: absolute;
+					z-index: 2;
+					top: 10px;
+					left: 10px;
+					color: #000;
+					width: 25px;
+					height: 25px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					border-radius: 50%;
+					border: 1px solid #000;
+					background-color: #fff;
+				}
 				@include sm {
 					flex: 1 1 calc((100% / 2) - 4px);
 					height: calc((100% / 2) - 3px);
@@ -219,8 +218,8 @@
 				gap: 5px;
 			}
 		}
-		span {
-			text-align: center;
+		.answer {
+			justify-content: center;
 		}
 	}
 	&.toggle {
