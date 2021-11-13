@@ -36,11 +36,26 @@ class Quiz {
 		this.round = []; // текущий раунд квиза (10 вопросов)
 		this.id = 0; // id карточки для которой нужно отобразить вопросы
 
-		// bind
+		//audio
+		this.sounds = {
+			wrong: new Audio("../assets/audio/wrong.wav"),
+			correct: new Audio("../assets/audio/correct.wav"),
+			round: new Audio("../assets/audio/round.mp3"),
+		};
+
+		//timer
+		this.optTimer = {
+			id: false,
+			seconds: 0,
+		};
+		this.quizTimer = this.quiz.querySelector(".quiz-timer");
+
+		//bind
 		this.nextQuestion = this.nextQuestion.bind(this);
 		this.nextRound = this.nextRound.bind(this);
 		this.checkAnswer = this.checkAnswer.bind(this);
 		this.closeQuiz = this.closeQuiz.bind(this);
+		this.timer = this.timer.bind(this);
 		//init
 		this.init();
 	}
@@ -53,10 +68,16 @@ class Quiz {
 		this.btnNextRound.addEventListener("click", this.nextRound);
 		this.btnContinue.addEventListener("click", this.closeQuiz);
 		this.btnCategories.addEventListener("click", () => {
+			if (this.opt.timer) {
+				clearInterval(this.optTimer.id);
+			}
 			this.quiz.classList.remove("toggle");
 			this.body.classList.remove("stop-scroll");
 		});
 		this.btnHome.addEventListener("click", () => {
+			if (this.opt.timer) {
+				clearInterval(this.optTimer.id);
+			}
 			this.body.querySelector(".btn-home-header").classList.remove("active");
 			this.body.querySelector(".categories").classList.add("d-none");
 			this.body.querySelector(".home").classList.remove("d-none");
@@ -77,6 +98,14 @@ class Quiz {
 				'<div class="img responsive"><div class="number">A</div></div><div class="img responsive"><div class="number">B</div></div><div class="img responsive"><div class="number">C</div></div><div class="img responsive"><div class="number">D</div></div>';
 		}
 		this.imgs = this.imgContainer.querySelectorAll(".img");
+		if (this.opt.timer) {
+			// отображение таймера в квизе
+			this.quizTimer.innerHTML = "00:00";
+			this.quizTimer.classList.remove("d-none");
+		} else {
+			this.quizTimer.classList.add("d-none");
+		}
+
 		this.rebind();
 	}
 	rebind() {
@@ -161,6 +190,13 @@ class Quiz {
 		).textContent = `${totalCorrectAnswer}/10`;
 		this.modalNextQuestion.classList.remove("active");
 		this.modalNextRound.classList.add("active");
+		this.playAudio(this.sounds.round);
+	}
+	playAudio(sound) {
+		if (!this.opt.muted) {
+			sound.volume = this.opt.volume;
+			sound.play();
+		}
 	}
 	async renderResult(isCorrect) {
 		let question = this.round[this.answeredAmount];
@@ -182,10 +218,10 @@ class Quiz {
 			descriptions;
 		this.modalNextQuestion.className = `next-question ${className} modal active`;
 		this.modals.classList.add("toggle");
-		//собрать модалку
 	}
 	checkAnswer(event) {
 		event.preventDefault();
+		clearInterval(this.optTimer.id);
 		let correctAnswer =
 			this.type === "artists"
 				? this.round[this.answeredAmount].author
@@ -198,6 +234,11 @@ class Quiz {
 		}
 		let className = isCorrect ? "correct" : "wrong";
 		answer.classList.add(className);
+		if (isCorrect) {
+			this.playAudio(this.sounds.correct);
+		} else {
+			this.playAudio(this.sounds.wrong);
+		}
 		// todo менять класс кнопки (зеленая или красная)
 		// todo менять цвет пагинации (зеленая или красная)
 		// todo проигрывать звук правильного/неправильного ответа (если активировано в настройках)
@@ -267,10 +308,39 @@ class Quiz {
 			//
 			this.modals.classList.remove("toggle");
 		}
+		this.startTimer();
 	}
 	calculateCorrectAnswer(result) {
 		let total = result.filter((e) => e == true).length;
 		return total;
+	}
+
+	//timer
+	timer() {
+		if (this.optTimer.seconds < 0) {
+			clearInterval(this.optTimer.id);
+			console.log("time out");
+			this.playAudio(this.sounds.wrong);
+			this.roundResult.push(false);
+			this.renderResult(false);
+		} else {
+			let strTimer = `00:${
+				this.optTimer.seconds < 10
+					? "0" + this.optTimer.seconds
+					: this.optTimer.seconds
+			}`;
+			this.quizTimer.innerHTML = strTimer;
+		}
+		--this.optTimer.seconds;
+	}
+
+	startTimer() {
+		if (this.opt.timer) {
+			this.optTimer.seconds = this.opt.seconds;
+			this.optTimer.id = setInterval(() => {
+				this.timer();
+			}, 1000);
+		}
 	}
 
 	closeQuiz() {

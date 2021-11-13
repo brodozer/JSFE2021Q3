@@ -16,8 +16,10 @@ class Main {
 			options = JSON.parse(localStorage.opt);
 		} else {
 			options = {
-				volume: 50,
+				volume: 0.5,
+				muted: false,
 				timer: false,
+				seconds: 15,
 				//artists: [],
 				//pictures: [],
 				artists: [

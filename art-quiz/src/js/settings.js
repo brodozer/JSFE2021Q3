@@ -17,7 +17,11 @@ class Settings {
 		this.btnHome = this.body.querySelector(".btn-home-header");
 		this.btnCategories = this.body.querySelector(".btn-categories-header");
 		this.volume = this.body.querySelector(".volume");
+		this.mute = this.body.querySelector(".mute");
 		this.timer = this.body.querySelector(".timer");
+		this.seconds = this.body.querySelector(".seconds");
+		this.btnIncrease = this.body.querySelector(".btn-increase");
+		this.btnDecrease = this.body.querySelector(".btn-decrease");
 		//pages
 		this.home = this.body.querySelector(".home");
 		this.settings = this.body.querySelector(".settings");
@@ -37,13 +41,21 @@ class Settings {
 		this.opt = opt;
 		this.result = result;
 		this.quiz = quiz;
+		//defopt
+		this.defOpt = {
+			volume: 0.5,
+			timer: false,
+			seconds: 15,
+			muted: false,
+		};
 		//bind method
 		this.saveSettings = this.saveSettings.bind(this);
 		this.resetSetings = this.resetSetings.bind(this);
+		this.toggleMute = this.toggleMute.bind(this);
+		this.updateVolumeIcon = this.updateVolumeIcon.bind(this);
 		this.renderCategories = this.renderCategories.bind(this);
 		this.displayHome = this.displayHome.bind(this);
 		this.displayCategories = this.displayCategories.bind(this);
-		this.init();
 	}
 	//установить настройки громкости и таймера
 	//загрузить данные с сервера
@@ -127,6 +139,7 @@ class Settings {
 	}
 
 	addListeners() {
+		console.log("addListeners");
 		this.btnSettings.addEventListener("click", () => {
 			Animation.fadeOut(this.home, this.settings);
 		});
@@ -136,10 +149,17 @@ class Settings {
 		this.pictures.addEventListener("click", this.renderCategories);
 		this.btnHome.addEventListener("click", this.displayHome);
 		this.btnCategories.addEventListener("click", this.displayCategories);
+		this.mute.addEventListener("click", this.toggleMute);
+		this.volume.addEventListener("change", this.updateVolumeIcon);
+		this.btnDecrease.addEventListener("click", (e) => {
+			this.seconds.stepDown();
+		});
+		this.btnIncrease.addEventListener("click", (e) => {
+			this.seconds.stepUp();
+		});
 		this.categories
 			.querySelector(".content")
 			.addEventListener("click", (event) => {
-				event.stopImmediatePropagation();
 				if (event.target.closest(".card")) {
 					let cardId = event.target.closest(".card").id;
 					let round = this.questions[this.type][cardId];
@@ -181,19 +201,44 @@ class Settings {
 	saveSettings() {
 		this.opt.volume = this.volume.value;
 		this.opt.timer = this.timer.checked;
+		this.opt.seconds = this.seconds.value;
 		Animation.fadeOut(this.settings, this.home);
 	}
 
 	resetSetings() {
-		this.opt.volume = 50;
-		this.opt.timer = false;
+		for (const key in this.defOpt) {
+			this.opt[key] = this.defOpt[key];
+		}
 		this.setSettings();
+		this.updateVolumeIcon();
 		Animation.fadeOut(this.settings, this.home);
 	}
 
 	setSettings() {
-		this.volume.value = this.opt.value;
+		this.volume.value = this.opt.volume;
 		this.timer.checked = this.opt.timer;
+		this.seconds.value = this.opt.seconds;
+	}
+
+	updateVolumeIcon() {
+		if (this.volume.value == 0) {
+			this.mute.classList.add("on");
+		} else {
+			this.mute.classList.remove("on");
+		}
+	}
+
+	toggleMute() {
+		this.opt.muted = !this.opt.muted;
+
+		if (this.opt.muted) {
+			this.volume.setAttribute("data-volume", this.volume.value);
+			this.volume.value = 0;
+			this.updateVolumeIcon();
+		} else {
+			this.volume.value = this.volume.dataset.volume;
+			this.updateVolumeIcon();
+		}
 	}
 
 	renderCategories(event) {
@@ -249,6 +294,7 @@ class Settings {
 	}
 
 	init() {
+		console.log("init");
 		this.startQuiz();
 		this.addListeners();
 		this.setSettings();
