@@ -1,5 +1,4 @@
 .settings {
-	opacity: 0;
 	.card-wrap {
 		max-width: 500px;
 		margin: 25px auto;
@@ -29,22 +28,6 @@
 			.range {
 				display: flex;
 				align-items: center;
-				.mute {
-					width: 37px;
-					height: 30px;
-					margin-right: 25px;
-					background-image: url("../assets/images/svg/volume-on.svg");
-					background-repeat: no-repeat;
-					background-size: contain;
-					background-position: left center;
-					@include sm {
-						width: 30px;
-						height: 30px;
-					}
-					&.on {
-						background-image: url("../assets/images/svg/mute.svg");
-					}
-				}
 				.volume {
 					-webkit-appearance: none;
 					appearance: none;
@@ -85,7 +68,7 @@
 				-moz-user-select: none;
 				-ms-user-select: none;
 				user-select: none;
-				.timer {
+				input {
 					position: absolute;
 					opacity: 0;
 					cursor: pointer;

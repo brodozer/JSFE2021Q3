@@ -1,17 +1,18 @@
 "use strict";
 
 import "./sass/style.scss";
-//import "./js/settings";
 
-import Settings from "./js/settings";
 import Quiz from "./js/quiz";
+import Round from "./js/round";
 import Result from "./js/result";
-//import Animation from "./js/animation";
+import Category from "./js/category";
+import Setting from "./js/setting";
+import Data from "./js/data";
 
 class Main {
 	static init() {
 		const body = document.body;
-		let options = false;
+		let options = {};
 		if (localStorage.opt) {
 			options = JSON.parse(localStorage.opt);
 		} else {
@@ -50,10 +51,13 @@ class Main {
 			};
 		}
 		console.log(options);
-		const quiz = new Quiz(body, options);
+		const data = new Data();
 		const result = new Result(body);
-		const settings = new Settings(body, result, quiz, options);
-		settings.init();
+		const round = new Round(body, options);
+		const setting = new Setting(body, options);
+		const category = new Category(body, options, data, result, round);
+		const quiz = new Quiz(body, category, setting);
+		//  повесить обработчики для  ls и записывать данные перед закрытием страницы
 	}
 }
 

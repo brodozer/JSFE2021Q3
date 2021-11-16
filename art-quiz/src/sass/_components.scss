@@ -8,25 +8,22 @@ body {
 	background-color: #90b1c5;
 }
 
-// .wrapper {
-// 	display: flex;
-// 	flex-direction: column;
-// 	height: 100vh;
-// 	width: 100%;
-// 	main {
-// 		flex: 1 1 auto;
-// 		overflow: auto;
-// 	}
-// }
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100%;
+	main {
+		flex: 1 1 auto;
+		overflow: auto;
+	}
+}
 
 .title {
-	text-align: left;
+	text-align: center;
 	font-weight: 400;
 	font-size: 24px;
 	padding-top: 25px;
-	@include sm {
-		text-align: center;
-	}
 	@include lg {
 		font-size: 36px;
 	}

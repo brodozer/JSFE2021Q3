@@ -16,6 +16,7 @@ class Animation {
 
 	static fadeIn(el) {
 		let opacity = 0.01;
+		el.style.opacity = opacity;
 		el.classList.remove("d-none");
 
 		const timer = setInterval(() => {
