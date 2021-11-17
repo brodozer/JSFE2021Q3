@@ -28,7 +28,7 @@ class Round {
 		this.modalNextQuestion = this.modals.querySelector(".next-question");
 		this.modalGameOver = this.modals.querySelector(".game-over");
 
-		this.imgs = false;
+		this.imgs = [];
 		this.answeredAmount = 0;
 		this.roundResult = []; // true/false
 		this.type = false; // тип квиза авторы/картины (нужно для класса контейнера и темплейта html!)
@@ -123,7 +123,7 @@ class Round {
 		let count = this.answeredAmount;
 		console.log("count ", count);
 		if (this.answeredAmount < this.round.length) {
-			this.renderQuestion(this.round[this.answeredAmount]); // рендер вопроса
+			this.renderQuestion(this.round[this.answeredAmount]);
 			this.progressBullets[this.answeredAmount].classList.add("on");
 		} else {
 			console.log("end round --->");

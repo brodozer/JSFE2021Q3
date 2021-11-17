@@ -11,6 +11,8 @@ import Data from "./js/data";
 
 class Main {
 	static init() {
+		//window.addEventListener('load', init); // забираем опции и инитим приложение
+
 		const body = document.body;
 		let options = {};
 		if (localStorage.opt) {
@@ -21,36 +23,40 @@ class Main {
 				muted: false,
 				timer: false,
 				seconds: 15,
-				//artists: [],
-				//pictures: [],
-				artists: [
-					{
-						id: 3,
-						score: 5,
-						result: [
-							true,
-							false,
-							true,
-							true,
-							true,
-							true,
-							true,
-							false,
-							true,
-							true,
-						],
-					},
-				],
-				pictures: [
-					{
-						id: 5,
-						score: 7,
-						result: [],
-					},
-				],
+				artists: [],
+				pictures: [],
+				// artists: [
+				// 	{
+				// 		id: 3,
+				// 		score: 5,
+				// 		result: [
+				// 			true,
+				// 			false,
+				// 			true,
+				// 			true,
+				// 			true,
+				// 			true,
+				// 			true,
+				// 			false,
+				// 			true,
+				// 			true,
+				// 		],
+				// 	},
+				// ],
+				// pictures: [
+				// 	{
+				// 		id: 5,
+				// 		score: 7,
+				// 		result: [],
+				// 	},
+				// ],
 			};
 		}
 		console.log(options);
+		const setLocalStorage = () => {
+			localStorage.opt = JSON.stringify(options);
+		};
+		window.addEventListener("beforeunload", setLocalStorage);
 		const data = new Data();
 		const result = new Result(body);
 		const round = new Round(body, options);
