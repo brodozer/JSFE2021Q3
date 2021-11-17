@@ -5,7 +5,8 @@
 }
 
 body {
-	background-color: #90b1c5;
+	//background-color: #90b1c5;
+	background: linear-gradient(180deg, rgb(191, 191, 191), rgb(255, 255, 255));
 }
 
 .wrapper {
@@ -138,10 +139,13 @@ img {
 	justify-content: end;
 	align-items: center;
 	padding-right: 7px;
-	background-color: $main_color;
-	color: #fff;
+	//background-color: $main_color;
+	//color: #fff;
+	background-color: transparent;
+	border: 2px solid #000;
+	color: #000;
 	font-size: 18px;
-	background-size: 45px;
+	background-size: 30px;
 	background-repeat: no-repeat;
 	background-position: 7px center;
 	cursor: pointer;
@@ -164,10 +168,26 @@ img {
 	}
 	&-categories {
 		background-image: url("../assets/images/svg/categories.svg");
-		background-size: 29px 24px;
+		background-size: 27px;
 	}
 	&-result {
 		background-image: url("../assets/images/svg/score.svg");
+		background-color: rgba(0, 0, 0, 0.6);
+		color: #fff;
+		border: none;
+	}
+	&-home,
+	&-categories {
+		border: none;
+		padding: 0;
+		background-position: center;
+		width: 50px;
+		@include sm {
+			width: 150px;
+			border: 2px solid #000;
+			background-position: 7px center;
+			padding-right: 7px;
+		}
 	}
 }
 
@@ -185,6 +205,7 @@ img {
 		grid-gap: 20px;
 	}
 	.card {
+		cursor: pointer;
 		position: relative;
 		background-color: #fff;
 		padding-bottom: 2px;

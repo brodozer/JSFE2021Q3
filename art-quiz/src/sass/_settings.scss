@@ -11,6 +11,7 @@
 			justify-content: space-around;
 		}
 		.settings-card {
+			box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 			height: 204px;
 			display: flex;
 			flex-direction: column;
@@ -93,10 +94,10 @@
 				margin-left: 20px;
 			}
 			.input-wr {
-				width: 75px;
+				width: 85px;
 				height: 25px;
+				justify-content: space-between;
 				margin-bottom: 10px;
-				border: 1px solid $main_color;
 				input {
 					border: none;
 					text-align: center;

@@ -20,7 +20,7 @@ class Main {
 		} else {
 			options = {
 				volume: 0.5,
-				muted: false,
+				muted: true,
 				timer: false,
 				seconds: 15,
 				artists: [],

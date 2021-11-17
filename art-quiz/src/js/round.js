@@ -89,6 +89,7 @@ class Round {
 		this.rounds = rounds;
 		if (this.type === "artists") {
 			this.imgContainer.innerHTML = '<div class="img responsive"></div>';
+			//this.imgContainer.innerHTML = '<div class="img"></div>';
 			this.question.textContent = "Кто автор этой картины ?";
 		} else {
 			this.imgContainer.innerHTML =

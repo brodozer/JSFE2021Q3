@@ -6,7 +6,8 @@
 	left: 0;
 	transform: translateX(100%);
 	transition: all 0.4s linear;
-	background-color: #90b1c5;
+	//background-color: #90b1c5;
+	background: linear-gradient(180deg, rgb(191, 191, 191), rgb(255, 255, 255));
 	.quiz-container {
 		height: 100%;
 		display: flex;
@@ -56,11 +57,6 @@
 			&:hover {
 				background-color: rgba(255, 255, 255, 0.5);
 			}
-		}
-		.btn {
-			width: 50px;
-			padding: 0;
-			background-position: center;
 		}
 		.question {
 			padding-top: 15px;
@@ -165,6 +161,10 @@
 		.img {
 			width: 100%;
 			height: 100%;
+			img {
+				height: 100%;
+				object-fit: contain;
+			}
 		}
 		.answers .answer {
 			&:nth-child(odd) {
@@ -186,13 +186,17 @@
 	}
 	&.quiz-pictures {
 		.img-container {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 2px;
 			.img {
 				//position: relative;
 				width: 100%;
-				height: calc((100% / 4) - 4px);
+				height: 100%;
+				img {
+					height: 100%;
+					object-fit: cover;
+				}
 				.number {
 					position: absolute;
 					z-index: 2;
@@ -208,14 +212,8 @@
 					border: 1px solid #000;
 					background-color: #fff;
 				}
-				@include sm {
-					flex: 1 1 calc((100% / 2) - 4px);
-					height: calc((100% / 2) - 3px);
-				}
 			}
 			@include sm {
-				flex-direction: row;
-				flex-wrap: wrap;
 				gap: 5px;
 			}
 		}
