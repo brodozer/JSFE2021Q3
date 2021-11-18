@@ -5,9 +5,11 @@ import Animation from "./animation";
 class Quiz {
 	constructor(body, category, setting) {
 		this.body = body;
+		this.category = category;
+		this.setting = setting;
+		//buttons
 		this.artists = document.getElementById("artists");
 		this.pictures = document.getElementById("pictures");
-		//buttons
 		this.btnSettings = this.body.querySelector(".btn-settings");
 		this.btnHome = this.body.querySelector(".header .btn-home");
 		this.btnCategories = this.body.querySelector(".header .btn-categories");
@@ -16,9 +18,6 @@ class Quiz {
 		this.settings = this.body.querySelector(".settings");
 		this.result = this.body.querySelector(".result");
 		this.categories = this.body.querySelector(".categories");
-
-		this.category = category;
-		this.setting = setting;
 		//events
 		this.artists.addEventListener(
 			"click",

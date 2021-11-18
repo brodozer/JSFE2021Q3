@@ -4,14 +4,11 @@ import LoadImage from "./loadImage";
 
 class Round {
 	constructor(body, opt) {
-		//quiz
 		this.body = body;
-		this.quiz = this.body.querySelector(".quiz");
 		this.opt = opt;
-
+		//round
+		this.quiz = this.body.querySelector(".quiz");
 		this.answers = this.quiz.querySelector(".answers");
-		this.progress = this.quiz.querySelector(".progress");
-		this.progressBullets = false;
 		this.question = this.quiz.querySelector(".question");
 		this.imgContainer = this.quiz.querySelector(".img-container");
 		this.progressBullets = this.quiz.querySelectorAll(".progress span");
@@ -30,9 +27,9 @@ class Round {
 
 		this.imgs = [];
 		this.answeredAmount = 0;
-		this.roundResult = []; // true/false
-		this.type = false; // тип квиза авторы/картины (нужно для класса контейнера и темплейта html!)
-		this.rounds = []; // массив из 10 раундов
+		this.roundResult = []; // массив значений true/false
+		this.type = false; // тип квиза
+		this.rounds = []; // массив из 12 раундов
 		this.round = []; // текущий раунд квиза (10 вопросов)
 		this.id = 0; // id карточки для которой нужно отобразить вопросы
 
@@ -56,7 +53,7 @@ class Round {
 		this.checkAnswer = this.checkAnswer.bind(this);
 		this.closeQuiz = this.closeQuiz.bind(this);
 		this.timer = this.timer.bind(this);
-		//init
+
 		this.events();
 	}
 
@@ -89,7 +86,6 @@ class Round {
 		this.rounds = rounds;
 		if (this.type === "artists") {
 			this.imgContainer.innerHTML = '<div class="img responsive"></div>';
-			//this.imgContainer.innerHTML = '<div class="img"></div>';
 			this.question.textContent = "Кто автор этой картины ?";
 		} else {
 			this.imgContainer.innerHTML =
@@ -117,12 +113,10 @@ class Round {
 				bullet.classList.remove("on");
 			}
 		});
-		this.renderQuestion(this.round[0]); // ? рендерить последовательно или перескакивать через раунды, которые пользователь уже сыграл ранее
+		this.renderQuestion(this.round[0]); // ? рендерить последовательно или пропускать раунды, которые пользователь уже сыграл ранее
 	}
 	nextQuestion() {
 		this.answeredAmount++;
-		let count = this.answeredAmount;
-		console.log("count ", count);
 		if (this.answeredAmount < this.round.length) {
 			this.renderQuestion(this.round[this.answeredAmount]);
 			this.progressBullets[this.answeredAmount].classList.add("on");
@@ -151,7 +145,6 @@ class Round {
 	}
 	endRound() {
 		this.quiz.classList.remove("toggle");
-		// ? убрать у body overflow hidden! (может overflow убирать на другом этапе, когда пользователь выбрал категории)
 		let totalCorrectAnswer = this.calculateCorrectAnswer(this.roundResult); // кол-во правильных ответов
 		let result = {
 			id: this.id,
@@ -164,12 +157,9 @@ class Round {
 		} else {
 			this.opt[this.type].push(result);
 		}
-		console.log("round result ", result);
+		//console.log("round result ", result);
 
-		// вариант 2 - накинуть карточке класс played (включит кнопку и скор)
-		//           - заинжектить скор
 		const card = document.getElementById(this.id);
-		// можно добавить проверку, чтобы добавлять класс, только тогда, когда его нет (для случаев, когда раунд уже сыгран)
 		card.classList.add("played");
 		card.innerHTML = `		
 			<div class="card-title">
@@ -237,11 +227,8 @@ class Round {
 		} else {
 			this.playAudio(this.sounds.wrong);
 		}
-		// todo менять класс кнопки (зеленая или красная)
-		// todo менять цвет пагинации (зеленая или красная)
-		// todo проигрывать звук правильного/неправильного ответа (если активировано в настройках)
-		console.log("correct answer ", correctAnswer);
-		console.log("current answer ", currentAnswer);
+		//console.log("correct answer ", correctAnswer);
+		//console.log("current answer ", currentAnswer);
 		this.roundResult.push(isCorrect);
 		this.renderResult(isCorrect);
 	}
@@ -255,7 +242,7 @@ class Round {
 		return answers;
 	}
 	async renderQuestion(question) {
-		console.log("question ", question);
+		//console.log("question ", question);
 		let answers = this.shuffleAnswers(question.answers);
 		let urls = [];
 		let html = "";
@@ -280,17 +267,15 @@ class Round {
 				);
 			});
 		}
-		console.log("quiz answers ", html);
+		//console.log("quiz answers ", html);
 		const statusesPromise = await Promise.allSettled(urls);
 		statusesPromise.forEach((item, i) => {
 			if (item.status === "fulfilled") {
-				console.log("img quiz ", item.value);
-				// ? картинки или бекграунд
+				//console.log("img ", item.value);
 				if (this.answeredAmount > 0) {
 					this.imgs[i].lastChild.remove();
 				}
 				this.imgs[i].append(item.value);
-				//this.imgs[i].style.backgroundImage = `url("${item.value.src}")`; // item.value === image
 			} else {
 				console.log(item.reason.message);
 				//throw item.reason;
@@ -301,8 +286,6 @@ class Round {
 			this.quiz.className = `quiz quiz-${this.type}`;
 			this.quiz.classList.add("toggle");
 		} else {
-			// убрать модалку c результатом ответа на вопрос
-			//
 			this.modals.classList.remove("toggle");
 		}
 		this.startTimer();
@@ -312,7 +295,6 @@ class Round {
 		return total;
 	}
 
-	//timer
 	timer() {
 		if (this.optTimer.seconds < 0) {
 			clearInterval(this.optTimer.id);
@@ -343,10 +325,6 @@ class Round {
 	closeQuiz() {
 		this.modals.classList.remove("toggle");
 		this.modalNextRound.classList.remove("active");
-		/*
-			todo закрыть квиз, показать категории
-			todo вызывать при клике по кнопке категорий и кнопке no в модалке modalNextRound
-		*/
 	}
 }
 

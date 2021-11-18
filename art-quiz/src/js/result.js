@@ -20,7 +20,6 @@ class Result {
 		this.title.textContent = `result round ${Number(round_id) + 1} (${
 			result.score
 		}/10)`;
-		console.log(round);
 		round.forEach((el) => {
 			urls.push(
 				LoadImage.load(
@@ -33,7 +32,7 @@ class Result {
 
 		statusesPromise.forEach((p, i) => {
 			if (p.status === "fulfilled") {
-				console.log("loadImg, ", p.value.src);
+				//console.log("loadImg, ", p.value.src);
 				const card = document.createElement("div");
 				card.className = `card ${result.result[i] ? "correct" : "wrong"}`;
 				card.dataset.id = i;
@@ -48,8 +47,6 @@ class Result {
 		console.log("promise done");
 		Animation.fadeOut(this.categoties, this.result);
 
-		// нужно скрыть категории, показать результаты
-		// ? добавить обработчик в конструктор на контент а в renderDescriptions обработку - если етсь описание, то новое не показывать!
 		document.querySelectorAll(".result .card").forEach((card) => {
 			card.addEventListener("click", this.renderDescriptions);
 		});

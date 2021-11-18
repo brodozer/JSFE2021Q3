@@ -78,12 +78,8 @@ class Category {
 	}
 	cardsHandler(event) {
 		if (event.target.closest(".card")) {
-			let cardId = event.target.closest(".card").id;
-			let round = this.data.questions[this.type][cardId];
-			console.log("round ", round);
-			console.log("card id ", cardId);
+			const cardId = event.target.closest(".card").id;
 			if (event.target.tagName === "BUTTON") {
-				// ? что если пользователь нажал не по кнопке а по элементу внутри кнопки
 				this.btnCategories.classList.add("active");
 				this.btnHome.dataset.hide = "result";
 				this.result.renderResult(

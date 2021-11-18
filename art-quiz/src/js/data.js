@@ -7,18 +7,16 @@ class Data {
 		this.fetch();
 	}
 	async fetch() {
-		// получить данные, записать данные, собрать вопросы
-
 		try {
 			const url = "js/images.json";
 
 			const res = await fetch(url);
 			const data = await res.json();
-			console.log(url, data);
+			//console.log(url, data);
 
 			this.data = data;
 			this.getQuestions(this.data);
-			console.log(this.questions);
+			//console.log(this.questions);
 		} catch (error) {
 			alert(error);
 		}

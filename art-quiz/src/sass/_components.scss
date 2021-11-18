@@ -139,8 +139,6 @@ img {
 	justify-content: end;
 	align-items: center;
 	padding-right: 7px;
-	//background-color: $main_color;
-	//color: #fff;
 	background-color: transparent;
 	border: 2px solid #000;
 	color: #000;
@@ -175,6 +173,7 @@ img {
 		background-color: rgba(0, 0, 0, 0.6);
 		color: #fff;
 		border: none;
+		font-size: 16px;
 	}
 	&-home,
 	&-categories {
