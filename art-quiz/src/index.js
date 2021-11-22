@@ -29,6 +29,12 @@ class Main {
 		const setLocalStorage = () => {
 			localStorage.opt = JSON.stringify(options);
 		};
+		const setHeight = () => {
+			const vh = window.innerHeight * 0.01;
+			document.documentElement.style.setProperty("--vh", `${vh}px`);
+		};
+		setHeight();
+		window.addEventListener("resize", setHeight);
 		window.addEventListener("beforeunload", setLocalStorage);
 		const data = new Data();
 		const result = new Result(body);

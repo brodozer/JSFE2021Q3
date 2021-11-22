@@ -5,7 +5,6 @@
 }
 
 body {
-	//background-color: #90b1c5;
 	background: linear-gradient(180deg, rgb(191, 191, 191), rgb(255, 255, 255));
 }
 
@@ -13,6 +12,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
+	height: calc(var(--vh, 1vh) * 100);
 	width: 100%;
 	main {
 		flex: 1 1 auto;

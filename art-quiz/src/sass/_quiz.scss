@@ -1,12 +1,12 @@
 .quiz {
 	height: 100vh;
+	height: calc(var(--vh, 1vh) * 100);
 	width: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
 	transform: translateX(100%);
 	transition: all 0.4s linear;
-	//background-color: #90b1c5;
 	background: linear-gradient(180deg, rgb(191, 191, 191), rgb(255, 255, 255));
 	.quiz-container {
 		height: 100%;
