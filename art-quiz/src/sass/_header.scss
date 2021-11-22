@@ -25,15 +25,6 @@
 		.btn {
 			visibility: hidden;
 			opacity: 0;
-			transition: all 0.3s;
-			width: 50px;
-			padding: 0;
-			background-position: center;
-			@include sm {
-				width: 150px;
-				padding-right: 7px;
-				background-position: 7px center;
-			}
 			&.active {
 				visibility: visible;
 				opacity: 1;

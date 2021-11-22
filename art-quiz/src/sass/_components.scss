@@ -133,20 +133,20 @@ img {
 }
 
 .btn {
-	width: 150px;
 	height: 50px;
 	display: flex;
 	justify-content: end;
 	align-items: center;
-	padding-right: 7px;
 	background-color: transparent;
-	border: 2px solid #000;
-	color: #000;
 	font-size: 18px;
 	background-size: 30px;
 	background-repeat: no-repeat;
-	background-position: 7px center;
+	transition: all 0.3s linear;
 	cursor: pointer;
+	color: #000;
+	&:active {
+		transform: scale(1.1);
+	}
 	span {
 		color: inherit;
 		display: none;
@@ -168,6 +168,20 @@ img {
 		background-image: url("../assets/images/svg/categories.svg");
 		background-size: 27px;
 	}
+	&-save,
+	&-default,
+	&-settings,
+	&-result,
+	&-center {
+		width: 150px;
+		padding-right: 7px;
+		border: 2px solid #000;
+		background-position: 7px center;
+		&:hover {
+			background-color: #000;
+			color: #fff;
+		}
+	}
 	&-result {
 		background-image: url("../assets/images/svg/score.svg");
 		background-color: rgba(0, 0, 0, 0.6);
@@ -177,15 +191,16 @@ img {
 	}
 	&-home,
 	&-categories {
-		border: none;
-		padding: 0;
-		background-position: center;
 		width: 50px;
 		@include sm {
 			width: 150px;
+			padding-right: 7px;
 			border: 2px solid #000;
 			background-position: 7px center;
-			padding-right: 7px;
+			&:hover {
+				background-color: #000;
+				color: #fff;
+			}
 		}
 	}
 }
@@ -194,10 +209,9 @@ img {
 	padding: 25px 0;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 2px;
+	grid-gap: 7px;
 	@include sm {
 		grid-template-columns: repeat(4, 1fr);
-		grid-gap: 5px;
 	}
 	@include lg {
 		grid-template-columns: repeat(6, 1fr);
@@ -208,6 +222,16 @@ img {
 		position: relative;
 		background-color: #fff;
 		padding-bottom: 2px;
+		border-top: 3px solid transparent;
+		transition: all 0.3s linear;
+		box-shadow: 2px 4px 6px #000;
+
+		&:hover {
+			border-color: #000;
+		}
+		&:active {
+			box-shadow: 1px 1px 2px rgba(#fff, 0.2);
+		}
 		@include sm {
 			padding-bottom: 6px;
 		}
