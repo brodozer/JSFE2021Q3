@@ -144,15 +144,18 @@ img {
 	transition: all 0.3s linear;
 	cursor: pointer;
 	color: #000;
-	&:active {
-		transform: scale(1.1);
-	}
 	span {
 		color: inherit;
 		display: none;
 		@include sm {
 			display: block;
 		}
+	}
+	&:active {
+		transform: scale(1.2);
+	}
+	&-result:active {
+		transform: scale(1);
 	}
 	&-center {
 		justify-content: center;
@@ -192,6 +195,7 @@ img {
 	&-home,
 	&-categories {
 		width: 50px;
+		background-position: center;
 		@include sm {
 			width: 150px;
 			padding-right: 7px;
@@ -222,15 +226,17 @@ img {
 		position: relative;
 		background-color: #fff;
 		padding-bottom: 2px;
-		border-top: 3px solid transparent;
+		//border-top: 3px solid transparent;
 		transition: all 0.3s linear;
 		box-shadow: 2px 4px 6px #000;
 
 		&:hover {
-			border-color: #000;
+			//border-color: #000;
+			box-shadow: 1px 1px 2px rgba(#fff, 0.2);
 		}
 		&:active {
-			box-shadow: 1px 1px 2px rgba(#fff, 0.2);
+			transform: scale(1.1);
+			z-index: 2;
 		}
 		@include sm {
 			padding-bottom: 6px;
