@@ -1,14 +1,12 @@
 import { urlParams, news, sources } from '../interfaces';
 
 class Model {
-    baseLink: string;
-    apiKey: string;
-    constructor(baseLink: string, apiKey: string) {
+    constructor(private baseLink: string, private apiKey: string) {
         this.baseLink = baseLink;
         this.apiKey = apiKey;
     }
 
-    makeUrl(options: urlParams): string {
+    public makeUrl(options: urlParams): string {
         let url = `${this.baseLink}${options.endpoint}?apiKey=${this.apiKey}`;
         if (options.hasOwnProperty('sources')) {
             url += `&sources=${options.sources}`;
@@ -16,7 +14,7 @@ class Model {
         return url;
     }
 
-    async getResp(method: string, url: string): Promise<sources | news> {
+    public async getResp(method: string, url: string): Promise<sources | news> {
         const res = await fetch(url, { method });
         if (!res.ok) {
             if (res.status === 401 || res.status === 404)

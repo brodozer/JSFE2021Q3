@@ -1,6 +1,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
@@ -31,6 +32,11 @@ const baseConfig = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './src/index.html'),
             filename: 'index.html',
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: "./src/assets/", to: path.resolve(__dirname, 'dist') },
+            ],
         }),
         new ESLintPlugin({
             extensions: ['.tsx', '.ts', '.js'],

@@ -17,19 +17,19 @@ footer {
     height: 100px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 15px;
 }
 footer .copyright {
     font-size: 14px;
     color: #333;
-    text-align: center;
 }
-footer .copyright a {
-    color: #444;
+footer .github {
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
 }
-footer .copyright a:hover {
-    color: #555;
-}
-footer .copyright:before {
-    content: '©';
+
+.github:hover {
+    text-decoration: underline;
 }

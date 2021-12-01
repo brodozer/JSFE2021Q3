@@ -11,7 +11,7 @@ class AppController {
         this.model = model;
         this.sources = sources;
     }
-    getSources(): void {
+    public getSources(): void {
         const url: string = this.model.makeUrl({
             endpoint: 'sources',
         });
@@ -21,7 +21,7 @@ class AppController {
             .catch((err) => console.log(err));
     }
 
-    getNews(e: event): void {
+    public getNews(e: event): void {
         const target: Element = e.target;
         const newsContainer: Element = e.currentTarget;
         if (target != newsContainer) {
@@ -41,7 +41,7 @@ class AppController {
         }
     }
 
-    init(): void {
+    public init(): void {
         this.sources.addEventListener('click', this.getNews.bind(this));
         this.getSources();
     }
