@@ -35,7 +35,7 @@ const baseConfig = {
         }),
         new CopyPlugin({
             patterns: [
-                { from: "./src/assets/", to: path.resolve(__dirname, 'dist') },
+                { from: "./src/assets/", to: "assets" },
             ],
         }),
         new ESLintPlugin({
