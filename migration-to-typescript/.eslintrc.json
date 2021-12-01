@@ -5,7 +5,6 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended",
         "prettier"
-        //"prettier/@typescript-eslint"
     ],
     "parserOptions": {
         "ecmaVersion": 2020,
@@ -21,6 +20,5 @@
         "no-console": 0,
         "class-methods-use-this": "off",
         "@typescript-eslint/no-explicit-any": 2
-        //"no-explicit-any": 2
     }
 }
