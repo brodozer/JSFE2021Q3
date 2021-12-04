@@ -1,0 +1,14 @@
+@import 'scss/vendor';
+
+body {
+  background-image: url(./assets/timeout.jpeg);
+}
+
+h1 {
+  color: red;
+  font-size: 32px;
+
+  &:hover {
+    color: blue;
+  }
+}
