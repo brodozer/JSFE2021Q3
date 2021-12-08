@@ -1,0 +1,88 @@
+.tree {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: url('./assets/bg/1.jpg') center/cover no-repeat;
+  .btn-group {
+    padding: 10px 0;
+  }
+  .settings {
+    padding: 10px;
+    h4 {
+      font-size: 22px;
+    }
+    .christmas-trees {
+      display: flex;
+      flex-wrap: wrap;
+      .select-tree {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        margin: 0 10px 10px 0;
+        border-radius: 6px;
+        background-color: #bbdefb;
+        img {
+          width: 80%;
+        }
+      }
+    }
+    .background {
+      display: flex;
+      flex-wrap: wrap;
+      .select-bcg {
+        width: 70px;
+        height: 70px;
+        border-radius: 3px;
+        margin: 0 5px 5px 0;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+  .christmas-tree {
+    padding: 20px;
+    flex: 1 1 auto;
+    img {
+      height: 100%;
+    }
+  }
+  .favorites-bolls {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(10, 65px);
+    padding: 10px;
+    .card-boll {
+      padding: 5px;
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 6px;
+      img {
+        width: 100%;
+      }
+      span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 20px;
+        height: 20px;
+        background-color: grey;
+        border-radius: 50%;
+        color: #fff;
+      }
+    }
+  }
+}

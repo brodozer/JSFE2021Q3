@@ -1,0 +1,118 @@
+body {
+  display: flex;
+  //min-height: 100vh;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.full-screen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: 0.3s linear;
+}
+
+.sidebar {
+  position: fixed;
+  width: 350px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  background-color: #fff;
+  transform: translateX(-100%);
+  transition: 0.3s linear;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+  width: 90%;
+}
+
+.overlay {
+  display: none;
+  opacity: 0;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+}
+
+nav {
+  .container {
+    display: flex;
+  }
+  i.material-icons {
+    font-size: 36px;
+  }
+  .nav-mobile {
+    padding: 0 15px;
+    .nav-link {
+      text-transform: uppercase;
+    }
+  }
+  .nav-search {
+    margin-left: auto;
+    margin-right: 15px;
+  }
+  .favorites {
+    position: relative;
+    &-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      top: 7px;
+      right: -14px;
+      border-radius: 50%;
+      background-color: grey;
+    }
+  }
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.page-footer {
+  padding-top: 0;
+  .container {
+    justify-content: space-between;
+  }
+}
+
+/* Materialize Styles for noUiSlider */
+
+.noUi-target {
+  border: 0;
+  border-radius: 0;
+  background: #cdcdcd;
+}
+
+.noUi-horizontal {
+  height: 3px;
+}
+
+.noUi-vertical {
+  height: 100%;
+  width: 3px;
+}
+
+.noUi-horizontal .noUi-handle,
+.noUi-vertical .noUi-handle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-shadow: none;
+  background-color: #26a69a;
+  border: none;
+  top: -5px;
+  right: -8px;
+}
+
+.noUi-handle:before,
+.noUi-handle:after {
+  content: none;
+}

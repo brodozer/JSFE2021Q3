@@ -1,0 +1,11 @@
+.home {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background: url('./assets/bg-home.jpeg') center/cover no-repeat;
+  transform: translateY(-100%);
+  h1 {
+    text-transform: uppercase;
+    color: #26a69a;
+  }
+}

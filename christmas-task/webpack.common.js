@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   target: 'web',
@@ -60,6 +61,9 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [{ from: 'src/assets', to: 'assets' }],
+    }),
+    new webpack.ProvidePlugin({
+      noUiSlider: 'nouislider',
     }),
   ],
 };
