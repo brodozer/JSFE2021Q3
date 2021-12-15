@@ -1,88 +1,17 @@
 .toys {
-  background: url('./assets/bg.jpg') center/cover no-repeat;
+  //background: url('./assets/bg.jpg') center/cover no-repeat;
+  background-color: #e9e9e9;
   .settings {
+    position: sticky;
+    top: 0;
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
+    background-color: #e9e9e9;
+    z-index: 1;
     .sort {
       height: auto;
       width: auto;
-    }
-    .filters {
-      padding: 10px;
-      h4 {
-        font-size: 1.28rem;
-      }
-      .collection {
-        border: none;
-        .collection-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border: none;
-          padding: 20px 0;
-        }
-      }
-      .btn-floating {
-        margin-left: 5px;
-      }
-      .filter-shape,
-      .filter-size {
-        .btn-floating {
-          background-color: #9e9e9e;
-          text-align: center;
-          text-transform: uppercase;
-          img {
-            width: 90%;
-          }
-          &:hover,
-          &.active {
-            background-color: #26a69a;
-          }
-        }
-      }
-      .filter-color .btn-floating {
-        i {
-          opacity: 0;
-          color: #000;
-        }
-        &.active {
-          i {
-            opacity: 1;
-          }
-        }
-      }
-      .range-wrapper {
-        padding: 15px 0;
-        .range-title {
-          display: block;
-          padding: 5px 0;
-          font-size: 16px;
-        }
-        .range-slider {
-          display: flex;
-          align-items: center;
-          .position {
-            width: 60px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            background-color: #26a69a;
-            border-radius: 2px;
-          }
-          .slider {
-            margin: 0 15px;
-            flex: 1 1 auto;
-          }
-        }
-      }
-      .btn-group {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-      }
     }
   }
   .balls {
@@ -102,11 +31,16 @@
     }
   }
   .card {
+    display: flex;
+    flex-direction: column;
     flex: 0 0 220px;
     margin: 0;
-    .card-image img {
-      width: 70%;
-      margin: 0 auto;
+    .card-image {
+      padding: 10px;
+      img {
+        width: 70%;
+        margin: 0 auto;
+      }
     }
     .btn-favorite {
       position: absolute;
@@ -121,8 +55,12 @@
       }
     }
     .card-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
       padding: 12px;
       .card-title {
+        flex: 1 1 auto;
         font-size: 16px;
         font-weight: 400;
         line-height: 22px;
@@ -137,5 +75,82 @@
         }
       }
     }
+  }
+}
+
+.filters {
+  z-index: 4;
+  padding: 10px;
+  h4 {
+    font-size: 1.28rem;
+  }
+  .collection {
+    border: none;
+    .collection-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: none;
+      padding: 20px 0;
+    }
+  }
+  .btn-floating {
+    margin-left: 5px;
+  }
+  .filter-shape,
+  .filter-size {
+    .btn-floating {
+      background-color: #9e9e9e;
+      text-align: center;
+      text-transform: uppercase;
+      img {
+        width: 90%;
+      }
+      &.active {
+        background-color: #26a69a;
+      }
+    }
+  }
+  .filter-color .btn-floating {
+    i {
+      opacity: 0;
+      color: #000;
+    }
+    &.active {
+      i {
+        opacity: 1;
+      }
+    }
+  }
+  .range-wrapper {
+    padding: 15px 0;
+    .range-title {
+      display: block;
+      padding: 5px 0;
+      font-size: 16px;
+    }
+    .range-slider {
+      display: flex;
+      align-items: center;
+      .position {
+        width: 60px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        background-color: #26a69a;
+        border-radius: 2px;
+      }
+      .slider {
+        margin: 0 15px;
+        flex: 1 1 auto;
+      }
+    }
+  }
+  .btn-group {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
   }
 }

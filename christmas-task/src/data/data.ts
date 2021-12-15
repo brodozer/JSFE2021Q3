@@ -597,7 +597,7 @@ const data = [
     shape: 'фигурка',
     color: 'белый',
     size: 'средний',
-    favorite: true,
+    favorite: false,
   },
 ];
 

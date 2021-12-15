@@ -20,7 +20,7 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  z-index: 2;
+  z-index: 3;
   background-color: #fff;
   transform: translateX(-100%);
   transition: 0.3s linear;
@@ -33,14 +33,16 @@ body {
 }
 
 .overlay {
-  display: none;
-  opacity: 0;
+  z-index: 2;
   background-color: rgba($color: #000000, $alpha: 0.5);
 }
 
 nav {
   .container {
     display: flex;
+  }
+  .link-home {
+    cursor: pointer;
   }
   i.material-icons {
     font-size: 36px;
@@ -115,4 +117,20 @@ main {
 .noUi-handle:before,
 .noUi-handle:after {
   content: none;
+}
+
+/* show message */
+.msg {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  padding: 10px 5px;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: all 0.3s linear;
+  color: #e3e0e0;
+  background-color: #626262;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
 }

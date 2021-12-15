@@ -15,20 +15,26 @@
       <nav>
         <div class="nav-wrapper">
           <div class="container">
-            <a href="home"><i class="material-icons">home</i></a>
+            <a class="link-home"><i class="material-icons">home</i></a>
             <ul class="nav-mobile">
               <li class="active">
-                <a class="nav-link" href="sass.html">игрушки</a>
+                <a class="nav-link link-toys">игрушки</a>
               </li>
-              <li><a class="nav-link" href="badges.html">елка</a></li>
+              <li><a class="nav-link link-tree">елка</a></li>
             </ul>
             <div class="nav-search">
               <div class="input-field">
-                <input id="search" type="search" required />
+                <input
+                  id="search"
+                  type="search"
+                  autocomplete="off"
+                  autofocus
+                  required
+                />
                 <label class="label-icon" for="search"
                   ><i class="material-icons">search</i></label
                 >
-                <i class="material-icons">close</i>
+                <i class="material-icons close-search">close</i>
               </div>
             </div>
             <div class="favorites">
@@ -43,101 +49,20 @@
       <div class="toys">
         <div class="container">
           <div class="settings">
-            <a class="waves-effect waves-light btn">
+            <a
+              class="waves-effect waves-light btn btn-filters"
+              data-target="filters"
+            >
               <i class="material-icons left">filter_list</i>
               фильтры
             </a>
             <select class="browser-default sort">
-              <option value="" disabled selected>Сортировка</option>
-              <option value="1">от А до Я</option>
-              <option value="2">от Я до А</option>
-              <option value="3">год приобретения</option>
-              <option value="4">год приобретения</option>
+              <option value="disable" disabled selected>Сортировка</option>
+              <option value="A-Z">от А до Я</option>
+              <option value="Z-A">от Я до А</option>
+              <option value="year-up">год приобретения по возрастанию</option>
+              <option value="year-down">год приобретения по убыванию</option>
             </select>
-            <div class="filters sidebar hide">
-              <a class="btn-flat btn-сlose right"
-                ><i class="material-icons large">close</i></a
-              >
-              <h4>Фильтры по значению</h4>
-              <ul class="collection filter-value">
-                <li class="collection-item filter-shape">
-                  <span>Форма:</span>
-                  <div>
-                    <a class="btn-floating"
-                      ><img src="/assets/svg/cone.svg" alt="cone"
-                    /></a>
-                    <a class="btn-floating"
-                      ><img src="/assets/svg/bell.svg" alt="bell"
-                    /></a>
-                    <a class="btn-floating"
-                      ><img src="/assets/svg/ball.svg" alt="ball"
-                    /></a>
-                    <a class="btn-floating"
-                      ><img src="/assets/svg/toy.svg" alt="toy"
-                    /></a>
-                    <a class="btn-floating"
-                      ><img src="/assets/svg/snowflake.svg" alt="snowflake"
-                    /></a>
-                  </div>
-                </li>
-                <li class="collection-item filter-color">
-                  <span>Цвет:</span>
-                  <div>
-                    <a class="btn-floating white active"
-                      ><i class="material-icons">check</i></a
-                    >
-                    <a class="btn-floating red"
-                      ><i class="material-icons">check</i></a
-                    >
-                    <a class="btn-floating yellow"
-                      ><i class="material-icons">check</i></a
-                    >
-                    <a class="btn-floating green"
-                      ><i class="material-icons">check</i></a
-                    >
-                    <a class="btn-floating blue"
-                      ><i class="material-icons">check</i></a
-                    >
-                  </div>
-                </li>
-                <li class="collection-item filter-size">
-                  <span>Размер:</span>
-                  <div>
-                    <a class="btn-floating active secondary-content">S</a>
-                    <a class="btn-floating secondary-content">M</a>
-                    <a class="btn-floating active secondary-content">L</a>
-                  </div>
-                </li>
-                <li class="collection-item filter-favorites">
-                  <!-- Только любимые: -->
-                  <label>
-                    <input type="checkbox" class="filled-in" />
-                    <span>Только любимые</span>
-                  </label>
-                </li>
-              </ul>
-              <h4>Фильтры по диапазону</h4>
-              <div class="range-wrapper">
-                <span class="range-title">Год приобретения:</span>
-                <div class="range-slider">
-                  <div class="position year-start">1940</div>
-                  <div id="year-slider" class="slider"></div>
-                  <div class="position year-end">2020</div>
-                </div>
-              </div>
-              <div class="range-wrapper">
-                <span class="range-title">Количество экземпляров:</span>
-                <div class="range-slider">
-                  <div class="position count-start">1</div>
-                  <div id="count-slider" class="slider"></div>
-                  <div class="position count-end">12</div>
-                </div>
-              </div>
-              <div class="btn-group">
-                <a class="btn btn-filter-reset">сбросить фильтры</a>
-                <!-- <a class="btn">применить</a> -->
-              </div>
-            </div>
           </div>
           <div class="balls">
             <div class="card">
@@ -235,12 +160,12 @@
       <div class="tree hide">
         <div class="container">
           <div class="btn-group">
-            <a class="btn">настройки</a>
-            <a class="btn">снег</a>
-            <a class="btn">звук</a>
+            <a class="btn btn-settings" data-target="settings">настройки</a>
+            <a class="btn btn-snowflake">снег</a>
+            <a class="btn btn-sound">звук</a>
           </div>
         </div>
-        <div class="settings sidebar hide">
+        <div class="settings sidebar" id="settings">
           <a class="btn-flat btn-сlose right"
             ><i class="material-icons large">close</i></a
           >
@@ -347,6 +272,7 @@
         <div class="favorites-bolls">
           <div class="card-boll">
             <img src="./assets/toys/10.png" alt="" />
+            <span>5</span>
           </div>
         </div>
       </div>
@@ -372,9 +298,106 @@
           Помоги бабушке,<br />
           наряди елку!
         </h1>
-        <a class="waves-effect waves-light btn start-game">начать</a>
+        <a class="waves-effect waves-light btn btn-start-game">начать</a>
       </div>
     </div>
-    <div class="overlay full-screen"></div>
+    <div class="overlay full-screen hide">
+      <a class="btn btn-сlose right"><i class="material-icons">close</i></a>
+    </div>
+    <div class="filters sidebar" id="filters">
+      <h4>Фильтры по значению</h4>
+      <ul class="collection filter-value">
+        <li class="collection-item filter-shape">
+          <span>Форма:</span>
+          <div>
+            <a class="btn-floating btn-filter" data-filter="shape-шишка"
+              ><img src="/assets/svg/cone.svg" alt="cone"
+            /></a>
+            <a class="btn-floating btn-filter" data-filter="shape-колокольчик"
+              ><img src="/assets/svg/bell.svg" alt="bell"
+            /></a>
+            <a class="btn-floating btn-filter" data-filter="shape-шар"
+              ><img src="/assets/svg/ball.svg" alt="ball"
+            /></a>
+            <a class="btn-floating btn-filter" data-filter="shape-фигурка"
+              ><img src="/assets/svg/toy.svg" alt="toy"
+            /></a>
+            <a
+              class="btn-floating btn-filter btn-filter"
+              data-filter="shape-снежинка"
+              ><img src="/assets/svg/snowflake.svg" alt="snowflake"
+            /></a>
+          </div>
+        </li>
+        <li class="collection-item filter-color">
+          <span>Цвет:</span>
+          <div>
+            <a class="btn-floating white btn-filter" data-filter="color-белый"
+              ><i class="material-icons">check</i></a
+            >
+            <a class="btn-floating red btn-filter" data-filter="color-красный"
+              ><i class="material-icons">check</i></a
+            >
+            <a class="btn-floating yellow btn-filter" data-filter="color-желтый"
+              ><i class="material-icons">check</i></a
+            >
+            <a class="btn-floating green btn-filter" data-filter="color-зелёный"
+              ><i class="material-icons">check</i></a
+            >
+            <a class="btn-floating blue btn-filter" data-filter="color-синий"
+              ><i class="material-icons">check</i></a
+            >
+          </div>
+        </li>
+        <li class="collection-item filter-size">
+          <span>Размер:</span>
+          <div>
+            <a
+              class="btn-floating secondary-content btn-filter"
+              data-filter="size-малый"
+              >S</a
+            >
+            <a
+              class="btn-floating secondary-content btn-filter"
+              data-filter="size-средний"
+              >M</a
+            >
+            <a
+              class="btn-floating secondary-content btn-filter"
+              data-filter="size-большой"
+              >L</a
+            >
+          </div>
+        </li>
+        <li class="collection-item filter-favorites">
+          <!-- Только любимые: -->
+          <label>
+            <input type="checkbox" class="filled-in check-favorites" />
+            <span>Только любимые</span>
+          </label>
+        </li>
+      </ul>
+      <h4>Фильтры по диапазону</h4>
+      <div class="range-wrapper">
+        <span class="range-title">Год приобретения:</span>
+        <div class="range-slider">
+          <div class="position year-start">1940</div>
+          <div id="year-slider" class="slider"></div>
+          <div class="position year-end">2020</div>
+        </div>
+      </div>
+      <div class="range-wrapper">
+        <span class="range-title">Количество экземпляров:</span>
+        <div class="range-slider">
+          <div class="position count-start">1</div>
+          <div id="count-slider" class="slider"></div>
+          <div class="position count-end">12</div>
+        </div>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-filter-reset">сбросить фильтры</a>
+        <!-- <a class="btn">применить</a> -->
+      </div>
+    </div>
   </body>
 </html>
