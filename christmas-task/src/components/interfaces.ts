@@ -1,4 +1,4 @@
-type Tfilters = {
+type TFilters = {
   [key: string]: boolean | Array<string> | Array<number> | string;
   size: string[];
   shape: string[];
@@ -9,7 +9,7 @@ type Tfilters = {
   favorites: boolean;
 };
 
-export interface Idata {
+export interface IData {
   num: string;
   name: string;
   count: string;
@@ -20,8 +20,8 @@ export interface Idata {
   favorite: boolean;
 }
 
-export interface Iopt {
-  filters: Tfilters;
+export interface IOptToys {
+  filters: TFilters;
   sort: string | boolean;
   favorites: string[];
 }

@@ -1,13 +1,11 @@
 // import data from '../data/data';
 import * as noUiSlider from 'nouislider';
-import { Idata, Iopt } from './interfaces';
+import { IData, IOptToys } from './interfaces';
 
 class Toys {
-  data: Idata[];
+  data: IData[];
 
-  filterData: Idata[];
-
-  opt: Iopt;
+  filterData: IData[];
 
   searchElem: HTMLElement;
 
@@ -41,9 +39,27 @@ class Toys {
 
   sidebar: HTMLElement;
 
-  constructor(data: Idata[], opt: Iopt) {
+  btnResetSettings: HTMLElement;
+
+  opt: IOptToys = {
+    filters: {
+      size: [],
+      shape: [],
+      count: [],
+      color: [],
+      year: [],
+      search: '',
+      favorites: false,
+    },
+    sort: false,
+    favorites: [],
+  };
+
+  isClearLS = false;
+
+  constructor(data: IData[]) {
     this.data = data;
-    this.opt = opt;
+    // this.opt = opt;
     this.balls = document.querySelector('.balls');
     this.searchElem = document.getElementById('search');
     this.closeSearch = document.querySelector('.close-search');
@@ -62,16 +78,18 @@ class Toys {
     this.countEnd = document.querySelector('.count-end');
 
     this.sidebar = document.getElementById('filters');
+
+    this.btnResetSettings = document.querySelector('.btn-reset-toys');
   }
 
   buildCards() {
-    this.cards = [];
-    this.data.forEach((el) => {
+    let html = '';
+    this.filterData.forEach((el) => {
       const isFavorite: boolean = this.opt.favorites.indexOf(el.num) !== -1;
-      const card = `<div class="card" id="${el.num}">
+      html += `<div class="card" id="${el.num}">
               <div class="card-image">
                 <img src="/assets/toys/${el.num}.png" />
-                <a class="btn-flat btn-favorite ${isFavorite ? 'active' : ''}"
+                <a class="btn-flat btn-favorite"
                   ><i class="material-icons">${
                     isFavorite ? 'favorite' : 'favorite_border'
                   }</i></a
@@ -98,17 +116,13 @@ class Toys {
                 </ul>
               </div>
             </div>`;
-      this.cards.push(card);
     });
+    return html;
   }
 
   renderCards() {
     if (this.filterData.length > 0) {
-      let html = '';
-      this.filterData.forEach((card) => {
-        html += this.cards[Number(card.num) - 1];
-      });
-      this.balls.innerHTML = html;
+      this.balls.innerHTML = this.buildCards();
       // выгружаем карточки на страницу
     } else {
       console.log('совпадений не найдено');
@@ -122,7 +136,7 @@ class Toys {
       this.opt.sort = this.selectSort.value;
       switch (this.opt.sort) {
         case 'A-Z':
-          this.data.sort((a: Idata, b: Idata) => {
+          this.data.sort((a: IData, b: IData) => {
             const nameA = a.name.toLowerCase();
             const nameB = b.name.toLowerCase();
             if (nameA < nameB) return -1;
@@ -132,7 +146,7 @@ class Toys {
           break;
         case 'Z-A':
           // можно сортировать от а до я и делать  reverse!!!
-          this.data.sort((a: Idata, b: Idata) => {
+          this.data.sort((a: IData, b: IData) => {
             const nameA = a.name.toLowerCase();
             const nameB = b.name.toLowerCase();
             if (nameA > nameB) return -1;
@@ -142,12 +156,12 @@ class Toys {
           break;
         case 'year-up':
           this.data.sort(
-            (a: Idata, b: Idata) => Number(a.year) - Number(b.year)
+            (a: IData, b: IData) => Number(a.year) - Number(b.year)
           );
           break;
         case 'year-down':
           this.data.sort(
-            (a: Idata, b: Idata) => Number(b.year) - Number(a.year)
+            (a: IData, b: IData) => Number(b.year) - Number(a.year)
           );
           break;
         default:
@@ -206,22 +220,20 @@ class Toys {
   addFavorites(event: Event) {
     if ((<HTMLElement>event.target).closest('.btn-favorite')) {
       const card = (<HTMLElement>event.target).closest('.card');
-      const btn = card.querySelector('.btn-favorite');
+      const btnIcon = card.querySelector('.material-icons');
       const id = card.getAttribute('id');
-      if (btn.classList.contains('active')) {
-        btn.classList.remove('active');
+      if (btnIcon.textContent === 'favorite') {
         const index = this.opt.favorites.indexOf(id);
         this.opt.favorites.splice(index, 1);
-        btn.querySelector('.material-icons').textContent = 'favorite_border';
+        btnIcon.textContent = 'favorite_border';
       } else {
-        if (this.opt.favorites.length === 5) {
+        if (this.opt.favorites.length === 20) {
           // может popup может уведомление рядом с избранным в хедере
           this.showMessage(card, 'Извините, все слоты заняты');
           return;
         }
-        btn.classList.add('active');
         this.opt.favorites.push(id);
-        btn.querySelector('.material-icons').textContent = 'favorite';
+        btnIcon.textContent = 'favorite';
       }
       this.favoritesCount.textContent = String(this.opt.favorites.length);
     }
@@ -384,6 +396,20 @@ class Toys {
     this.search();
   }
 
+  getLS() {
+    if (localStorage.optToys) {
+      this.opt = JSON.parse(localStorage.optToys);
+    }
+  }
+
+  setLS() {
+    if (!this.isClearLS) {
+      localStorage.optToys = JSON.stringify(this.opt);
+    } else {
+      localStorage.removeItem('optToys');
+    }
+  }
+
   events() {
     this.btnsFilter.forEach((btn) => {
       btn.addEventListener('click', this.addFilters.bind(this));
@@ -397,11 +423,18 @@ class Toys {
     this.btnFilterReset.addEventListener('click', this.resetFIlters.bind(this));
     this.searchElem.addEventListener('input', this.search.bind(this));
     this.closeSearch.addEventListener('click', this.clearSearch.bind(this));
+    this.btnResetSettings.addEventListener('click', () => {
+      this.isClearLS = true;
+      this.btnResetSettings.classList.add('disabled');
+      this.btnResetSettings.textContent = 'нужно обновить страницу';
+    });
+
+    window.addEventListener('beforeunload', this.setLS.bind(this));
   }
 
   init() {
+    this.getLS();
     this.applySettings();
-    this.buildCards();
     this.sort();
     this.events();
     this.initSlider(
@@ -420,7 +453,6 @@ class Toys {
       this.countStart,
       this.countEnd
     );
-    // показать кол-во избранных
   }
 }
 

@@ -41,6 +41,7 @@ class Main {
     this.btnStartGame.addEventListener('click', () => {
       this.pageHome.style.transform = 'translateY(-100%)';
       this.modal.unlockScroll();
+      this.toys.init();
     });
     this.linkHome.addEventListener('click', () => {
       this.modal.lockScroll();
@@ -68,7 +69,6 @@ class Main {
   init() {
     this.modal.lockScroll();
     this.events();
-    this.toys.init();
   }
 }
 
