@@ -1,10 +1,13 @@
 import Modal from './modal';
 import Toys from './toys';
+import Tree from './tree';
 
 class Main {
   modal: Modal;
 
   toys: Toys;
+
+  tree: Tree;
 
   pageHome: HTMLElement;
 
@@ -20,9 +23,10 @@ class Main {
 
   btnStartGame: HTMLElement;
 
-  constructor(modal: Modal, toys: Toys) {
+  constructor(modal: Modal, toys: Toys, tree: Tree) {
     this.modal = modal;
     this.toys = toys;
+    this.tree = tree;
     this.pageHome = document.querySelector('.home');
     this.pageToys = document.querySelector('.toys');
     this.pageTree = document.querySelector('.tree');
@@ -56,7 +60,7 @@ class Main {
       this.classToggle(this.pageTree, this.pageToys, 'hide');
     });
     this.linkTree.addEventListener('click', () => {
-      // this.tree.init(this.toys.getFavorites());
+      this.tree.renderCards(this.toys.getFavorites());
       this.classToggle(
         this.linkTree.closest('li'),
         this.linkToys.closest('li'),

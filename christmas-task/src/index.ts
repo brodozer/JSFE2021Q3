@@ -2,13 +2,15 @@ import './styles.scss';
 
 import data from './data/data';
 import Toys from './components/toys';
+import Tree from './components/tree';
 import Modal from './components/modal';
 import Main from './components/main';
 
 const toys: Toys = new Toys(data);
 const modal: Modal = new Modal();
+const tree: Tree = new Tree();
 
-const main: Main = new Main(modal, toys);
+const main: Main = new Main(modal, toys, tree);
 main.init();
 
 console.log(`
