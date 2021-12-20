@@ -73,6 +73,7 @@ class Main {
   init() {
     this.modal.lockScroll();
     this.events();
+    this.tree.init();
   }
 }
 

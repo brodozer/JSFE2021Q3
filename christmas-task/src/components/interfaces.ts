@@ -25,3 +25,11 @@ export interface IOptToys {
   sort: string | boolean;
   favorites: string[];
 }
+
+export interface IOptTree {
+  [key: string]: string | boolean;
+  tree: string;
+  bcg: string;
+  lights: boolean;
+  colorLights: string;
+}

@@ -1,9 +1,34 @@
+.border {
+  position: relative;
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3D(-50%, -50%, 0);
+    width: 105%;
+    height: 105%;
+    box-shadow: 0 0 0 2px #ee6e73;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.3s linear;
+  }
+  &.active:after {
+    opacity: 1;
+  }
+}
+
 .tree {
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: url('./assets/bg/1.jpg') center/cover no-repeat;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  // background: url('./assets/bg/1.jpg') center/cover no-repeat;
+  transition: all 0.3s linear;
   .btn-group {
     padding: 10px 0;
   }
@@ -18,6 +43,7 @@
       .select-tree {
         width: 100px;
         height: 100px;
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -37,7 +63,10 @@
         width: 70px;
         height: 70px;
         border-radius: 3px;
-        margin: 0 5px 5px 0;
+        margin: 0 7px 7px 0;
+        &:after {
+          border-radius: 3px;
+        }
         img {
           width: 100%;
           height: 100%;
