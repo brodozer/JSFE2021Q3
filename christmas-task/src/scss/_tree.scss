@@ -76,29 +76,24 @@
       }
     }
   }
-  .christmas-tree {
+  .tree-container {
     padding: 20px;
     flex: 1 1 auto;
-    img {
-      height: 100%;
+    .christmas-tree {
+      width: 514px;
+      height: 719px;
     }
   }
   .favorites-bolls {
     display: grid;
     grid-gap: 5px;
     grid-template-columns: repeat(10, 65px);
+    grid-auto-rows: 65px;
     padding: 10px;
     .card-boll {
-      padding: 5px;
-      display: flex;
       position: relative;
-      justify-content: center;
-      align-items: center;
       background-color: #fff;
       border-radius: 6px;
-      img {
-        width: 100%;
-      }
       span {
         display: flex;
         justify-content: center;
@@ -114,4 +109,12 @@
       }
     }
   }
+}
+
+.img-toys {
+  width: 55px;
+  height: 55px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }

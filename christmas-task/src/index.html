@@ -81,6 +81,7 @@
         </div>
       </div>
       <div class="tree hide">
+        <div class="snowflake-container"></div>
         <div class="container">
           <div class="btn-group">
             <a class="btn btn-settings" data-target="settings">настройки</a>
@@ -186,8 +187,20 @@
           </ul>
         </div>
         <!-- <a class="btn btn-settings">настройки</a> -->
-        <div class="christmas-tree">
-          <!-- <img src="./assets/tree/1.png" alt="" /> -->
+        <div class="tree-container">
+          <div class="lights-container"></div>
+          <map name="tree-map">
+            <area
+              coords="250,1,185,85,204,130,161,117,148,139,177,166,168,190,177,216,115,197,95,227,123,250,111,281,162,297,118,304,118,344,77,336,65,362,105,387,99,432,24,424,10,451,44,472,41,497,79,506,77,527,3,532,2,577,31,584,45,624,60,629,76,653,109,644,100,674,136,693,161,659,176,705,208,709,222,679,242,703,284,701,290,677,305,703,379,693,379,663,396,663,434,676,457,650,475,591,467,571,494,568,495,532,440,528,423,482,460,470,454,442,415,432,407,397,364,407,375,388,435,372,429,342,390,347,385,329,361,325,365,310,394,309,399,283,365,269,412,240,394,210,362,218,349,179,368,160,352,131,315,147,315,117,283,115,312,81"
+              shape="poly"
+            />
+          </map>
+          <img
+            class="christmas-tree"
+            src="./assets/tree/1.png"
+            alt="tree"
+            usemap="#tree-map"
+          />
         </div>
         <div class="favorites-bolls">
           <div class="card-boll">
