@@ -13,6 +13,16 @@ class Tree {
 
   mapTree: HTMLElement;
 
+  snowflakeContainer: HTMLElement;
+
+  btnSnowflake: HTMLElement;
+
+  btnSound: HTMLElement;
+
+  timerID: NodeJS.Timer;
+
+  audio = new Audio('/assets/audio/audio.mp3');
+
   map = [
     '250,1,185,85,204,130,161,117,148,139,177,166,168,190,177,216,115,197,95,227,123,250,111,281,162,297,118,304,118,344,77,336,65,362,105,387,99,432,24,424,10,451,44,472,41,497,79,506,77,527,3,532,2,577,31,584,45,624,60,629,76,653,109,644,100,674,136,693,161,659,176,705,208,709,222,679,242,703,284,701,290,677,305,703,379,693,379,663,396,663,434,676,457,650,475,591,467,571,494,568,495,532,440,528,423,482,460,470,454,442,415,432,407,397,364,407,375,388,435,372,429,342,390,347,385,329,361,325,365,310,394,309,399,283,365,269,412,240,394,210,362,218,349,179,368,160,352,131,315,147,315,117,283,115,312,81',
     '250,-1,235,40,216,35,217,62,204,62,208,82,187,83,199,109,173,112,187,135,170,135,177,172,165,174,163,190,145,190,149,212,146,232,130,228,140,258,118,275,133,290,94,300,98,318,86,327,108,348,112,359,74,370,96,391,86,406,105,425,56,446,73,476,36,479,42,493,28,499,56,522,27,521,49,555,44,560,15,544,14,584,31,608,-1,634,28,643,56,629,83,640,71,648,112,657,126,668,102,688,127,698,135,713,197,676,230,662,253,671,262,693,279,682,319,696,304,677,313,672,333,697,345,692,391,702,361,663,407,661,426,676,439,661,481,652,435,624,464,612,492,613,472,593,499,584,471,566,452,567,455,554,473,555,464,539,484,527,450,512,460,493,444,465,456,443,404,435,405,422,434,414,407,393,401,375,408,350,384,336,396,313,374,312,391,281,354,289,364,258,383,247,365,235,372,221,330,230,355,200,333,192,322,161,327,146,326,129,310,127,321,103,300,102,307,84,295,79,306,68,292,62,278,63,283,46,266,39',
@@ -38,6 +48,11 @@ class Tree {
     this.selectBcg = document.querySelector('.background');
     this.container = document.querySelector('.tree');
     this.mapTree = document.querySelector('map');
+    this.snowflakeContainer = document.querySelector('.snowflake-container');
+    this.btnSnowflake = document.querySelector('.btn-snowflake');
+    this.btnSound = document.querySelector('.btn-sound');
+
+    this.createSnowFlake = this.createSnowFlake.bind(this);
   }
 
   renderCards(cards: IData[]) {
@@ -111,6 +126,33 @@ class Tree {
     this.mapTree.querySelector('area').coords = this.map[indexMap];
   }
 
+  createSnowFlake() {
+    const snowFlake = document.createElement('i');
+    snowFlake.classList.add('material-icons');
+    snowFlake.classList.add('snow');
+    snowFlake.textContent = 'ac_unit';
+    snowFlake.style.left = `${Math.random() * window.innerWidth}px`;
+    snowFlake.style.animationDuration = `${Math.random() * 3 + 2}s`; // between 2 - 5 seconds
+    snowFlake.style.opacity = `${Math.random()}`;
+    snowFlake.style.fontSize = `${Math.random() * 10 + 10}px`;
+    // инжект снежинки в контейнер
+    this.snowflakeContainer.appendChild(snowFlake);
+
+    setTimeout(() => {
+      snowFlake.remove();
+    }, 5000);
+  }
+
+  sound() {
+    if (this.audio.paused) {
+      this.opt.sound = true;
+      this.audio.play();
+    } else {
+      this.opt.sound = false;
+      this.audio.pause();
+    }
+  }
+
   applySettings() {
     this.selectBcg
       .querySelector(`a[data-url="${this.opt.bcg}"]`)
@@ -121,8 +163,10 @@ class Tree {
     this.container.style.backgroundImage = `url(${this.opt.bcg})`;
     this.christmasTree.src = this.opt.tree;
     this.setMap(this.opt.tree);
+    if (this.opt.snowflake) {
+      this.timerID = setInterval(this.createSnowFlake, 50);
+    }
     // звук
-    // снег
     // гирлянда
   }
 
@@ -153,6 +197,20 @@ class Tree {
       event.preventDefault();
     });
     this.mapTree.addEventListener('drop', this.drop.bind(this));
+    this.btnSnowflake.addEventListener('click', () => {
+      if (!this.opt.snowflake) {
+        this.opt.snowflake = true;
+        this.timerID = setInterval(this.createSnowFlake, 50);
+      } else {
+        this.opt.snowflake = false;
+        clearTimeout(this.timerID);
+      }
+    });
+    this.audio.addEventListener('ended', () => {
+      this.audio.currentTime = 0;
+      this.audio.play();
+    });
+    this.btnSound.addEventListener('click', this.sound.bind(this));
     // повесить обработчики на выбор елки и фона
   }
 
