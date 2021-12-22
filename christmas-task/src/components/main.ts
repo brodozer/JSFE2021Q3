@@ -58,6 +58,7 @@ class Main {
         'active'
       );
       this.classToggle(this.pageTree, this.pageToys, 'hide');
+      this.tree.clearTree();
     });
     this.linkTree.addEventListener('click', () => {
       this.tree.renderCards(this.toys.getFavorites());

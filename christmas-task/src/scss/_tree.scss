@@ -21,6 +21,7 @@
 
 .tree {
   height: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,6 +30,7 @@
   background-size: cover;
   // background: url('./assets/bg/1.jpg') center/cover no-repeat;
   transition: all 0.3s linear;
+  overflow: hidden;
   .btn-group {
     padding: 10px 0;
   }
@@ -77,6 +79,7 @@
     }
   }
   .tree-container {
+    position: relative;
     padding: 20px;
     flex: 1 1 auto;
     .christmas-tree {
@@ -117,4 +120,110 @@
   position: absolute;
   top: 5px;
   left: 5px;
+}
+
+.lights-container {
+  position: absolute;
+  left: 50%;
+  top: 100px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  .light-rope {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 60px 0;
+    li {
+      margin-right: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      animation-name: red-light;
+      animation-fill-mode: both;
+      animation-iteration-count: infinite;
+      animation-duration: 2s;
+      &:nth-child(2n + 1) {
+        margin-top: 1px;
+        animation-duration: 1.8s;
+      }
+      &:nth-child(3n + 1) {
+        margin-top: 3px;
+        animation-duration: 1.4s;
+      }
+      &:nth-child(4n + 2) {
+        margin-top: 5px;
+        animation-duration: 1.1s;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      &.red-light {
+        animation-name: red-light;
+      }
+      &.green-light {
+        animation-name: green-light;
+      }
+      &.blue-light {
+        animation-name: blue-light;
+      }
+      &.yellow-light {
+        animation-name: yellow-light;
+      }
+      &.multicolor {
+        &:nth-child(4n + 2) {
+          animation-name: blue-light;
+        }
+        &:nth-child(4n + 3) {
+          animation-name: yellow-light;
+        }
+        &:nth-child(4n + 4) {
+          animation-name: green-light;
+        }
+      }
+    }
+  }
+}
+
+@keyframes green-light {
+  0%,
+  100% {
+    background: rgba(0, 247, 165, 1);
+    box-shadow: 0px 2px 12px 2px rgba(0, 247, 165, 1);
+  }
+  50% {
+    background: rgba(0, 247, 165, 0.4);
+    box-shadow: 0px 2px 12px 2px rgba(0, 247, 165, 0.2);
+  }
+}
+@keyframes blue-light {
+  0%,
+  100% {
+    background: rgba(0, 255, 255, 1);
+    box-shadow: 0px 2px 12px 2px rgba(0, 255, 255, 1);
+  }
+  50% {
+    background: rgba(0, 255, 255, 0.4);
+    box-shadow: 0px 2px 12px 2px rgba(0, 255, 255, 0.2);
+  }
+}
+@keyframes red-light {
+  0%,
+  100% {
+    background: rgba(247, 0, 148, 1);
+    box-shadow: 0px 2px 12px 2px rgba(247, 0, 148, 1);
+  }
+  50% {
+    background: rgba(247, 0, 148, 0.4);
+    box-shadow: 0px 2px 12px 2px rgba(247, 0, 148, 0.2);
+  }
+}
+@keyframes yellow-light {
+  0%,
+  100% {
+    background: rgba(255, 255, 0, 1);
+    box-shadow: 0px 2px 12px 2px rgba(255, 255, 0, 1);
+  }
+  50% {
+    background: rgba(255, 255, 0, 0.4);
+    box-shadow: 0px 2px 12px 2px rgba(255, 255, 0, 0.2);
+  }
 }

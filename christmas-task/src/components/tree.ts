@@ -15,11 +15,19 @@ class Tree {
 
   snowflakeContainer: HTMLElement;
 
+  lightsContainer: HTMLElement;
+
   btnSnowflake: HTMLElement;
 
   btnSound: HTMLElement;
 
+  toggleLight: HTMLInputElement;
+
+  radioColorLights: NodeList;
+
   timerID: NodeJS.Timer;
+
+  body: HTMLElement;
 
   audio = new Audio('/assets/audio/audio.mp3');
 
@@ -38,7 +46,7 @@ class Tree {
     lights: false,
     snowflake: false,
     sound: false,
-    colorLights: 'red',
+    colorLights: 'multicolor',
   };
 
   constructor() {
@@ -51,6 +59,10 @@ class Tree {
     this.snowflakeContainer = document.querySelector('.snowflake-container');
     this.btnSnowflake = document.querySelector('.btn-snowflake');
     this.btnSound = document.querySelector('.btn-sound');
+    this.lightsContainer = document.querySelector('.lights-container');
+    this.toggleLight = document.querySelector('.toggle-light');
+    this.radioColorLights = document.querySelectorAll('input[name="light"]');
+    this.body = document.body;
 
     this.createSnowFlake = this.createSnowFlake.bind(this);
   }
@@ -106,9 +118,16 @@ class Tree {
     img.style.left = `${event.pageX - img.offsetWidth / 2}px`;
     img.style.top = `${event.pageY - img.offsetWidth / 2}px`;
     if (img.closest('.card-boll')) {
-      (event.target as HTMLElement).append(img);
+      // (event.target as HTMLElement).append(img);
+      this.body.append(img);
       this.countToys(this.getCardToys(img));
     }
+  }
+
+  clearTree() {
+    this.body.querySelectorAll('.img-toys').forEach((element) => {
+      element.remove();
+    });
   }
 
   setBcg(event: Event) {
@@ -163,11 +182,17 @@ class Tree {
     this.container.style.backgroundImage = `url(${this.opt.bcg})`;
     this.christmasTree.src = this.opt.tree;
     this.setMap(this.opt.tree);
+    this.audio.loop = true;
     if (this.opt.snowflake) {
       this.timerID = setInterval(this.createSnowFlake, 50);
     }
-    // звук
-    // гирлянда
+    if (this.opt.sound) {
+      this.audio.play();
+    }
+    if (this.opt.lights) {
+      this.toggleLight.checked = true;
+      this.renderLights(this.opt.colorLights);
+    }
   }
 
   addActive(link: HTMLElement, key: string) {
@@ -182,12 +207,39 @@ class Tree {
         this.container.style.backgroundImage = `url(${url})`;
       } else {
         // получить индекс
-        // сменит aria в map
+        // сменить aria в map
         this.setMap(url);
         this.christmasTree.src = url;
       }
       this.opt[key] = url;
     }
+  }
+
+  renderLights(color: string) {
+    let html = '';
+    let count = 3;
+    for (let i = 1; i <= 8; i += 1) {
+      html += '<ul class="light-rope">';
+      for (let t = 0; t < count; t += 1) {
+        html += `<li class="${color}"></li>`;
+      }
+      html += '</ul>';
+      count += 3;
+    }
+    this.lightsContainer.innerHTML = html;
+  }
+
+  showLights() {
+    if (this.opt.lights) {
+      this.renderLights(this.opt.colorLights);
+    } else {
+      this.lightsContainer.innerHTML = '';
+    }
+  }
+
+  setColorLights(event: Event) {
+    this.opt.colorLights = (event.target as HTMLInputElement).value;
+    this.showLights();
   }
 
   events() {
@@ -206,19 +258,23 @@ class Tree {
         clearTimeout(this.timerID);
       }
     });
-    this.audio.addEventListener('ended', () => {
-      this.audio.currentTime = 0;
-      this.audio.play();
-    });
     this.btnSound.addEventListener('click', this.sound.bind(this));
-    // повесить обработчики на выбор елки и фона
+    this.toggleLight.addEventListener('change', (event: Event) => {
+      this.opt.lights = (event.target as HTMLInputElement).checked;
+      this.showLights();
+    });
+    this.radioColorLights.forEach((radio) => {
+      radio.addEventListener('change', this.setColorLights.bind(this));
+      if ((radio as HTMLInputElement).value === this.opt.colorLights) {
+        const color = radio as HTMLInputElement;
+        color.checked = true;
+      }
+    });
   }
 
   init() {
     this.events();
     this.applySettings();
-    // установить фон
-    // установить елку
   }
 }
 

@@ -298,13 +298,13 @@ class Toys {
     this.checkFavorites.checked = false;
     this.resetSlider(
       this.yearSlider,
-      ['1940', '2020'],
+      ['1940.00', '2020.00'],
       this.yearStart,
       this.yearEnd
     );
     this.resetSlider(
       this.countSlider,
-      ['1', '12'],
+      ['1.00', '12.00'],
       this.countStart,
       this.countEnd
     );
@@ -346,8 +346,8 @@ class Toys {
     const [a, b] = values;
     const start = s;
     const end = e;
-    start.textContent = a;
-    end.textContent = b;
+    start.textContent = a.slice(0, -3);
+    end.textContent = b.slice(0, -3);
   }
 
   resetSlider(

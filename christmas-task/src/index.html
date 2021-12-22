@@ -148,7 +148,7 @@
           <div class="switch">
             <label>
               Off
-              <input type="checkbox" />
+              <input type="checkbox" class="toggle-light" />
               <span class="lever"></span>
               On
             </label>
@@ -156,37 +156,38 @@
           <ul class="light">
             <li>
               <label>
-                <input name="light" type="radio" checked />
+                <input name="light" type="radio" checked value="red-light" />
                 <span>Красный</span>
               </label>
             </li>
             <li>
               <label>
-                <input name="light" type="radio" />
+                <input name="light" type="radio" value="green-light" />
                 <span>Зеленый</span>
               </label>
             </li>
             <li>
               <label>
-                <input name="light" type="radio" />
+                <input name="light" type="radio" value="blue-light" />
                 <span>Синий</span>
               </label>
             </li>
             <li>
               <label>
-                <input name="light" type="radio" />
+                <input name="light" type="radio" value="yellow-light" />
                 <span>Желтый</span>
               </label>
             </li>
             <li>
               <label>
-                <input name="light" type="radio" />
+                <input name="light" type="radio" value="multicolor" />
                 <span>Мультиколор</span>
               </label>
             </li>
           </ul>
         </div>
         <!-- <a class="btn btn-settings">настройки</a> -->
+        <div class="favorites-bolls"></div>
         <div class="tree-container">
           <div class="lights-container"></div>
           <map name="tree-map">
@@ -201,12 +202,6 @@
             alt="tree"
             usemap="#tree-map"
           />
-        </div>
-        <div class="favorites-bolls">
-          <div class="card-boll">
-            <img src="./assets/toys/10.png" alt="" />
-            <span>5</span>
-          </div>
         </div>
       </div>
     </main>

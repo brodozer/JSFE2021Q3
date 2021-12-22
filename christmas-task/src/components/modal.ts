@@ -55,7 +55,6 @@ class Modal {
   init() {
     this.modal.addEventListener('click', (e: Event) => {
       const target = e.target as HTMLElement;
-      console.log(target);
       if (
         target.classList.contains('overlay') ||
         target.closest('.btn-close') === this.btnClose
