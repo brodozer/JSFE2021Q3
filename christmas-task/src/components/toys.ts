@@ -1,6 +1,7 @@
 // import data from '../data/data';
 import * as noUiSlider from 'nouislider';
 import { IData, IOptToys } from './interfaces';
+import LocalStorage from './localStorage';
 
 class Toys {
   data: IData[];
@@ -41,7 +42,7 @@ class Toys {
 
   btnResetSettings: HTMLElement;
 
-  opt: IOptToys = {
+  defOpt: IOptToys = {
     filters: {
       size: [],
       shape: [],
@@ -55,7 +56,7 @@ class Toys {
     favorites: [],
   };
 
-  isClearLS = false;
+  opt: IOptToys;
 
   constructor(data: IData[]) {
     this.data = data;
@@ -396,20 +397,6 @@ class Toys {
     this.search();
   }
 
-  getLS() {
-    if (localStorage.optToys) {
-      this.opt = JSON.parse(localStorage.optToys);
-    }
-  }
-
-  setLS() {
-    if (!this.isClearLS) {
-      localStorage.optToys = JSON.stringify(this.opt);
-    } else {
-      localStorage.removeItem('optToys');
-    }
-  }
-
   events() {
     this.btnsFilter.forEach((btn) => {
       btn.addEventListener('click', this.addFilters.bind(this));
@@ -423,17 +410,15 @@ class Toys {
     this.btnFilterReset.addEventListener('click', this.resetFIlters.bind(this));
     this.searchElem.addEventListener('input', this.search.bind(this));
     this.closeSearch.addEventListener('click', this.clearSearch.bind(this));
-    this.btnResetSettings.addEventListener('click', () => {
-      this.isClearLS = true;
-      this.btnResetSettings.classList.add('disabled');
-      this.btnResetSettings.textContent = 'нужно обновить страницу';
-    });
-
-    window.addEventListener('beforeunload', this.setLS.bind(this));
+    this.btnResetSettings.addEventListener('click', LocalStorage.resetLS);
+    window.addEventListener(
+      'beforeunload',
+      LocalStorage.setLS.bind(this, 'optToys', this.opt, this.btnResetSettings)
+    );
   }
 
   init() {
-    this.getLS();
+    this.opt = LocalStorage.getLS('optToys', this.defOpt);
     this.applySettings();
     this.sort();
     this.events();
