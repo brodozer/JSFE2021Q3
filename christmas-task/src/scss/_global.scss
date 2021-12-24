@@ -51,6 +51,9 @@ nav {
     padding: 0 15px;
     .nav-link {
       text-transform: uppercase;
+      &.active {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
     }
   }
   .nav-search {

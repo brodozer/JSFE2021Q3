@@ -12,6 +12,11 @@
   </head>
   <style>
     .home {
+      position: absolute;
+      top: 64px;
+      right: 0;
+      bottom: 50px;
+      left: 0;
       display: flex;
       justify-content: start;
       align-items: center;
@@ -28,12 +33,19 @@
       <nav>
         <div class="nav-wrapper">
           <div class="container">
-            <a class="link-home"><i class="material-icons">home</i></a>
+            <!-- <a class="link-home active" data-path="/"
+              ><i class="material-icons">home</i></a
+            > -->
             <ul class="nav-mobile">
-              <li class="active">
-                <a class="nav-link link-toys">игрушки</a>
+              <li>
+                <a class="nav-link link-home active" data-path="/"
+              ><i class="material-icons">home</i></a
+            >
               </li>
-              <li><a class="nav-link link-tree">елка</a></li>
+              <li>
+                <a class="nav-link link-toys" data-path="/toys">игрушки</a>
+              </li>
+              <li><a class="nav-link link-tree" data-path="/tree">елка</a></li>
             </ul>
             <div class="nav-search">
               <div class="input-field">
@@ -41,7 +53,6 @@
                   id="search"
                   type="search"
                   autocomplete="off"
-                  autofocus
                   placeholder="поиск..."
                 />
                 <label class="label-icon" for="search"
@@ -59,7 +70,20 @@
       </nav>
     </header>
     <main>
-      <div class="toys">
+      <div class="home">
+        <div class="container center-align">
+          <h1>
+            Помоги бабушке,<br />
+            наряди елку!
+          </h1>
+          <a
+            class="waves-effect waves-light btn btn-start-game"
+            data-path="/toys"
+            >начать</a
+          >
+        </div>
+      </div>
+      <div class="toys hide">
         <div class="container">
           <div class="settings">
             <a
@@ -218,20 +242,11 @@
               width="60"
               height="24"
           /></a>
-          © 2021 Copyright Text
-          <a class="grey-text text-lighten-4 right" href="#!">brodozer</a>
+          © 2021 Copyright
+          <a class="grey-text text-lighten-4 right" target="_blank" href=https://github.com/brodozer">brodozer</a>
         </div>
       </div>
     </footer>
-    <div class="home full-screen">
-      <div class="container center-align">
-        <h1>
-          Помоги бабушке,<br />
-          наряди елку!
-        </h1>
-        <a class="waves-effect waves-light btn btn-start-game">начать</a>
-      </div>
-    </div>
     <div class="overlay full-screen hide">
       <a class="btn btn-сlose right"><i class="material-icons">close</i></a>
     </div>

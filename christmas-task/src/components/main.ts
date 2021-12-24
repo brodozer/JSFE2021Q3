@@ -1,6 +1,8 @@
 import Modal from './modal';
 import Toys from './toys';
 import Tree from './tree';
+// import { IPage } from './interfaces';
+// import history from "event-module";
 
 class Main {
   modal: Modal;
@@ -9,30 +11,32 @@ class Main {
 
   tree: Tree;
 
-  pageHome: HTMLElement;
-
-  pageToys: HTMLElement;
-
-  pageTree: HTMLElement;
-
-  linkHome: HTMLElement;
-
-  linkToys: HTMLElement;
-
-  linkTree: HTMLElement;
-
   btnStartGame: HTMLElement;
+
+  curPage = '/';
+
+  pages = [
+    {
+      path: '/',
+      page: document.querySelector('.home'),
+      btn: document.querySelector('.link-home'),
+    },
+    {
+      path: '/toys',
+      page: document.querySelector('.toys'),
+      btn: document.querySelector('.link-toys'),
+    },
+    {
+      path: '/tree',
+      page: document.querySelector('.tree'),
+      btn: document.querySelector('.link-tree'),
+    },
+  ];
 
   constructor(modal: Modal, toys: Toys, tree: Tree) {
     this.modal = modal;
     this.toys = toys;
     this.tree = tree;
-    this.pageHome = document.querySelector('.home');
-    this.pageToys = document.querySelector('.toys');
-    this.pageTree = document.querySelector('.tree');
-    this.linkHome = document.querySelector('.link-home');
-    this.linkToys = document.querySelector('.link-toys');
-    this.linkTree = document.querySelector('.link-tree');
     this.btnStartGame = document.querySelector('.btn-start-game');
   }
 
@@ -41,39 +45,40 @@ class Main {
     show.classList.remove(className);
   }
 
+  openPath(event: Event) {
+    event.preventDefault();
+    const { path } = (event.target as HTMLElement).closest('a').dataset;
+    window.history.pushState(null, null, path);
+    if (path !== this.curPage) {
+      this.pages.forEach((page) => {
+        if (page.path === this.curPage) {
+          page.btn.classList.remove('active');
+          page.page.classList.add('hide');
+          if (page.path === '/tree') {
+            this.tree.clearTree();
+          }
+        } else if (page.path === path) {
+          page.btn.classList.add('active');
+          page.page.classList.remove('hide');
+          if (path === '/tree') {
+            this.tree.renderCards(this.toys.getFavorites());
+          }
+        }
+      });
+      this.curPage = path;
+    }
+  }
+
   events() {
-    this.btnStartGame.addEventListener('click', () => {
-      this.pageHome.style.transform = 'translateY(-100%)';
-      this.modal.unlockScroll();
-      this.toys.init();
+    this.pages.forEach((page) => {
+      page.btn.addEventListener('click', this.openPath.bind(this));
     });
-    this.linkHome.addEventListener('click', () => {
-      this.modal.lockScroll();
-      this.pageHome.style.transform = 'translateY(0)';
-    });
-    this.linkToys.addEventListener('click', () => {
-      this.classToggle(
-        this.linkToys.closest('li'),
-        this.linkTree.closest('li'),
-        'active'
-      );
-      this.classToggle(this.pageTree, this.pageToys, 'hide');
-      this.tree.clearTree();
-    });
-    this.linkTree.addEventListener('click', () => {
-      this.tree.renderCards(this.toys.getFavorites());
-      this.classToggle(
-        this.linkTree.closest('li'),
-        this.linkToys.closest('li'),
-        'active'
-      );
-      this.classToggle(this.pageToys, this.pageTree, 'hide');
-    });
+    this.btnStartGame.addEventListener('click', this.openPath.bind(this));
   }
 
   init() {
-    this.modal.lockScroll();
     this.events();
+    this.toys.init();
     this.tree.init();
   }
 }
