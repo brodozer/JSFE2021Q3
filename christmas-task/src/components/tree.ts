@@ -28,8 +28,6 @@ class Tree {
 
   timerID: NodeJS.Timer;
 
-  body: HTMLElement;
-
   audio = new Audio('/assets/audio/audio.mp3');
 
   btnResetSettings: HTMLElement;
@@ -68,7 +66,6 @@ class Tree {
     this.toggleLight = document.querySelector('.toggle-light');
     this.radioColorLights = document.querySelectorAll('input[name="light"]');
     this.btnResetSettings = document.querySelector('.btn-reset-tree');
-    this.body = document.body;
     this.createSnowFlake = this.createSnowFlake.bind(this);
   }
 
@@ -108,28 +105,37 @@ class Tree {
 
   dragEnd(event: DragEvent) {
     if (event.dataTransfer.dropEffect === 'none') {
-      const img = event.target as HTMLElement;
-      img.removeAttribute('style');
-      const card = this.getCardToys(img);
-      card.appendChild(img);
+      const toy = event.target as HTMLElement;
+      toy.removeAttribute('style');
+      const card = this.getCardToys(toy);
+      card.appendChild(toy);
       this.countToys(card);
     }
   }
 
   drop(event: DragEvent) {
-    const imgId = event.dataTransfer.getData('id');
-    const img = document.getElementById(imgId);
-    img.style.left = `${event.pageX - img.offsetWidth / 2}px`;
-    img.style.top = `${event.pageY - img.offsetWidth / 2}px`;
-    if (img.closest('.card-boll')) {
-      this.body.append(img);
-      this.countToys(this.getCardToys(img));
+    const toyId = event.dataTransfer.getData('id');
+    const toy = document.getElementById(toyId);
+    const coordsTree = this.getCoords(this.christmasTree);
+    toy.style.left = `${event.pageX - coordsTree.left}px`;
+    toy.style.top = `${event.pageY - coordsTree.top}px`;
+    if (toy.closest('.card-boll')) {
+      this.mapTree.append(toy);
+      this.countToys(this.getCardToys(toy));
     }
   }
 
+  getCoords(elem: HTMLElement) {
+    const box = elem.getBoundingClientRect();
+    return {
+      top: box.top + window.scrollY,
+      left: box.left + window.scrollX,
+    };
+  }
+
   clearTree() {
-    this.body.querySelectorAll('.img-toys').forEach((element) => {
-      element.remove();
+    this.mapTree.querySelectorAll('.img-toys').forEach((toy) => {
+      toy.remove();
     });
   }
 
