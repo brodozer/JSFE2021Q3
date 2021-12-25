@@ -1,8 +1,6 @@
 import Modal from './modal';
 import Toys from './toys';
 import Tree from './tree';
-// import { IPage } from './interfaces';
-// import history from "event-module";
 
 class Main {
   modal: Modal;

@@ -69,7 +69,6 @@ class Tree {
     this.radioColorLights = document.querySelectorAll('input[name="light"]');
     this.btnResetSettings = document.querySelector('.btn-reset-tree');
     this.body = document.body;
-
     this.createSnowFlake = this.createSnowFlake.bind(this);
   }
 
@@ -123,7 +122,6 @@ class Tree {
     img.style.left = `${event.pageX - img.offsetWidth / 2}px`;
     img.style.top = `${event.pageY - img.offsetWidth / 2}px`;
     if (img.closest('.card-boll')) {
-      // (event.target as HTMLElement).append(img);
       this.body.append(img);
       this.countToys(this.getCardToys(img));
     }
@@ -156,10 +154,9 @@ class Tree {
     snowFlake.classList.add('snow');
     snowFlake.textContent = 'ac_unit';
     snowFlake.style.left = `${Math.random() * window.innerWidth}px`;
-    snowFlake.style.animationDuration = `${Math.random() * 3 + 2}s`; // between 2 - 5 seconds
+    snowFlake.style.animationDuration = `${Math.random() * 3 + 2}s`;
     snowFlake.style.opacity = `${Math.random()}`;
     snowFlake.style.fontSize = `${Math.random() * 10 + 10}px`;
-    // инжект снежинки в контейнер
     this.snowflakeContainer.appendChild(snowFlake);
 
     setTimeout(() => {
@@ -214,8 +211,6 @@ class Tree {
       if (key === 'bcg') {
         this.container.style.backgroundImage = `url(${url})`;
       } else {
-        // получить индекс
-        // сменить aria в map
         this.setMap(url);
         this.christmasTree.src = url;
       }
@@ -225,14 +220,16 @@ class Tree {
 
   renderLights(color: string) {
     let html = '';
-    let count = 3;
-    for (let i = 1; i <= 8; i += 1) {
+    let numberLightBulbs = 3;
+    const numberLayers = 8;
+    const iterator = 3;
+    for (let i = 1; i <= numberLayers; i += 1) {
       html += '<ul class="light-rope">';
-      for (let t = 0; t < count; t += 1) {
+      for (let t = 0; t < numberLightBulbs; t += 1) {
         html += `<li class="${color}"></li>`;
       }
       html += '</ul>';
-      count += 3;
+      numberLightBulbs += iterator;
     }
     this.lightsContainer.innerHTML = html;
   }

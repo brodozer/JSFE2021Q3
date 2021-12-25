@@ -1,4 +1,3 @@
-// import data from '../data/data';
 import * as noUiSlider from 'nouislider';
 import { IData, IOptToys } from './interfaces';
 import LocalStorage from './localStorage';
@@ -14,7 +13,7 @@ class Toys {
 
   favoritesCount: HTMLElement;
 
-  cards: string[]; // Element[]
+  cards: string[];
 
   balls: HTMLElement;
 
@@ -60,7 +59,6 @@ class Toys {
 
   constructor(data: IData[]) {
     this.data = data;
-    // this.opt = opt;
     this.balls = document.querySelector('.balls');
     this.searchElem = document.getElementById('search');
     this.closeSearch = document.querySelector('.close-search');
@@ -124,11 +122,9 @@ class Toys {
   renderCards() {
     if (this.filterData.length > 0) {
       this.balls.innerHTML = this.buildCards();
-      // выгружаем карточки на страницу
     } else {
       console.log('совпадений не найдено');
       this.showMessage(this.sidebar, 'Совпадений, не найдено');
-      // показываем popup или выводим информацию в настройках
     }
   }
 
@@ -146,7 +142,6 @@ class Toys {
           });
           break;
         case 'Z-A':
-          // можно сортировать от а до я и делать  reverse!!!
           this.data.sort((a: IData, b: IData) => {
             const nameA = a.name.toLowerCase();
             const nameB = b.name.toLowerCase();
@@ -172,7 +167,6 @@ class Toys {
   }
 
   applyFilters() {
-    // передавать опции фильтрации из контроллера
     this.filterData = this.data.map((a) => ({ ...a }));
     const filterOpt = this.opt.filters;
     Object.keys(filterOpt).forEach((key) => {
@@ -229,7 +223,6 @@ class Toys {
         btnIcon.textContent = 'favorite_border';
       } else {
         if (this.opt.favorites.length === 20) {
-          // может popup может уведомление рядом с избранным в хедере
           this.showMessage(card, 'Извините, все слоты заняты');
           return;
         }
@@ -262,15 +255,13 @@ class Toys {
     const btn: HTMLElement = (event.target as HTMLElement).closest(
       '.btn-filter'
     );
-    const filter = btn.dataset.filter.split('-'); // ['size', 'большой']
+    const filter = btn.dataset.filter.split('-');
     const [key, value] = filter;
     btn.classList.toggle('active');
     const index = (this.opt.filters[key] as Array<string>).indexOf(value);
     if (index === -1) {
-      // добавить в фильтр
       (this.opt.filters[key] as Array<string>).push(value);
     } else {
-      // удалить из фильтра
       (this.opt.filters[key] as Array<string>).splice(index, 1);
     }
 
@@ -370,7 +361,6 @@ class Toys {
         if (options[i].value === this.opt.sort) options[i].selected = true;
       }
     }
-    // добавить кнопкам фильтрам класс active
     this.btnsFilter.forEach((btn) => {
       const filter = (btn as HTMLElement).dataset.filter.split('-');
       const [key, value] = filter;
@@ -378,9 +368,7 @@ class Toys {
         (btn as HTMLElement).classList.add('active');
       }
     });
-    // установить чекбокс избранное
     this.checkFavorites.checked = this.opt.filters.favorites;
-    // устновить кол-во избранного
     this.favoritesCount.textContent = String(this.opt.favorites.length);
   }
 

@@ -33,9 +33,3 @@ export interface IOptTree {
   lights: boolean;
   colorLights: string;
 }
-
-export interface IPage {
-  url: string;
-  page: HTMLElement;
-  btn: HTMLElement;
-}
