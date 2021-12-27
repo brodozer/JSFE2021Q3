@@ -1,29 +1,29 @@
-type articleSource = {
+type TArticleSource = {
     id: string;
     name: string;
 };
 
-interface article {
+interface IArticle {
     author: string;
     content: string;
     description: string;
     publishedAt: string;
-    source: articleSource;
+    source: TArticleSource;
     title: string;
     url: string;
     urlToImage: string;
 }
 
-interface data {
+interface IData {
     status: string;
 }
 
-interface news extends data {
-    articles: article[];
+interface INews extends IData {
+    articles: IArticle[];
     totalResults: number;
 }
 
-interface source {
+interface ISource {
     category: string;
     country: string;
     description: string;
@@ -33,18 +33,18 @@ interface source {
     url: string;
 }
 
-interface sources extends data {
-    sources: source[];
+interface ISources extends IData {
+    sources: ISource[];
 }
 
-interface event {
+interface IEvent {
     target: Element;
     currentTarget: Element;
 }
 
-interface urlParams {
+interface IUrlParams {
     endpoint: string;
     sources?: string;
 }
 
-export { articleSource, article, news, source, sources, event, urlParams };
+export { TArticleSource, IArticle, INews, ISource, ISources, IEvent, IUrlParams };

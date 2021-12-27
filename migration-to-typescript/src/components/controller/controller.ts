@@ -1,6 +1,6 @@
 import Model from '../model/model';
 import AppView from '../view/appView';
-import { event, sources, news } from '../interfaces';
+import { IEvent, ISources, INews } from '../interfaces';
 
 class AppController {
     sources: Element;
@@ -17,11 +17,11 @@ class AppController {
         });
         this.model
             .getResp('GET', url)
-            .then((data: sources) => this.view.drawSources(data))
+            .then((data: ISources) => this.view.drawSources(data))
             .catch((err) => console.log(err));
     }
 
-    public getNews(e: event): void {
+    public getNews(e: IEvent): void {
         const target: Element = e.target;
         const newsContainer: Element = e.currentTarget;
         if (target != newsContainer) {
@@ -35,7 +35,7 @@ class AppController {
                 });
                 this.model
                     .getResp('GET', url)
-                    .then((data: news) => this.view.drawNews(data))
+                    .then((data: INews) => this.view.drawNews(data))
                     .catch((err) => console.log(err));
             }
         }

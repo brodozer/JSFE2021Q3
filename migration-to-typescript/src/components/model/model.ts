@@ -1,4 +1,4 @@
-import { urlParams, news, sources } from '../interfaces';
+import { IUrlParams, INews, ISources } from '../interfaces';
 
 class Model {
     constructor(private baseLink: string, private apiKey: string) {
@@ -6,7 +6,7 @@ class Model {
         this.apiKey = apiKey;
     }
 
-    public makeUrl(options: urlParams): string {
+    public makeUrl(options: IUrlParams): string {
         let url = `${this.baseLink}${options.endpoint}?apiKey=${this.apiKey}`;
         if (options.hasOwnProperty('sources')) {
             url += `&sources=${options.sources}`;
@@ -14,7 +14,7 @@ class Model {
         return url;
     }
 
-    public async getResp(method: string, url: string): Promise<sources | news> {
+    public async getResp(method: string, url: string): Promise<ISources | INews> {
         const res = await fetch(url, { method });
         if (!res.ok) {
             if (res.status === 401 || res.status === 404)
