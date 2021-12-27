@@ -1,5 +1,3 @@
-"use strict";
-
 import Animation from "./animation";
 
 class Setting {
@@ -16,14 +14,12 @@ class Setting {
 		this.seconds = this.body.querySelector(".seconds");
 		this.btnIncrease = this.body.querySelector(".btn-increase");
 		this.btnDecrease = this.body.querySelector(".btn-decrease");
-
 		this.defOpt = {
 			volume: 0.5,
 			timer: false,
 			seconds: 15,
 			muted: false,
 		};
-
 		this.saveSettings = this.saveSettings.bind(this);
 		this.resetSetings = this.resetSetings.bind(this);
 		this.events();

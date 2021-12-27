@@ -1,5 +1,3 @@
-"use strict";
-
 import "./sass/style.scss";
 
 import Quiz from "./js/quiz";
@@ -25,7 +23,6 @@ class Main {
 				pictures: [],
 			};
 		}
-		console.log(options);
 		const setLocalStorage = () => {
 			localStorage.opt = JSON.stringify(options);
 		};
@@ -34,7 +31,16 @@ class Main {
 			document.documentElement.style.setProperty("--vh", `${vh}px`);
 		};
 		setHeight();
-		window.addEventListener("resize", setHeight);
+		let resizeTimeout;
+		const resizeThrottler = () => {
+			if (!resizeTimeout) {
+				resizeTimeout = setTimeout(() => {
+					resizeTimeout = null;
+					setHeight();
+				}, 66);
+			}
+		};
+		window.addEventListener("resize", resizeThrottler);
 		window.addEventListener("beforeunload", setLocalStorage);
 		const data = new Data();
 		const result = new Result(body);

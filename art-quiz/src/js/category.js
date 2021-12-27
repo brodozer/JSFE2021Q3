@@ -1,5 +1,3 @@
-"use strict";
-
 import Animation from "./animation";
 
 class Category {
@@ -11,12 +9,6 @@ class Category {
 		this.type = false;
 		this.result = result;
 		this.round = round;
-
-		// this.categoriesImgs = {
-		// 	artists: [],
-		// 	pictures: [],
-		// };
-
 		this.btnHome = this.body.querySelector(".header .btn-home");
 		this.btnCategories = this.body.querySelector(".header .btn-categories");
 		this.home = this.body.querySelector(".home");
@@ -24,28 +16,18 @@ class Category {
 		this.container.addEventListener("click", this.cardsHandler.bind(this));
 		this.renderCategories = this.renderCategories.bind(this);
 	}
+
 	renderCategories(event) {
 		this.type = event.target.closest(".card").id;
 		let cards = "";
-		// массив картинок категорий (первая картинка вопроса раунда) динамичные картинки категорий с гитхаба
-		// if (this.categoriesImgs[this.type].length == 0) {
-		// 	const urls = [];
-		// 	this.questions[this.type].forEach((round) => {
-		// 		urls.push(
-		// 			`https://raw.githubusercontent.com/brodozer/image-data/master/img/${round[0].imageNum}.jpg`
-		// 		);
-		// 	});
-		// 	this.categoriesImgs[this.type] = urls;
-		// 	console.log("categeories imgs ", urls);
-		// }
-		for (let i = 0; i < 12; i++) {
-			let res = this.opt[this.type].find((r) => r.id == i);
-			if (res) {
+		for (let i = 0; i < this.data.numberRounds; i++) {
+			let result = this.opt[this.type].find((r) => r.id == i);
+			if (result) {
 				cards += `
 					<div class="card played" id="${i}">
 						<div class="card-title">
 							<div class="number color">${i + 1}</div>
-							<div class="score">${res.score}/10</div>
+							<div class="score">${result.score}/10</div>
 						</div>
 						<div class="card-img">
 							<img
@@ -70,25 +52,28 @@ class Category {
 				`;
 			}
 		}
-
 		this.container.innerHTML = cards;
 		this.btnHome.classList.add("active");
 		this.btnHome.dataset.hide = "categories";
 		Animation.fadeOut(this.home, this.categories);
 	}
+
 	cardsHandler(event) {
-		if (event.target.closest(".card")) {
-			const cardId = event.target.closest(".card").id;
-			if (event.target.tagName === "BUTTON") {
+		const eventTarget = event.target;
+		const currentCard = eventTarget.closest(".card");
+		if (currentCard) {
+			const cardId = currentCard.id;
+			if (eventTarget.tagName === "BUTTON") {
 				this.btnCategories.classList.add("active");
 				this.btnHome.dataset.hide = "result";
 				this.result.renderResult(
 					this.opt[this.type].find((res) => res.id == cardId),
 					this.data.questions[this.type][cardId],
-					cardId
+					cardId,
+					this.categories
 				);
 			} else {
-				if (event.target.closest(".card").classList.contains("played")) {
+				if (eventTarget.closest(".card").classList.contains("played")) {
 					this.data.getQuestions();
 				}
 				this.round.start(this.type, this.data.questions[this.type], cardId);

@@ -1,8 +1,12 @@
 class Animation {
+	static minOpacityValue = 0;
+	static maxOpacityValue = 1;
+	static opacityStep = 0.1;
 	static fadeOut(hide, show) {
-		let opacity = 1;
+		let opacity = this.maxOpacityValue;
 		const timer = setInterval(() => {
-			if (opacity <= 0.1) {
+			if (opacity <= this.opacityStep) {
+				opacity = this.minOpacityValue;
 				clearInterval(timer);
 				hide.classList.add("d-none");
 				if (show) {
@@ -10,17 +14,18 @@ class Animation {
 				}
 			}
 			hide.style.opacity = parseFloat(opacity);
-			opacity -= opacity * 0.1;
+			opacity -= opacity * this.opacityStep;
 		}, 10);
 	}
 
 	static fadeIn(el) {
-		let opacity = 0.01;
+		let opacity = this.opacityStep;
 		el.style.opacity = opacity;
 		el.classList.remove("d-none");
 
 		const timer = setInterval(() => {
-			if (opacity >= 1) {
+			if (opacity >= this.maxOpacityValue) {
+				opacity = this.maxOpacityValue;
 				clearInterval(timer);
 			}
 
