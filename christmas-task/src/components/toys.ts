@@ -25,13 +25,13 @@ class Toys {
 
   btnFilterReset: HTMLElement;
 
-  yearSlider: noUiSlider.TargetElement;
+  yearSlider: noUiSlider.target;
 
   yearStart: HTMLElement;
 
   yearEnd: HTMLElement;
 
-  countSlider: noUiSlider.TargetElement;
+  countSlider: noUiSlider.target;
 
   countStart: HTMLElement;
 
@@ -305,7 +305,7 @@ class Toys {
   }
 
   initSlider(
-    slider: noUiSlider.TargetElement,
+    slider: noUiSlider.target,
     start: number[],
     step: number,
     key: string,
@@ -343,7 +343,7 @@ class Toys {
   }
 
   resetSlider(
-    slider: noUiSlider.TargetElement,
+    slider: noUiSlider.target,
     values: string[],
     s: HTMLElement,
     e: HTMLElement
