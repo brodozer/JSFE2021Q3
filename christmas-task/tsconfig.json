@@ -3,6 +3,7 @@
     "outDir": "./dist/",
     "moduleResolution": "node",
     "noImplicitAny": true,
+    // "strict": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "module": "es6",

@@ -21,7 +21,7 @@ class LocalStorage {
   static resetLS(event: Event) {
     const btnReset = event.target as HTMLElement;
     btnReset.classList.add('disabled');
-    btnReset.textContent = 'нужно обновить страницу';
+    btnReset.textContent = 'настойки сброшены';
   }
 }
 

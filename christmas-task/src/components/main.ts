@@ -46,7 +46,6 @@ class Main {
   openPath(event: Event) {
     event.preventDefault();
     const { path } = (event.target as HTMLElement).closest('a').dataset;
-    window.history.pushState(null, null, path);
     if (path !== this.curPage) {
       this.pages.forEach((page) => {
         if (page.path === this.curPage) {
