@@ -1,18 +1,16 @@
-"use strict";
-
 import LoadImage from "./loadImage";
 
 class Round {
 	constructor(body, opt) {
 		this.body = body;
 		this.opt = opt;
-		//round
+		// round
 		this.quiz = this.body.querySelector(".quiz");
 		this.answers = this.quiz.querySelector(".answers");
 		this.question = this.quiz.querySelector(".question");
 		this.imgContainer = this.quiz.querySelector(".img-container");
 		this.progressBullets = this.quiz.querySelectorAll(".progress span");
-		//modals
+		// modals
 		this.modals = document.querySelector(".modals-container");
 		this.btnNextQuestion = this.modals.querySelector(".btn-next-question");
 		this.btnNextRound = this.modals.querySelector(".btn-next-round");
@@ -20,20 +18,20 @@ class Round {
 		this.btnCategories = this.quiz.querySelector(".btn-categories");
 		this.btnHome = this.quiz.querySelector(".btn-home");
 		this.btnYes = this.modals.querySelector(".btn-yes");
-		this.btnNo = this.modals.querySelector(".brn-no");
+		this.btnNo = this.modals.querySelector(".btn-no");
 		this.modalNextRound = this.modals.querySelector(".next-round");
 		this.modalNextQuestion = this.modals.querySelector(".next-question");
 		this.modalGameOver = this.modals.querySelector(".game-over");
 
 		this.imgs = [];
 		this.answeredAmount = 0;
-		this.roundResult = []; // массив значений true/false
-		this.type = false; // тип квиза
-		this.rounds = []; // массив из 12 раундов
-		this.round = []; // текущий раунд квиза (10 вопросов)
-		this.id = 0; // id карточки для которой нужно отобразить вопросы
+		this.roundResult = [];
+		this.typeQuiz = false;
+		this.rounds = [];
+		this.currentRound = [];
+		this.cardId = 0;
 
-		//audio
+		// audio
 		this.sounds = {
 			wrong: new Audio("../assets/audio/wrong.wav"),
 			correct: new Audio("../assets/audio/correct.wav"),
@@ -47,11 +45,11 @@ class Round {
 		};
 		this.quizTimer = this.quiz.querySelector(".quiz-timer");
 
-		//bind
+		// bind
 		this.nextQuestion = this.nextQuestion.bind(this);
 		this.nextRound = this.nextRound.bind(this);
 		this.checkAnswer = this.checkAnswer.bind(this);
-		this.closeQuiz = this.closeQuiz.bind(this);
+		this.closeModal = this.closeModal.bind(this);
 		this.timer = this.timer.bind(this);
 
 		this.events();
@@ -62,29 +60,22 @@ class Round {
 		this.answers.addEventListener("click", this.checkAnswer);
 		this.btnNextQuestion.addEventListener("click", this.nextQuestion);
 		this.btnNextRound.addEventListener("click", this.nextRound);
-		this.btnContinue.addEventListener("click", this.closeQuiz);
-		this.btnCategories.addEventListener("click", () => {
-			if (this.opt.timer) {
-				clearInterval(this.optTimer.id);
-			}
-			this.quiz.classList.remove("toggle");
-		});
-		this.btnHome.addEventListener("click", () => {
-			if (this.opt.timer) {
-				clearInterval(this.optTimer.id);
-			}
-			this.body.querySelector(".header .btn-home").classList.remove("active");
-			this.body.querySelector(".categories").classList.add("d-none");
-			this.body.querySelector(".home").classList.remove("d-none");
-			this.body.querySelector(".home").style.opacity = 1;
-			this.quiz.classList.remove("toggle");
-		});
+		this.btnContinue.addEventListener("click", this.closeModal);
+		this.btnCategories.addEventListener("click", this.closeQuiz.bind(this));
 	}
+
+	closeQuiz() {
+		if (this.opt.timer) {
+			clearInterval(this.optTimer.id);
+		}
+		this.quiz.classList.remove("toggle");
+	}
+
 	start(type, rounds, id) {
-		this.type = type;
-		this.id = Number(id);
+		this.typeQuiz = type;
+		this.cardId = Number(id);
 		this.rounds = rounds;
-		if (this.type === "artists") {
+		if (this.typeQuiz === "artists") {
 			this.imgContainer.innerHTML = '<div class="img responsive"></div>';
 			this.question.textContent = "Кто автор этой картины ?";
 		} else {
@@ -93,7 +84,6 @@ class Round {
 		}
 		this.imgs = this.imgContainer.querySelectorAll(".img");
 		if (this.opt.timer) {
-			// отображение таймера в квизе
 			this.quizTimer.innerHTML = "00:00";
 			this.quizTimer.classList.remove("d-none");
 		} else {
@@ -102,8 +92,9 @@ class Round {
 
 		this.rebind();
 	}
+
 	rebind() {
-		this.round = this.rounds[this.id];
+		this.currentRound = this.rounds[this.cardId];
 		this.answeredAmount = 0;
 		this.roundResult = [];
 		this.progressBullets.forEach((bullet, i) => {
@@ -113,62 +104,64 @@ class Round {
 				bullet.classList.remove("on");
 			}
 		});
-		this.renderQuestion(this.round[0]); // ? рендерить последовательно или пропускать раунды, которые пользователь уже сыграл ранее
+		this.renderQuestion(this.currentRound[0]);
 	}
+
 	nextQuestion() {
 		this.answeredAmount++;
-		if (this.answeredAmount < this.round.length) {
-			this.renderQuestion(this.round[this.answeredAmount]);
+		if (this.answeredAmount < this.currentRound.length) {
+			this.renderQuestion(this.currentRound[this.answeredAmount]);
 			this.progressBullets[this.answeredAmount].classList.add("on");
 		} else {
-			console.log("end round --->");
 			this.endRound();
 		}
 	}
+
 	nextRound() {
-		if (this.opt[this.type].length < 12) {
-			this.id++;
-			if (this.rounds.length == this.id) {
-				this.id = 0;
+		if (this.opt[this.typeQuiz].length < 12) {
+			this.cardId++;
+			if (this.rounds.length == this.cardId) {
+				this.cardId = 0;
 			}
-			// todo проверять игрался такой раунд или нет, если да, то включать кнопку replay и при нажатии на next-round переходить к первому раунду, который еще не играл и выводить это в название кнопки (next round 5)
+			// todo check play or not round, if play - show button replay, if click next button on play first round that hasn't been played yet
 			this.rebind();
 			this.modals.classList.remove("toggle");
 			this.modalNextRound.classList.remove("active");
 		} else {
-			console.log("game over --->");
 			this.gameOver();
 		}
 	}
+
 	gameOver() {
-		// todo render модалки для окончания игры. показывать, если пройдены все раунды
+		// todo render modals for game over
 	}
+
 	endRound() {
 		this.quiz.classList.remove("toggle");
-		let totalCorrectAnswer = this.calculateCorrectAnswer(this.roundResult); // кол-во правильных ответов
+		let totalCorrectAnswer = this.calculateCorrectAnswer(this.roundResult);
 		let result = {
-			id: this.id,
+			id: this.cardId,
 			score: totalCorrectAnswer,
 			result: this.roundResult,
 		};
-		let resultIndex = this.opt[this.type].findIndex((e) => e.id == this.id);
+		let resultIndex = this.opt[this.typeQuiz].findIndex(
+			(e) => e.id == this.cardId
+		);
 		if (resultIndex !== -1) {
-			this.opt[this.type][resultIndex] = result;
+			this.opt[this.typeQuiz][resultIndex] = result;
 		} else {
-			this.opt[this.type].push(result);
+			this.opt[this.typeQuiz].push(result);
 		}
-		//console.log("round result ", result);
-
-		const card = document.getElementById(this.id);
+		const card = document.getElementById(this.cardId);
 		card.classList.add("played");
 		card.innerHTML = `		
 			<div class="card-title">
-				<div class="number color">${this.id + 1}</div>
+				<div class="number color">${this.cardId + 1}</div>
 				<div class="score">${totalCorrectAnswer}/10</div>
 			</div>
 			<div class="card-img">
 				<img
-					src="assets/images/categories/${this.type}/${this.id}.jpg"
+					src="assets/images/categories/${this.typeQuiz}/${this.cardId}.jpg"
 				/>
 			</div>
 			<button class="btn btn-result">result</button>
@@ -180,14 +173,16 @@ class Round {
 		this.modalNextRound.classList.add("active");
 		this.playAudio(this.sounds.round);
 	}
+
 	playAudio(sound) {
 		if (this.opt.muted) {
 			sound.volume = this.opt.volume;
 			sound.play();
 		}
 	}
+
 	async renderResult(isCorrect) {
-		let question = this.round[this.answeredAmount];
+		let question = this.currentRound[this.answeredAmount];
 		let descriptions = `
 			<p>${question.name}</p>
 			<p>${question.author}</p>
@@ -207,13 +202,14 @@ class Round {
 		this.modalNextQuestion.className = `next-question ${className} modal active`;
 		this.modals.classList.add("toggle");
 	}
+
 	checkAnswer(event) {
 		event.preventDefault();
 		clearInterval(this.optTimer.id);
 		let correctAnswer =
-			this.type === "artists"
-				? this.round[this.answeredAmount].author
-				: this.round[this.answeredAmount].name;
+			this.typeQuiz === "artists"
+				? this.currentRound[this.answeredAmount].author
+				: this.currentRound[this.answeredAmount].name;
 		let answer = event.target.closest(".answer");
 		let currentAnswer = answer.dataset.answer;
 		let isCorrect = false;
@@ -227,11 +223,10 @@ class Round {
 		} else {
 			this.playAudio(this.sounds.wrong);
 		}
-		//console.log("correct answer ", correctAnswer);
-		//console.log("current answer ", currentAnswer);
 		this.roundResult.push(isCorrect);
 		this.renderResult(isCorrect);
 	}
+
 	shuffleAnswers(answers) {
 		for (let i = answers.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * i);
@@ -241,12 +236,12 @@ class Round {
 		}
 		return answers;
 	}
+
 	async renderQuestion(question) {
-		//console.log("question ", question);
 		let answers = this.shuffleAnswers(question.answers);
 		let urls = [];
 		let html = "";
-		if (this.type === "artists") {
+		if (this.typeQuiz === "artists") {
 			urls.push(
 				LoadImage.load(
 					`https://raw.githubusercontent.com/brodozer/image-data/master/full/${question.imageNum}full.jpg`
@@ -267,29 +262,25 @@ class Round {
 				);
 			});
 		}
-		//console.log("quiz answers ", html);
 		const statusesPromise = await Promise.allSettled(urls);
 		statusesPromise.forEach((item, i) => {
 			if (item.status === "fulfilled") {
-				//console.log("img ", item.value);
 				if (this.answeredAmount > 0) {
 					this.imgs[i].lastChild.remove();
 				}
 				this.imgs[i].append(item.value);
-			} else {
-				console.log(item.reason.message);
-				//throw item.reason;
 			}
 		});
 		this.answers.innerHTML = html;
 		if (this.answeredAmount == 0) {
-			this.quiz.className = `quiz quiz-${this.type}`;
+			this.quiz.className = `quiz quiz-${this.typeQuiz}`;
 			this.quiz.classList.add("toggle");
 		} else {
 			this.modals.classList.remove("toggle");
 		}
 		this.startTimer();
 	}
+
 	calculateCorrectAnswer(result) {
 		let total = result.filter((e) => e == true).length;
 		return total;
@@ -322,7 +313,7 @@ class Round {
 		}
 	}
 
-	closeQuiz() {
+	closeModal() {
 		this.modals.classList.remove("toggle");
 		this.modalNextRound.classList.remove("active");
 	}

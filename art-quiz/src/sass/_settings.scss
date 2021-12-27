@@ -17,7 +17,7 @@
 			flex-direction: column;
 			justify-content: space-evenly;
 			align-items: center;
-			background-color: #fff;
+			background-color: $white;
 			margin-bottom: 20px;
 			@include sm {
 				height: 320px;
@@ -47,7 +47,7 @@
 						width: 15px;
 						height: 15px;
 						border-radius: 50%;
-						border: 2px solid #fff;
+						border: 2px solid $white;
 						background: $main_color;
 						cursor: pointer;
 						@include lg {
