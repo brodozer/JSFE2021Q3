@@ -8,6 +8,8 @@ class Tree {
 
   container: HTMLElement;
 
+  treeContainer: HTMLElement;
+
   selectTree: HTMLElement;
 
   selectBcg: HTMLElement;
@@ -58,6 +60,7 @@ class Tree {
     this.selectTree = document.querySelector('.christmas-trees');
     this.selectBcg = document.querySelector('.background');
     this.container = document.querySelector('.tree');
+    this.treeContainer = this.container.querySelector('.tree-container');
     this.mapTree = document.querySelector('map');
     this.snowflakeContainer = document.querySelector('.snowflake-container');
     this.btnSnowflake = document.querySelector('.btn-snowflake');
@@ -116,9 +119,9 @@ class Tree {
   drop(event: DragEvent) {
     const toyId = event.dataTransfer.getData('id');
     const toy = document.getElementById(toyId);
-    const coordsTree = this.getCoords(this.christmasTree);
-    toy.style.left = `${event.pageX - coordsTree.left}px`;
-    toy.style.top = `${event.pageY - coordsTree.top}px`;
+    const coordsTree = this.getCoords(this.treeContainer);
+    toy.style.left = `${event.pageX - coordsTree.left - toy.offsetWidth / 2}px`;
+    toy.style.top = `${event.pageY - coordsTree.top - toy.offsetHeight / 2}px`;
     if (toy.closest('.card-boll')) {
       this.mapTree.append(toy);
       this.countToys(this.getCardToys(toy));
