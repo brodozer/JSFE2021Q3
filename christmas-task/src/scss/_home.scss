@@ -1,10 +1,14 @@
 .home {
+  position: absolute;
+  top: 64px;
+  right: 0;
+  bottom: 50px;
+  left: 0;
   display: flex;
   justify-content: start;
   align-items: center;
   background: url('./assets/bg-home.jpeg') center/cover no-repeat;
   z-index: 10;
-  //transform: translateY(-100%);
   h1 {
     text-transform: uppercase;
     color: #26a69a;

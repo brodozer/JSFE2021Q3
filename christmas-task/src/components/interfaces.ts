@@ -27,9 +27,10 @@ export interface IOptToys {
 }
 
 export interface IOptTree {
-  [key: string]: string | boolean;
+  [key: string]: string | boolean | number;
   tree: string;
   bcg: string;
+  map: number;
   lights: boolean;
   colorLights: string;
 }

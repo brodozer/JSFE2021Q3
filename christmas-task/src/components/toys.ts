@@ -1,8 +1,9 @@
 import * as noUiSlider from 'nouislider';
 import { IData, IOptToys } from './interfaces';
 import LocalStorage from './localStorage';
+import Sorts from './sorts';
 
-class Toys {
+class Toys extends Sorts {
   data: IData[];
 
   filterData: IData[];
@@ -58,6 +59,7 @@ class Toys {
   opt: IOptToys;
 
   constructor(data: IData[]) {
+    super();
     this.data = data;
     this.balls = document.querySelector('.balls');
     this.searchElem = document.getElementById('search');
@@ -67,17 +69,13 @@ class Toys {
     this.selectSort = document.querySelector('.sort');
     this.btnsFilter = document.querySelectorAll('.btn-filter');
     this.btnFilterReset = document.querySelector('.btn-filter-reset');
-
     this.yearSlider = document.getElementById('year-slider');
     this.yearStart = document.querySelector('.year-start');
     this.yearEnd = document.querySelector('.year-end');
-
     this.countSlider = document.getElementById('count-slider');
     this.countStart = document.querySelector('.count-start');
     this.countEnd = document.querySelector('.count-end');
-
     this.sidebar = document.getElementById('filters');
-
     this.btnResetSettings = document.querySelector('.btn-reset-toys');
   }
 
@@ -123,92 +121,12 @@ class Toys {
     if (this.filterData.length > 0) {
       this.balls.innerHTML = this.buildCards();
     } else {
-      console.log('совпадений не найдено');
       this.showMessage(this.sidebar, 'Совпадений, не найдено');
     }
   }
 
-  sort() {
-    if (this.selectSort.value !== 'disable') {
-      this.opt.sort = this.selectSort.value;
-      switch (this.opt.sort) {
-        case 'A-Z':
-          this.data.sort((a: IData, b: IData) => {
-            const nameA = a.name.toLowerCase();
-            const nameB = b.name.toLowerCase();
-            if (nameA < nameB) return -1;
-            if (nameA > nameB) return 1;
-            return 0;
-          });
-          break;
-        case 'Z-A':
-          this.data.sort((a: IData, b: IData) => {
-            const nameA = a.name.toLowerCase();
-            const nameB = b.name.toLowerCase();
-            if (nameA > nameB) return -1;
-            if (nameA < nameB) return 1;
-            return 0;
-          });
-          break;
-        case 'year-up':
-          this.data.sort(
-            (a: IData, b: IData) => Number(a.year) - Number(b.year)
-          );
-          break;
-        case 'year-down':
-          this.data.sort(
-            (a: IData, b: IData) => Number(b.year) - Number(a.year)
-          );
-          break;
-        default:
-      }
-    }
-    this.applyFilters();
-  }
-
   applyFilters() {
-    this.filterData = this.data.map((a) => ({ ...a }));
-    const filterOpt = this.opt.filters;
-    Object.keys(filterOpt).forEach((key) => {
-      switch (key) {
-        case 'shape':
-        case 'size':
-        case 'color':
-          if (filterOpt[key].length > 0) {
-            this.filterData = this.filterData.filter((el) =>
-              filterOpt[key].includes(el[key])
-            );
-          }
-          break;
-        case 'favorites':
-          if (filterOpt[key]) {
-            this.filterData = this.filterData.filter((el) =>
-              this.opt.favorites.includes(el.num)
-            );
-          }
-          break;
-        case 'year':
-        case 'count':
-          if (filterOpt[key].length > 0) {
-            this.filterData = this.filterData.filter(
-              (el) =>
-                Number(el[key]) >= this.opt.filters[key][0] &&
-                Number(el[key]) <= this.opt.filters[key][1]
-            );
-          }
-          break;
-        case 'search':
-          if (filterOpt[key].length > 0) {
-            this.filterData = this.filterData.filter((el) =>
-              el.name
-                .toLowerCase()
-                .includes((<string>filterOpt[key]).toLowerCase())
-            );
-          }
-          break;
-        default:
-      }
-    });
+    this.filterData = this.filter(this.data, this.opt);
     this.renderCards();
   }
 
@@ -273,16 +191,10 @@ class Toys {
     this.applyFilters();
   }
 
-  resetFIlters() {
+  resetFilters() {
     const filters: string[] = Object.keys(this.opt.filters);
     filters.forEach((filter) => {
-      if (filter === 'search') {
-        this.opt.filters[filter] = '';
-      } else if (filter === 'favorites') {
-        this.opt.filters[filter] = false;
-      } else {
-        this.opt.filters[filter] = [];
-      }
+      this.opt.filters[filter] = this.defOpt.filters[filter];
     });
     this.btnsFilter.forEach((btn) => {
       (btn as HTMLElement).classList.remove('active');
@@ -353,7 +265,6 @@ class Toys {
   }
 
   applySettings() {
-    // установили select
     if (this.opt.sort) {
       const options = this.selectSort.querySelectorAll('option');
 
@@ -389,13 +300,17 @@ class Toys {
     this.btnsFilter.forEach((btn) => {
       btn.addEventListener('click', this.addFilters.bind(this));
     });
-    this.selectSort.addEventListener('change', this.sort.bind(this));
+    this.selectSort.addEventListener('change', () => {
+      this.opt.sort = this.selectSort.value;
+      this.sort(this.data, this.selectSort.value);
+      this.applyFilters();
+    });
     this.balls.addEventListener('click', this.addFavorites.bind(this));
     this.checkFavorites.addEventListener(
       'change',
       this.showFavorites.bind(this)
     );
-    this.btnFilterReset.addEventListener('click', this.resetFIlters.bind(this));
+    this.btnFilterReset.addEventListener('click', this.resetFilters.bind(this));
     this.searchElem.addEventListener('input', this.search.bind(this));
     this.closeSearch.addEventListener('click', this.clearSearch.bind(this));
     this.btnResetSettings.addEventListener('click', LocalStorage.resetLS);
@@ -408,7 +323,8 @@ class Toys {
   init() {
     this.opt = LocalStorage.getLS('optToys', this.defOpt);
     this.applySettings();
-    this.sort();
+    this.sort(this.data, this.selectSort.value);
+    this.applyFilters();
     this.events();
     this.initSlider(
       this.yearSlider,

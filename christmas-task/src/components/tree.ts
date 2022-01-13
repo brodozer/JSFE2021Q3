@@ -8,6 +8,8 @@ class Tree {
 
   container: HTMLElement;
 
+  treeContainer: HTMLElement;
+
   selectTree: HTMLElement;
 
   selectBcg: HTMLElement;
@@ -44,6 +46,7 @@ class Tree {
   defOpt: IOptTree = {
     tree: '/assets/tree/1.png',
     bcg: '/assets/bg/1.jpg',
+    map: 0,
     lights: false,
     snowflake: false,
     sound: false,
@@ -58,6 +61,7 @@ class Tree {
     this.selectTree = document.querySelector('.christmas-trees');
     this.selectBcg = document.querySelector('.background');
     this.container = document.querySelector('.tree');
+    this.treeContainer = this.container.querySelector('.tree-container');
     this.mapTree = document.querySelector('map');
     this.snowflakeContainer = document.querySelector('.snowflake-container');
     this.btnSnowflake = document.querySelector('.btn-snowflake');
@@ -116,9 +120,9 @@ class Tree {
   drop(event: DragEvent) {
     const toyId = event.dataTransfer.getData('id');
     const toy = document.getElementById(toyId);
-    const coordsTree = this.getCoords(this.christmasTree);
-    toy.style.left = `${event.pageX - coordsTree.left}px`;
-    toy.style.top = `${event.pageY - coordsTree.top}px`;
+    const coordsTree = this.getCoords(this.treeContainer);
+    toy.style.left = `${event.pageX - coordsTree.left - toy.offsetWidth / 2}px`;
+    toy.style.top = `${event.pageY - coordsTree.top - toy.offsetHeight / 2}px`;
     if (toy.closest('.card-boll')) {
       this.mapTree.append(toy);
       this.countToys(this.getCardToys(toy));
@@ -140,17 +144,17 @@ class Tree {
   }
 
   setBcg(event: Event) {
-    const target = event.target as HTMLElement;
-    this.addActive(target.closest('.select-bcg'), 'bcg');
+    this.addActive((event.target as HTMLElement).closest('.select-bcg'), 'bcg');
   }
 
   setTree(event: Event) {
-    const target = event.target as HTMLElement;
-    this.addActive(target.closest('.select-tree'), 'tree');
+    this.addActive(
+      (event.target as HTMLElement).closest('.select-tree'),
+      'tree'
+    );
   }
 
-  setMap(url: string) {
-    const indexMap = Number(url.slice(-5, -4)) - 1;
+  setMap(indexMap: number) {
     this.mapTree.querySelector('area').coords = this.map[indexMap];
   }
 
@@ -195,7 +199,7 @@ class Tree {
       .classList.add('active');
     this.container.style.backgroundImage = `url(${this.opt.bcg})`;
     this.christmasTree.src = this.opt.tree;
-    this.setMap(this.opt.tree);
+    this.setMap(this.opt.map);
     this.audio.loop = true;
     if (this.opt.snowflake) {
       this.timerID = setInterval(this.createSnowFlake, 50);
@@ -217,7 +221,9 @@ class Tree {
       if (key === 'bcg') {
         this.container.style.backgroundImage = `url(${url})`;
       } else {
-        this.setMap(url);
+        const map = Number(link.dataset.map);
+        this.opt.map = map;
+        this.setMap(map);
         this.christmasTree.src = url;
       }
       this.opt[key] = url;
